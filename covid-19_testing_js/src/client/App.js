@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
+import Customers from './components/customers/customers';
 
 class App extends Component {
 	state = {};
 
 	render() {
 		return (
-			<div>
-				<h1>COVID-19 Test Locations</h1>
+			<div style={{ textAlign: 'center' }}>
+				<Customers />
 			</div>
 		);
 	}
