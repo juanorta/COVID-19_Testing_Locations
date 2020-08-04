@@ -1,49 +1,30 @@
 import React, { Component } from 'react';
 import './App.css';
-import Home from './components/Home/Home';
+import Home from './Components/Home/Home';
+import CityForm from './Components/CityForm/CityForm';
+import CityView from './Components/CityView/CityView';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import FacilityView from './Components/FacilityView/FacilityView';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 class App extends Component {
-	state = {
-		clicked: false,
-	};
-
-	allButtonHandler = () => {
-		console.log('All button clicked');
-		this.setState((prevState) => {
-			return { clicked: !prevState.clicked };
-		});
-	};
-
-	cityButtonHandler = () => {
-		console.log('City button clicked');
-	};
+	state = {};
 
 	render() {
-		console.log(this.state.clicked);
 		return (
-			<div style={{ textAlign: 'center' }}>
-				<h1>COVID-19 Test Locations</h1>
-				<div>
-					<h3>Select Data</h3>
-					<Button
-						variant="contained"
-						color="primary"
-						onClick={this.allButtonHandler}
-					>
-						All Query
-					</Button>
-					<Button
-						variant="outlined"
-						color="primary"
-						onClick={this.cityButtonHandler}
-					>
-						City Query
-					</Button>
-					<Button variant="outlined" color="secondary">
-						State Query
-					</Button>
-				</div>
+			<div>
+				<Router>
+					<Switch>
+						<Route exact path="/" component={Home} />
+						<Route
+							exact
+							path="/facility"
+							component={FacilityView}
+						/>
+						<Route path="/city/:city" component={CityView} />
+					</Switch>
+				</Router>
 			</div>
 		);
 	}
