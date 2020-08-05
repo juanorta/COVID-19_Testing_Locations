@@ -5,6 +5,11 @@
 	margin-top: 5%;
 }
 
+.locations h1 {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+}
+
 ul {
 	list-style-type: none;
 	padding: 0;
@@ -14,4 +19,6 @@ li {
 	font-size: 1.3rem;
 	line-height: 4rem;
 	border-bottom: 1px dotted #777;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 400;
 }

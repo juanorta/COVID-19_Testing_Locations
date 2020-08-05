@@ -10,6 +10,9 @@ import {
 	button,
 	Link,
 } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
+import { FaSearch } from 'react-icons/fa';
+
 class CityForm extends Component {
 	constructor(props) {
 		super(props);
@@ -20,38 +23,35 @@ class CityForm extends Component {
 		};
 	}
 
+	//sets city everytime there's a change in the textbox
 	handleCityChange = (event) => {
 		this.setState({ city: event.target.value }, () => {
 			console.log(this.state.city);
 		});
-
-		/*
-		if (this.state.submitted) {
-			this.setState({ submitted: false });
-        }
-        */
 	};
 
 	handleSubmit = (event) => {
-		//console.log(this.state.city);
-		//alert(`${this.state.city}`);
-		//this.setState({ city: event.target.value });
-		console.log('ok');
 		this.setState({ submitted: true });
 		event.preventDefault();
-		//this.forceUpdate();
-		//return <Redirect to="/city" />;
 	};
 
 	render() {
-		//console.log(this.props.notFound);
 		return (
 			<div className="form">
-				<h2>Enter City</h2>
-				<form onSubmit={this.handleSubmit}>
-					<input type="text" onChange={this.handleCityChange}></input>
+				<h1>COVID-19 Testing Location Finder</h1>
+
+				<form onSubmit={this.handleSubmit} className="search-box">
+					<input
+						type="text"
+						onChange={this.handleCityChange}
+						className="textbox"
+						placeholder="Enter City"
+					/>
+
 					<Link to={`/city/${this.state.city}`}>
-						<button type="submit">Submit</button>
+						<a className="search-btn">
+							<FaSearch /> <button />
+						</a>
 					</Link>
 				</form>
 			</div>

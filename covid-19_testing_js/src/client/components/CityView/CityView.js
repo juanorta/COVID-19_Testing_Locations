@@ -56,19 +56,21 @@ class CityView extends Component {
 
 		return (
 			<div className="city-view">
-				<h1>Locations in {this.state.city}</h1>
+				<div className="locations">
+					<h1>Locations in {this.state.city}</h1>
 
-				<ul>
-					{this.state.locations.map((location) => (
-						<li key={location.id}>
-							{location.id} {'->'} {location.state} |{' '}
-							{location.facility} | {location.address} |{' '}
-							{location.city} |{location.facility_type} |{' '}
-							{location.phone_number} |{location.eligibility} |{' '}
-							{location.link}
-						</li>
-					))}
-				</ul>
+					<ul>
+						{this.state.locations.map((location) => (
+							<li key={location.id}>
+								{location.id} {'->'} {location.state} |{' '}
+								{location.facility} | {location.address} |{' '}
+								{location.city} |{location.facility_type} |{' '}
+								{location.phone_number} |{location.eligibility}{' '}
+								| {location.link}
+							</li>
+						))}
+					</ul>
+				</div>
 			</div>
 		);
 	}

@@ -9,7 +9,7 @@ class Home extends Component {
 	render() {
 		return (
 			<div>
-				<h1>COVID-19 TEST LOCATIONS</h1>
+				<h1></h1>
 				<CityForm />
 			</div>
 		);
