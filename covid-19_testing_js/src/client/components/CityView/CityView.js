@@ -9,7 +9,7 @@ import {
 	button,
 	Link,
 } from 'react-router-dom';
-import CityForm from '../CityForm/CityForm';
+
 import { Grid } from '@material-ui/core';
 import {
 	Card,
@@ -21,11 +21,12 @@ import {
 	Button,
 } from 'shards-react';
 import SiteCard from '../Card/Card';
+import CityForm2 from '../CityForm/CityForm2';
 
 class CityView extends Component {
 	constructor(props, { match }) {
 		super(props);
-		this.forceUpdate();
+
 		this.state = {
 			locations: [],
 			city: props.match.params.city,
@@ -34,6 +35,8 @@ class CityView extends Component {
 	}
 
 	componentDidMount() {
+		this.forceUpdate();
+		console.log('didmount');
 		fetch(`/api/covid_db/city/${this.state.city}`, {
 			headers: {
 				'Content-Type': 'application/json',
@@ -46,6 +49,16 @@ class CityView extends Component {
 					console.log('Locations fetched...', locations)
 				)
 			);
+	}
+
+	componentWillReceiveProps() {
+		console.log('willreceive');
+		/*
+		this.setState({ city: this.props.match.params.city }, () => {
+			console.log(this.state);
+		});
+		*/
+		window.location.reload(true);
 	}
 
 	render() {
@@ -67,7 +80,7 @@ class CityView extends Component {
 
 		return (
 			<div className="city-view">
-				<CityForm />
+				<CityForm2 />
 
 				<div className="locations">
 					<Grid className="location-grid" container>
