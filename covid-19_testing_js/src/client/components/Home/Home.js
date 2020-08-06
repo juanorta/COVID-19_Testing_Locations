@@ -8,8 +8,11 @@ class Home extends Component {
 	}
 	render() {
 		return (
-			<div>
-				<h1></h1>
+			<div className="home">
+				<h1 className="line anim-typewriter">
+					COVID-19 Testing Location Finder
+				</h1>
+
 				<CityForm />
 			</div>
 		);

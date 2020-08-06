@@ -38,8 +38,6 @@ class CityForm extends Component {
 	render() {
 		return (
 			<div className="form">
-				<h1>COVID-19 Testing Location Finder</h1>
-
 				<form onSubmit={this.handleSubmit} className="search-box">
 					<input
 						type="text"

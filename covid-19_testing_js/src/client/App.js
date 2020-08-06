@@ -23,6 +23,10 @@ class App extends Component {
 							component={FacilityView}
 						/>
 						<Route path="/city/:city" component={CityView} />
+						<Route
+							path="/facility/:facility"
+							component={FacilityView}
+						/>
 					</Switch>
 				</Router>
 			</div>

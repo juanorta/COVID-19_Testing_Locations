@@ -10,11 +10,22 @@ import {
 	Link,
 } from 'react-router-dom';
 import CityForm from '../CityForm/CityForm';
+import { Grid } from '@material-ui/core';
+import {
+	Card,
+	CardHeader,
+	CardTitle,
+	CardImg,
+	CardBody,
+	CardFooter,
+	Button,
+} from 'shards-react';
+import SiteCard from '../Card/Card';
 
 class CityView extends Component {
 	constructor(props, { match }) {
 		super(props);
-
+		this.forceUpdate();
 		this.state = {
 			locations: [],
 			city: props.match.params.city,
@@ -56,20 +67,37 @@ class CityView extends Component {
 
 		return (
 			<div className="city-view">
-				<div className="locations">
-					<h1>Locations in {this.state.city}</h1>
+				<CityForm />
 
-					<ul>
-						{this.state.locations.map((location) => (
-							<li key={location.id}>
-								{location.id} {'->'} {location.state} |{' '}
-								{location.facility} | {location.address} |{' '}
-								{location.city} |{location.facility_type} |{' '}
-								{location.phone_number} |{location.eligibility}{' '}
-								| {location.link}
-							</li>
-						))}
-					</ul>
+				<div className="locations">
+					<Grid className="location-grid" container>
+						<Grid className="location-column-container" item lg={3}>
+							<h1>Locations in {this.state.city} </h1>
+
+							<ul>
+								{this.state.locations.map((location) => (
+									<li key={location.id}>
+										<SiteCard
+											locationFacility={location.facility}
+											locationAddress={location.address}
+											locationFacilityType={
+												location.facility_type
+											}
+										/>
+									</li>
+								))}
+							</ul>
+						</Grid>
+						<Grid
+							className="location-map-container"
+							item
+							lg={9}
+							xs={0}
+							sm={0}
+						>
+							MAP
+						</Grid>
+					</Grid>
 				</div>
 			</div>
 		);

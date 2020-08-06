@@ -2,7 +2,7 @@
 	height: 10em;
 	position: relative;
 	font-size: 2rem;
-	margin-top: 20%;
+	margin-top: -3.5%;
 	text-align: center;
 }
 .form h1 {
@@ -25,8 +25,16 @@
 	border-radius: 40px;
 	height: 2rem;
 	padding: 1.25rem;
+	animation: fadeIn 1200ms;
+	animation-delay: 1.25s;
+	-moz-animation: fadeIn 1200ms; /* Firefox */
+	-moz-animation-delay: 1.25s;
+	-webkit-animation: fadeIn 1200ms; /* Safari and Chrome */
+	-webkit-animation-delay: 1.25s;
+	-o-animation: fadeIn 3200ms; /* Opera */
+	opacity: 0;
+	animation-fill-mode: forwards;
 }
-
 .textbox {
 	border: none;
 	background: none;
@@ -49,6 +57,15 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
 
 .search-box:hover > .textbox {

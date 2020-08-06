@@ -1,24 +1,43 @@
 .city-view {
-	height: 10em;
+	margin-left: 1rem;
+	margin-top: -3rem;
 	position: relative;
-	text-align: center;
-	margin-top: 5%;
+}
+
+.locations {
+	margin-top: -3.5%;
+}
+
+.location-container {
+	background-color: grey;
+}
+
+.location-column-container {
+	height: 89.5vh;
+	overflow-y: scroll;
+	padding-right: 1rem;
+}
+
+.location-map-container {
+	background-color: grey;
 }
 
 .locations h1 {
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 700;
+	font-size: 2.8rem;
 }
 
-ul {
+.locations ul {
 	list-style-type: none;
 	padding: 0;
 }
 
-li {
-	font-size: 1.3rem;
+.locations li {
+	font-size: 1.2rem;
 	line-height: 4rem;
-	border-bottom: 1px dotted #777;
+
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 400;
+	margin-bottom: 4rem;
 }

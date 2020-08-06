@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-class FacilityVieww extends Component {
+class FacilityView extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = { facility: props.match.params.facility };
 	}
 	render() {
-		return <h1>Facility Page</h1>;
+		return <h1>{this.state.facility}</h1>;
 	}
 }
 
-export default FacilityVieww;
+export default FacilityView;
