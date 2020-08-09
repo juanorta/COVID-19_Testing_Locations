@@ -24,7 +24,7 @@ class App extends Component {
 						/>
 						<Route path="/city/:city" component={CityView} />
 						<Route
-							path="/facility/:facility"
+							path="/address/:address"
 							component={FacilityView}
 						/>
 					</Switch>

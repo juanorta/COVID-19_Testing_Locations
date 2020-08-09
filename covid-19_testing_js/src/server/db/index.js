@@ -73,4 +73,36 @@ sitesDB.cityQuery = (city) => {
 	});
 };
 
+sitesDB.addressQuery = (address) => {
+	return new Promise((resolve, reject) => {
+		pool.query(
+			`SELECT * FROM test_sites WHERE address = ?`,
+			[address],
+			(err, results) => {
+				if (err) {
+					return reject(err);
+				}
+				//console.log('ok');
+				return resolve(results);
+			}
+		);
+	});
+};
+
+sitesDB.cityStateQuery = (city, state) => {
+	return new Promise((resolve, reject) => {
+		pool.query(
+			`SELECT * FROM test_sites WHERE city = ? AND state = ?`,
+			[city, state],
+			(err, results) => {
+				if (err) {
+					return reject(err);
+				}
+				//console.log('ok');
+				return resolve(results);
+			}
+		);
+	});
+};
+
 module.exports = sitesDB;

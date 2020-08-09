@@ -51,4 +51,20 @@ router.get('/city/:city', async (req, res) => {
 		return res.sendStatus(500);
 	}
 });
+
+router.get('/citystate/:city&:state', async (req, res) => {
+	try {
+		let results = await db.cityStateQuery(
+			req.params.city,
+			req.params.state
+		);
+		console.log('ok');
+
+		//res.status(200).json(results);
+		//res.status(200);
+		return res.json(results);
+	} catch (e) {
+		return res.sendStatus(500);
+	}
+});
 module.exports = router;

@@ -75,7 +75,11 @@
 	padding: 0 6px;
 }
 
-.textbox:hover {
+.textbox:focus {
 	width: 240px;
 	padding: 0 6px;
+}
+
+.pac-container {
+	width: 1rem;
 }

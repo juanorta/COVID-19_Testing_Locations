@@ -1,3 +1,4 @@
+/*global google*/
 import React, { Component } from 'react';
 import './CityView.css';
 import {
@@ -12,14 +13,12 @@ import {
 
 import { Grid } from '@material-ui/core';
 import {
-	Card,
-	CardHeader,
-	CardTitle,
-	CardImg,
-	CardBody,
-	CardFooter,
-	Button,
-} from 'shards-react';
+	withScriptjs,
+	withGoogleMap,
+	GoogleMap,
+	Marker,
+} from 'react-google-maps';
+import AutoComplete from 'react-google-autocomplete';
 import SiteCard from '../Card/Card';
 import CityForm2 from '../CityForm/CityForm2';
 
@@ -35,8 +34,6 @@ class CityView extends Component {
 	}
 
 	componentDidMount() {
-		this.forceUpdate();
-		console.log('didmount');
 		fetch(`/api/covid_db/city/${this.state.city}`, {
 			headers: {
 				'Content-Type': 'application/json',
@@ -53,11 +50,7 @@ class CityView extends Component {
 
 	componentWillReceiveProps() {
 		console.log('willreceive');
-		/*
-		this.setState({ city: this.props.match.params.city }, () => {
-			console.log(this.state);
-		});
-		*/
+
 		window.location.reload(true);
 	}
 
@@ -65,6 +58,16 @@ class CityView extends Component {
 		console.log('final city state -> ' + this.state.city);
 		//console.log(this.state.locations.length);
 
+		const MapWithAMarker = withScriptjs(
+			withGoogleMap((props) => (
+				<GoogleMap
+					defaultZoom={8}
+					defaultCenter={{ lat: -34.397, lng: 150.644 }}
+				>
+					<Marker position={{ lat: -34.397, lng: 150.644 }} />
+				</GoogleMap>
+			))
+		);
 		if (this.state.locations.length == 0) {
 			return (
 				<div>
@@ -96,6 +99,9 @@ class CityView extends Component {
 											locationFacilityType={
 												location.facility_type
 											}
+											phoneNumber={location.phoneNumber}
+											eligibility={location.eligibility}
+											link={location.link}
 										/>
 									</li>
 								))}
@@ -108,7 +114,16 @@ class CityView extends Component {
 							xs={0}
 							sm={0}
 						>
-							MAP
+							<MapWithAMarker
+								googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5EDlBAl8nkDsIXYsXNm7e6ty1cmpeKAE&libraries=geometry,drawing,places"
+								loadingElement={
+									<div style={{ height: `100%` }} />
+								}
+								containerElement={
+									<div style={{ height: `91vh` }} />
+								}
+								mapElement={<div style={{ height: `100%` }} />}
+							/>
 						</Grid>
 					</Grid>
 				</div>

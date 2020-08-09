@@ -2,7 +2,8 @@
 	height: 10em;
 	position: relative;
 	font-size: 2rem;
-	margin-top: -3.5%;
+	margin-top: -3%;
+	margin-bottom: -4.5%;
 	text-align: center;
 }
 .form h1 {
@@ -22,8 +23,8 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	border-radius: 40px;
-	height: 2rem;
+	border-radius: 200px;
+	height: 1rem;
 	padding: 1.25rem;
 }
 .textbox2 {
@@ -33,16 +34,17 @@
 	float: left;
 	width: 0px;
 	color: white;
-	font-size: 1.5rem;
+	font-size: 1.25rem;
 	transition: 0.25s;
 	line-height: 40px;
+	height: 1.5rem;
 }
 
 .search-btn2 {
 	color: white;
 	float: right;
 	width: 40px;
-	height: 40px;
+	height: 20px;
 	border-radius: 50%;
 	background: #ff3b42;
 	display: flex;
@@ -54,7 +56,7 @@
 	padding: 0 6px;
 }
 
-.textbox2:hover {
+.textbox2:focus {
 	width: 240px;
 	padding: 0 6px;
 }
