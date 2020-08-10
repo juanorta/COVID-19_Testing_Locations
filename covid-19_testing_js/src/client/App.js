@@ -22,7 +22,10 @@ class App extends Component {
 							path="/facility"
 							component={FacilityView}
 						/>
-						<Route path="/city/:city" component={CityView} />
+						<Route
+							path="/citystate/:city&:state"
+							component={CityView}
+						/>
 						<Route
 							path="/address/:address"
 							component={FacilityView}

@@ -23,34 +23,23 @@ import {
 import AutoComplete from 'react-google-autocomplete';
 import Geocode from 'react-geocode';
 import { Preloader, ThreeDots } from 'react-preloader-icon';
-import ArrowKeysReact from 'arrow-keys-react';
+
+import PropTypes from 'prop-types';
 class CityForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			city: 'default',
-			state: '',
+			textSelected: false,
 			selected: false,
-			geocity: '',
+			state: 'stateDefault',
 			placeSelected: false,
-			dots: 'default',
 		};
 		console.log(this.state);
-		ArrowKeysReact.config({
-			left: () => {
-				console.log('left key detected.');
-			},
-			right: () => {
-				console.log('right key detected.');
-			},
-			up: () => {
-				console.log('up key detected.');
-			},
-			down: () => {
-				console.log('down key detected.');
-			},
-		});
 	}
+	static contextTypes = {
+		router: PropTypes.object,
+	};
 
 	componentDidMount() {
 		this.geocoder = new google.maps.Geocoder();
@@ -62,6 +51,13 @@ class CityForm extends Component {
 		// write your logic here or call to the common method
 		console.log('will receive');
 	}
+
+	handleSubmit = (event) => {
+		console.log('submit');
+
+		event.preventDefault();
+	};
+
 	geocodeAddress = (address) => {
 		console.log('PARSE CALLED = ' + address);
 		setTimeout(function () {}, 3000);
@@ -74,16 +70,24 @@ class CityForm extends Component {
 						'Geocoder results ->' +
 							results[0].address_components[0].short_name
 					);
-					//let place = results[0].address_components[0].long_name;
-					//retrn
 
 					this.setState(
 						{
 							city: results[0].address_components[0].long_name,
+							state: results[0].address_components[2].long_name,
+							selected: true,
 						},
 						() => {
 							console.log(this.state);
 						}
+					);
+					/*
+					this.context.router.history.push(
+						`/city/${this.state.city}`
+					);
+					*/
+					this.context.router.history.push(
+						`/citystate/${this.state.city}&${this.state.state}`
 					);
 				} else {
 					console.log('not ok');
@@ -91,65 +95,32 @@ class CityForm extends Component {
 			}.bind(this)
 		);
 	};
-	//sets city everytime there's a change in the textbox
-	handleCityChange = (event) => {
-		//console.log('hmm');
 
-		this.setState({ dots: ThreeDots });
-
-		this.geocodeAddress(event.target.value);
-
-		/*
-			const val = event.target.value;
-			clearTimeout(this.typingTimer);
-			this.typingTimer = setTimeout(() => {
-				if (val) {
-					this.setState({ dots: 'd' });
-				}
-			}, 1100);
-*/
-		/*
-			this.setState(
-				{
-					city: event.target.value,
-				},
-				() => {
-					console.log(this.state);
-				}
-			);
-			*/
-		//this.selected();
-
-		//console.log('hmm');
-	};
+	handleCityChange = (event) => {};
 
 	onPlaceSelectedHandler = (place) => {
-		this.setState({ selected: true, placeSelected: true }, () => {
-			console.log(this.state);
-		});
-		//this.handleCityChange();
+		console.log(place.formatted_address);
+		console.log(place);
+
+		if (place.formatted_address === undefined) {
+			console.log('place is undefined');
+			//geocode place.name
+
+			this.geocodeAddress(place.name);
+		} else {
+			console.log('not undefined');
+			//geocode formatted_address
+			this.geocodeAddress(place.formatted_address);
+		}
 	};
-
-	handleSubmit = (event) => {
-		console.log('submit');
-
-		event.preventDefault();
-	};
-
-	clickHandler = (event) => {
-		this.setState({ selected: true }, () => {
-			console.log(this.state);
-		});
-		event.preventDefault();
-	};
-
 	render() {
 		return (
 			<div className="form">
 				<form onSubmit={this.handleSubmit} className="search-box">
 					<AutoComplete
 						onPlaceSelected={this.onPlaceSelectedHandler}
-						onKeyDown={this.handleCityChange.bind(this)}
+						onChange={this.handleCityChange.bind(this)}
+						onMouseEnter={this.handleCityChange}
 						type="text"
 						className="textbox"
 						placeholder="Enter City"
@@ -157,20 +128,15 @@ class CityForm extends Component {
 
 					{console.log('selected -> ' + this.state.selected)}
 					{this.state.selected ? (
-						<Link to={`/city/${this.state.city}`}>
+						<Link
+							to={`/citystate/${this.state.city}&${this.state.state}`}
+						>
 							<a className="search-btn">
 								<FaSearch /> <button />
 							</a>
 						</Link>
 					) : (
 						<a className="search-btn">
-							<Preloader
-								use={this.state.dots}
-								size={62}
-								strokeWidth={8}
-								strokeColor="black"
-								duration={800}
-							/>
 							<FaSearch /> <button />
 						</a>
 					)}
@@ -181,11 +147,3 @@ class CityForm extends Component {
 }
 
 export default CityForm;
-
-/*
-	<Link to={`/city/${this.state.city}`}>
-						<a className="search-btn">
-							<FaSearch /> <button />
-						</a>
-					</Link>
-					*/

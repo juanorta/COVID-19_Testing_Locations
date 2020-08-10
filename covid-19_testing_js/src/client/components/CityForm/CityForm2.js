@@ -14,6 +14,7 @@ import {
 import TextField from '@material-ui/core/TextField';
 import { FaSearch } from 'react-icons/fa';
 import AutoComplete from 'react-google-autocomplete';
+import PropTypes from 'prop-types';
 class CityForm2 extends Component {
 	constructor(props) {
 		super(props);
@@ -26,7 +27,9 @@ class CityForm2 extends Component {
 	}
 	typingTimer = null;
 	//sets city everytime there's a change in the textbox
-
+	static contextTypes = {
+		router: PropTypes.object,
+	};
 	componentDidMount() {
 		this.geocoder = new google.maps.Geocoder();
 	}
@@ -49,10 +52,15 @@ class CityForm2 extends Component {
 					this.setState(
 						{
 							city: results[0].address_components[0].long_name,
+							state: results[0].address_components[2].long_name,
+							selected: true,
 						},
 						() => {
 							console.log(this.state);
 						}
+					);
+					this.context.router.history.push(
+						`/citystate/${this.state.city}&${this.state.state}`
 					);
 				} else {
 					console.log('not ok');
@@ -61,32 +69,26 @@ class CityForm2 extends Component {
 		);
 	};
 	//sets city everytime there's a change in the textbox
-	handleCityChange = (event) => {
-		this.geocodeAddress(event.target.value);
-
-		//console.log(place);
-		//let place = this.parse(event.target.value);
-		//	setTimeout(function () {}, 5000);
-		/*
-		this.setState(
-			{
-				city: this.state.geocity,
-			},
-			() => {
-				console.log(this.state);
-			}
-		);
-		//this.selected();
-		*/
-	};
+	handleCityChange = (event) => {};
 
 	onPlaceSelectedHandler = (place) => {
-		this.setState({ selected: true }, () => {
-			console.log(this.state);
-		});
+		console.log(place.formatted_address);
+		console.log(place);
+
+		if (place.formatted_address === undefined) {
+			console.log('place is undefined');
+			//geocode place.name
+
+			this.geocodeAddress(place.name);
+		} else {
+			console.log('not undefined');
+			//geocode formatted_address
+			this.geocodeAddress(place.formatted_address);
+		}
 	};
 	handleSubmit = (event) => {
-		this.setState({ submitted: true });
+		console.log('submit');
+
 		event.preventDefault();
 	};
 
@@ -103,7 +105,9 @@ class CityForm2 extends Component {
 					/>
 
 					{this.state.selected ? (
-						<Link to={`/city/${this.state.city}`}>
+						<Link
+							to={`/citystate/${this.state.city}&${this.state.state}`}
+						>
 							<a className="search-btn2">
 								<FaSearch /> <button />
 							</a>

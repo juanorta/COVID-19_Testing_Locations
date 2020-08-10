@@ -29,17 +29,21 @@ class CityView extends Component {
 		this.state = {
 			locations: [],
 			city: props.match.params.city,
+			state: props.match.params.state,
 			found: false,
 		};
 	}
 
 	componentDidMount() {
-		fetch(`/api/covid_db/city/${this.state.city}`, {
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
-			},
-		})
+		fetch(
+			`/api/covid_db/citystate/${this.state.city}&${this.state.state}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+				},
+			}
+		)
 			.then((res) => res.json())
 			.then((locations) =>
 				this.setState({ locations }, () =>
@@ -87,8 +91,11 @@ class CityView extends Component {
 
 				<div className="locations">
 					<Grid className="location-grid" container>
-						<Grid className="location-column-container" item lg={3}>
-							<h1>Locations in {this.state.city} </h1>
+						<Grid className="location-column-container" item lg={4}>
+							<h1>
+								Locations in {this.state.city},{' '}
+								{this.state.state}{' '}
+							</h1>
 
 							<ul>
 								{this.state.locations.map((location) => (
@@ -110,7 +117,7 @@ class CityView extends Component {
 						<Grid
 							className="location-map-container"
 							item
-							lg={9}
+							lg={8}
 							xs={0}
 							sm={0}
 						>
