@@ -21,6 +21,7 @@ class CityForm2 extends Component {
 		this.state = {
 			submitted: false,
 			city: 'default',
+			state: 'stateDefault',
 			found: true,
 			selected: false,
 		};
@@ -34,6 +35,8 @@ class CityForm2 extends Component {
 		this.geocoder = new google.maps.Geocoder();
 	}
 
+	//takes in user input and converts that into a address object that contains a lot of information about the input
+	//if the input is a city, it sets the city and state of that location and sends it to the url
 	geocodeAddress = (address) => {
 		//console.log('PARSE CALLED = ' + address);
 		setTimeout(function () {}, 3000);
@@ -68,9 +71,11 @@ class CityForm2 extends Component {
 			}.bind(this)
 		);
 	};
-	//sets city everytime there's a change in the textbox
-	handleCityChange = (event) => {};
 
+	// receives user-entered input and autocomplete-selected input as 'place.'
+	// on submit, if place.formatted_address is undefined, then it was a user-entered input and feeds that info to
+	// the geocoder
+	// if place is defined, then it is a autocomplete-selected input and feeds it to the geocoder.
 	onPlaceSelectedHandler = (place) => {
 		console.log(place.formatted_address);
 		console.log(place);
@@ -98,7 +103,6 @@ class CityForm2 extends Component {
 				<form onSubmit={this.handleSubmit} className="search-box2">
 					<AutoComplete
 						type="text"
-						onKeyPress={this.handleCityChange.bind(this)}
 						onPlaceSelected={this.onPlaceSelectedHandler}
 						className="textbox2"
 						placeholder="Enter City"

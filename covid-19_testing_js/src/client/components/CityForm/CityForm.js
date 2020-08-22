@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 import React, { Component } from 'react';
-
 import './CityForm.css';
 import CityView from '../CityView/CityView';
 import {
@@ -22,15 +21,13 @@ import {
 } from 'react-google-maps';
 import AutoComplete from 'react-google-autocomplete';
 import Geocode from 'react-geocode';
-import { Preloader, ThreeDots } from 'react-preloader-icon';
-
 import PropTypes from 'prop-types';
+
 class CityForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			city: 'default',
-			textSelected: false,
 			selected: false,
 			state: 'stateDefault',
 			placeSelected: false,
@@ -58,6 +55,8 @@ class CityForm extends Component {
 		event.preventDefault();
 	};
 
+	//takes in user input and converts that into a address object that contains a lot of information about the input
+	//if the input is a city, it sets the city and state of that location and sends it to the url
 	geocodeAddress = (address) => {
 		console.log('PARSE CALLED = ' + address);
 		setTimeout(function () {}, 3000);
@@ -66,6 +65,7 @@ class CityForm extends Component {
 			function handleResults(results, status) {
 				if (status === google.maps.GeocoderStatus.OK) {
 					console.log(results);
+					console.log(results[0].geometry.location.toString());
 					console.log(
 						'Geocoder results ->' +
 							results[0].address_components[0].short_name
@@ -81,11 +81,6 @@ class CityForm extends Component {
 							console.log(this.state);
 						}
 					);
-					/*
-					this.context.router.history.push(
-						`/city/${this.state.city}`
-					);
-					*/
 					this.context.router.history.push(
 						`/citystate/${this.state.city}&${this.state.state}`
 					);
@@ -96,8 +91,10 @@ class CityForm extends Component {
 		);
 	};
 
-	handleCityChange = (event) => {};
-
+	// receives user-entered input and autocomplete-selected input as 'place.'
+	// on submit, if place.formatted_address is undefined, then it was a user-entered input and feeds that info to
+	// the geocoder
+	// if place is defined, then it is a autocomplete-selected input and feeds it to the geocoder.
 	onPlaceSelectedHandler = (place) => {
 		console.log(place.formatted_address);
 		console.log(place);
@@ -119,7 +116,6 @@ class CityForm extends Component {
 				<form onSubmit={this.handleSubmit} className="search-box">
 					<AutoComplete
 						onPlaceSelected={this.onPlaceSelectedHandler}
-						onChange={this.handleCityChange.bind(this)}
 						onMouseEnter={this.handleCityChange}
 						type="text"
 						className="textbox"

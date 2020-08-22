@@ -5,7 +5,7 @@ const pool = mysql.createPool({
 	connectionLimit: 10,
 	password: 'diegito1',
 	user: 'root',
-	database: 'covid19_test_sites',
+	database: 'covid_19_test_sites',
 	host: '127.0.0.1',
 	port: 3306,
 });

@@ -1,5 +1,5 @@
 /*global google*/
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import './CityView.css';
 import {
 	BrowserRouter as Router,
@@ -17,10 +17,40 @@ import {
 	withGoogleMap,
 	GoogleMap,
 	Marker,
+	InfoWindow,
 } from 'react-google-maps';
 import AutoComplete from 'react-google-autocomplete';
 import SiteCard from '../Card/Card';
 import CityForm2 from '../CityForm/CityForm2';
+import MapStyles from '../MapStyles';
+
+const options = {
+	styles: MapStyles,
+};
+
+const Map = withScriptjs(
+	withGoogleMap((props) => (
+		<GoogleMap
+			key={new Date().getTime()}
+			options={options}
+			defaultZoom={11}
+			defaultCenter={{
+				lat: props.lat,
+				lng: props.lng,
+			}}
+		>
+			{props.locations.map((location) => (
+				<Marker
+					key={location.id}
+					position={{
+						lat: parseFloat(location.lat),
+						lng: parseFloat(location.lng),
+					}}
+				/>
+			))}
+		</GoogleMap>
+	))
+);
 
 class CityView extends Component {
 	constructor(props, { match }) {
@@ -31,10 +61,22 @@ class CityView extends Component {
 			city: props.match.params.city,
 			state: props.match.params.state,
 			found: false,
+			defaultLat: '',
+			defaultLng: '',
+			markers: [
+				{
+					lat: '',
+					lng: '',
+				},
+			],
+			activeMarker: {},
+			selectedPlace: {},
+			showingInfoWindow: false,
 		};
 	}
 
 	componentDidMount() {
+		this.geocoder = new google.maps.Geocoder();
 		fetch(
 			`/api/covid_db/citystate/${this.state.city}&${this.state.state}`,
 			{
@@ -46,11 +88,41 @@ class CityView extends Component {
 		)
 			.then((res) => res.json())
 			.then((locations) =>
-				this.setState({ locations }, () =>
-					console.log('Locations fetched...', locations)
+				this.setState(
+					{ locations },
+					() => console.log('Locations fetched...', locations)
+					// locations.map((location) => {
+					// 	this.geocodeAddress(location.address);
+					// })
 				)
 			);
+
+		this.geocodeAddress(this.state.city + this.state.state);
+		//const [selectedLocation, setSelectedLocation] = useState(null);
 	}
+
+	geocodeAddress = (address) => {
+		console.log('PARSE CALLED = ' + address);
+		setTimeout(function () {}, 3000);
+		this.geocoder.geocode(
+			{ address: address },
+			function handleResults(results, status) {
+				if (status === google.maps.GeocoderStatus.OK) {
+					this.setState(
+						{
+							defaultLat: results[0].geometry.location.lat(),
+							defaultLng: results[0].geometry.location.lng(),
+						},
+						() => {
+							console.log(this.state);
+						}
+					);
+				} else {
+					console.log('not ok');
+				}
+			}.bind(this)
+		);
+	};
 
 	componentWillReceiveProps() {
 		console.log('willreceive');
@@ -59,23 +131,12 @@ class CityView extends Component {
 	}
 
 	render() {
-		console.log('final city state -> ' + this.state.city);
-		//console.log(this.state.locations.length);
+		//setTimeout(this.MapWithAMarker, 1000);
 
-		const MapWithAMarker = withScriptjs(
-			withGoogleMap((props) => (
-				<GoogleMap
-					defaultZoom={8}
-					defaultCenter={{ lat: -34.397, lng: 150.644 }}
-				>
-					<Marker position={{ lat: -34.397, lng: 150.644 }} />
-				</GoogleMap>
-			))
-		);
 		if (this.state.locations.length == 0) {
 			return (
 				<div>
-					<h3 style={{ textAlign: 'center' }}>
+					<h3 style={{ textAlign: 'center', marginTop: '20%' }}>
 						{' '}
 						No locations found in '{this.state.city}'
 						<Link to="/"> click here </Link> to enter a different
@@ -91,7 +152,12 @@ class CityView extends Component {
 
 				<div className="locations">
 					<Grid className="location-grid" container>
-						<Grid className="location-column-container" item lg={4}>
+						<Grid
+							className="location-column-container"
+							item
+							lg={3}
+							xs={0}
+						>
 							<h1>
 								Locations in {this.state.city},{' '}
 								{this.state.state}{' '}
@@ -109,6 +175,8 @@ class CityView extends Component {
 											phoneNumber={location.phoneNumber}
 											eligibility={location.eligibility}
 											link={location.link}
+											lat={location.lat}
+											lng={location.lng}
 										/>
 									</li>
 								))}
@@ -117,11 +185,11 @@ class CityView extends Component {
 						<Grid
 							className="location-map-container"
 							item
-							lg={8}
+							lg={9}
 							xs={0}
 							sm={0}
 						>
-							<MapWithAMarker
+							<Map
 								googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5EDlBAl8nkDsIXYsXNm7e6ty1cmpeKAE&libraries=geometry,drawing,places"
 								loadingElement={
 									<div style={{ height: `100%` }} />
@@ -130,6 +198,9 @@ class CityView extends Component {
 									<div style={{ height: `91vh` }} />
 								}
 								mapElement={<div style={{ height: `100%` }} />}
+								lat={this.state.defaultLat}
+								lng={this.state.defaultLng}
+								locations={this.state.locations}
 							/>
 						</Grid>
 					</Grid>
