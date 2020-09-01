@@ -12,9 +12,9 @@ import '/Users/mac/Desktop/covid_testing/COVID-19_Testing_Locations/covid-19_tes
 import '/Users/mac/Desktop/covid_testing/COVID-19_Testing_Locations/covid-19_testing_js/src/Fonts/AirbnbCerealMedium.ttf';
 */
 ReactDOM.render(
-	<React.StrictMode>
+	<React.Fragment>
 		<App />
-	</React.StrictMode>,
+	</React.Fragment>,
 	document.getElementById('root')
 );
 

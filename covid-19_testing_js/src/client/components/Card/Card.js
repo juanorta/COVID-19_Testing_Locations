@@ -1,13 +1,26 @@
 import React from 'react';
 import './Card.css';
 import { Link } from 'react-router-dom';
+import { FaMapMarker, FaClinicMedical } from 'react-icons/fa';
 
 const SiteCard = (props) => {
 	return (
 		<div className="card">
 			<h2>{props.locationFacility}</h2>
-			<h3>Address: {props.locationAddress}</h3>
-			<h4>Facility Type: {props.locationFacilityType}</h4>
+			<h3>
+				{' '}
+				<a className="map-marker">
+					<FaMapMarker />{' '}
+				</a>{' '}
+				{props.locationAddress}
+			</h3>
+			<h4>
+				{' '}
+				<a className="facility-type">
+					<FaClinicMedical size="1.5rem" />
+				</a>
+				{props.locationFacilityType}
+			</h4>
 
 			<Link to={`/address/${props.locationAddress}`}>
 				<button>More Info</button>

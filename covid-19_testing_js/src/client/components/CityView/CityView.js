@@ -28,16 +28,17 @@ const options = {
 	styles: MapStyles,
 };
 
-const Map = withScriptjs(
-	withGoogleMap((props) => (
+function Map(props) {
+	const [selectedMarker, setSelectedMarker] = useState(null);
+	return (
 		<GoogleMap
 			key={new Date().getTime()}
-			options={options}
 			defaultZoom={11}
 			defaultCenter={{
-				lat: props.lat,
-				lng: props.lng,
+				lat: parseFloat(props.lat),
+				lng: parseFloat(props.lng),
 			}}
+			defaultOptions={{ styles: MapStyles }}
 		>
 			{props.locations.map((location) => (
 				<Marker
@@ -46,11 +47,47 @@ const Map = withScriptjs(
 						lat: parseFloat(location.lat),
 						lng: parseFloat(location.lng),
 					}}
+					onClick={() => {
+						console.log('clicked');
+						setSelectedMarker(location);
+						console.log(location);
+					}}
 				/>
 			))}
+			{selectedMarker && (
+				<InfoWindow
+					key={selectedMarker.id}
+					position={{
+						lat: parseFloat(selectedMarker.lat),
+						lng: parseFloat(selectedMarker.lng),
+					}}
+					onCloseClick={() => {
+						setSelectedMarker(null);
+					}}
+				>
+					<div>
+						<h3>{selectedMarker.facility}</h3>
+						<p>{selectedMarker.address}</p>
+						<p>{selectedMarker.facility_type}</p>
+						<a
+							href={
+								'https://www.google.com/maps/place/' +
+								selectedMarker.address +
+								' ' +
+								selectedMarker.city
+							}
+							target="_blank"
+						>
+							View on Google Maps
+						</a>
+					</div>
+				</InfoWindow>
+			)}
 		</GoogleMap>
-	))
-);
+	);
+}
+
+const WrappedMap = withScriptjs(withGoogleMap(Map));
 
 class CityView extends Component {
 	constructor(props, { match }) {
@@ -69,10 +106,13 @@ class CityView extends Component {
 					lng: '',
 				},
 			],
-			activeMarker: {},
+			activeMarker: null,
 			selectedPlace: {},
 			showingInfoWindow: false,
+			isOpen: false,
 		};
+		this.onMarkerClick = this.onMarkerClick.bind(this);
+		this.setMarker = this.setMarker.bind(this);
 	}
 
 	componentDidMount() {
@@ -88,17 +128,16 @@ class CityView extends Component {
 		)
 			.then((res) => res.json())
 			.then((locations) =>
-				this.setState(
-					{ locations },
-					() => console.log('Locations fetched...', locations)
-					// locations.map((location) => {
-					// 	this.geocodeAddress(location.address);
-					// })
+				this.setState({ locations }, () =>
+					console.log('Locations fetched...', locations)
 				)
 			);
 
 		this.geocodeAddress(this.state.city + this.state.state);
-		//const [selectedLocation, setSelectedLocation] = useState(null);
+	}
+
+	componentDidUpdate() {
+		console.log('update');
 	}
 
 	geocodeAddress = (address) => {
@@ -129,6 +168,22 @@ class CityView extends Component {
 
 		window.location.reload(true);
 	}
+
+	onMarkerClick = (markerID) => {
+		// console.log('clicked');
+		// console.log(markerID);
+		// this.activeMarker = markerID;
+		this.setState({ activeMarker: markerID });
+		//this.setMarker(activeMarker);
+	};
+
+	setMarker = (markerID) => {
+		this.setState({ activeMarker: markerID });
+	};
+
+	onMapClick = () => {
+		this.setState({ activeMarker: null, isOpen: false });
+	};
 
 	render() {
 		//setTimeout(this.MapWithAMarker, 1000);
@@ -189,7 +244,7 @@ class CityView extends Component {
 							xs={0}
 							sm={0}
 						>
-							<Map
+							<WrappedMap
 								googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5EDlBAl8nkDsIXYsXNm7e6ty1cmpeKAE&libraries=geometry,drawing,places"
 								loadingElement={
 									<div style={{ height: `100%` }} />
@@ -201,6 +256,10 @@ class CityView extends Component {
 								lat={this.state.defaultLat}
 								lng={this.state.defaultLng}
 								locations={this.state.locations}
+								showingInfoWindow={this.state.showingInfoWindow}
+								onMarkerClick={this.onMarkerClick}
+								onMapClick={this.onMapClick}
+								activeMarker={this.activeMarker}
 							/>
 						</Grid>
 					</Grid>

@@ -12,7 +12,7 @@ import {
 	Link,
 } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaMapMarker } from 'react-icons/fa';
 import {
 	withScriptjs,
 	withGoogleMap,
