@@ -29,16 +29,47 @@ const options = {
 };
 
 function Map(props) {
+	let lat;
+	let lng;
 	const [selectedMarker, setSelectedMarker] = useState(null);
+	const [currentZoom, setCurrentZoom] = useState(11);
+	const [load, setLoad] = useState(1);
+
+	//will set the center coordinates to a city's until a marker is clicked
+	if (load == 1) {
+		console.log('true');
+		lat = parseFloat(props.lat);
+		lng = parseFloat(props.lng);
+	}
+
+	//changes the center of a map to the coordinates of the selected marker
+	function handleCenterChange(selectedLat, selectedLng) {
+		lat = selectedLat;
+		lng = selectedLng;
+		setLoad(0);
+	}
+
+	//sets the zoom level to the current zoom
+	//this prevents the map from loading to the default city zoom on every marker click
+	function handleZoomChange() {
+		console.log('zoom changed ' + this.getZoom());
+		setCurrentZoom(this.getZoom());
+		console.log('currentzoom ' + currentZoom);
+	}
+
 	return (
 		<GoogleMap
 			key={new Date().getTime()}
-			defaultZoom={11}
-			defaultCenter={{
-				lat: parseFloat(props.lat),
-				lng: parseFloat(props.lng),
+			defaultZoom={currentZoom}
+			center={{
+				lat: lat,
+				lng: lng,
 			}}
 			defaultOptions={{ styles: MapStyles }}
+			onClick={() => {
+				setSelectedMarker(null);
+			}}
+			onZoomChanged={handleZoomChange}
 		>
 			{props.locations.map((location) => (
 				<Marker
@@ -48,9 +79,8 @@ function Map(props) {
 						lng: parseFloat(location.lng),
 					}}
 					onClick={() => {
-						console.log('clicked');
 						setSelectedMarker(location);
-						console.log(location);
+						handleCenterChange(location.lat, location.lng);
 					}}
 				/>
 			))}
