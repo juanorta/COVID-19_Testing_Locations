@@ -70,6 +70,7 @@ function Map(props) {
 				setSelectedMarker(null);
 			}}
 			onZoomChanged={handleZoomChange}
+			onGoogleApiLoaded={console.log('loaded')}
 		>
 			{props.locations.map((location) => (
 				<Marker
@@ -78,9 +79,18 @@ function Map(props) {
 						lat: parseFloat(location.lat),
 						lng: parseFloat(location.lng),
 					}}
+					animation={
+						props.cardHover === location.id
+							? google.maps.Animation.BOUNCE
+							: null
+					}
 					onClick={() => {
 						setSelectedMarker(location);
 						handleCenterChange(location.lat, location.lng);
+					}}
+					icon={{
+						url: '/marker.svg',
+						scaledSize: new window.google.maps.Size(45, 45),
 					}}
 				/>
 			))}
@@ -136,13 +146,8 @@ class CityView extends Component {
 					lng: '',
 				},
 			],
-			activeMarker: null,
-			selectedPlace: {},
-			showingInfoWindow: false,
-			isOpen: false,
+			cardHover: '',
 		};
-		this.onMarkerClick = this.onMarkerClick.bind(this);
-		this.setMarker = this.setMarker.bind(this);
 	}
 
 	componentDidMount() {
@@ -199,21 +204,13 @@ class CityView extends Component {
 		window.location.reload(true);
 	}
 
-	onMarkerClick = (markerID) => {
-		// console.log('clicked');
-		// console.log(markerID);
-		// this.activeMarker = markerID;
-		this.setState({ activeMarker: markerID });
-		//this.setMarker(activeMarker);
-	};
-
-	setMarker = (markerID) => {
-		this.setState({ activeMarker: markerID });
-	};
-
-	onMapClick = () => {
-		this.setState({ activeMarker: null, isOpen: false });
-	};
+	handleMouseOver(locationID) {
+		this.setState({ cardHover: locationID });
+		console.log(this.state);
+	}
+	handleMouseLeave() {
+		//	this.setState({ cardHover: '' });
+	}
 
 	render() {
 		//setTimeout(this.MapWithAMarker, 1000);
@@ -250,7 +247,15 @@ class CityView extends Component {
 
 							<ul>
 								{this.state.locations.map((location) => (
-									<li key={location.id}>
+									<li
+										key={location.id}
+										onMouseOver={() => {
+											this.handleMouseOver(location.id);
+										}}
+										onMouseLeave={() => {
+											this.handleMouseLeave();
+										}}
+									>
 										<SiteCard
 											locationFacility={location.facility}
 											locationAddress={location.address}
@@ -290,6 +295,7 @@ class CityView extends Component {
 								onMarkerClick={this.onMarkerClick}
 								onMapClick={this.onMapClick}
 								activeMarker={this.activeMarker}
+								cardHover={this.state.cardHover}
 							/>
 						</Grid>
 					</Grid>
