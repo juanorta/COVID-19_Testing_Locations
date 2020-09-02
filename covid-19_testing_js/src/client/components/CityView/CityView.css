@@ -6,7 +6,11 @@
 }
 
 .locations {
-	margin-top: -3.5%;
+	margin-top: -100px;
+}
+
+.location-grid {
+	z-index: -1;
 }
 
 .location-container {
@@ -17,10 +21,15 @@
 	height: 92vh;
 	overflow-y: scroll;
 	padding-right: 1rem;
+	z-index: 100;
+	background-color: white;
+	position: absolute;
+	top: 130;
+	left: 0;
 }
 
 .location-map-container {
-	background-color: transparent;
+	z-index: 1;
 }
 
 .locations h1 {

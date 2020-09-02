@@ -34,12 +34,15 @@ function Map(props) {
 	const [selectedMarker, setSelectedMarker] = useState(null);
 	const [currentZoom, setCurrentZoom] = useState(11);
 	const [load, setLoad] = useState(1);
+	var center; // a latLng
+	var offsetX = 0.01; // move center one quarter map width left
+	var offsetY = 0.23; // move center one quarter map height down
 
 	//will set the center coordinates to a city's until a marker is clicked
 	if (load == 1) {
 		console.log('true');
-		lat = parseFloat(props.lat);
-		lng = parseFloat(props.lng);
+		lat = parseFloat(props.lat) - offsetX;
+		lng = parseFloat(props.lng) - offsetY;
 	}
 
 	//changes the center of a map to the coordinates of the selected marker
@@ -235,6 +238,32 @@ class CityView extends Component {
 				<div className="locations">
 					<Grid className="location-grid" container>
 						<Grid
+							className="location-map-container"
+							item
+							lg={12}
+							xs={0}
+							sm={0}
+						>
+							<WrappedMap
+								googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5EDlBAl8nkDsIXYsXNm7e6ty1cmpeKAE&libraries=geometry,drawing,places"
+								loadingElement={
+									<div style={{ height: `100%` }} />
+								}
+								containerElement={
+									<div style={{ height: `91vh` }} />
+								}
+								mapElement={<div style={{ height: `100%` }} />}
+								lat={this.state.defaultLat}
+								lng={this.state.defaultLng}
+								locations={this.state.locations}
+								showingInfoWindow={this.state.showingInfoWindow}
+								onMarkerClick={this.onMarkerClick}
+								onMapClick={this.onMapClick}
+								activeMarker={this.activeMarker}
+								cardHover={this.state.cardHover}
+							/>
+						</Grid>
+						<Grid
 							className="location-column-container"
 							item
 							lg={3}
@@ -271,32 +300,6 @@ class CityView extends Component {
 									</li>
 								))}
 							</ul>
-						</Grid>
-						<Grid
-							className="location-map-container"
-							item
-							lg={9}
-							xs={0}
-							sm={0}
-						>
-							<WrappedMap
-								googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5EDlBAl8nkDsIXYsXNm7e6ty1cmpeKAE&libraries=geometry,drawing,places"
-								loadingElement={
-									<div style={{ height: `100%` }} />
-								}
-								containerElement={
-									<div style={{ height: `91vh` }} />
-								}
-								mapElement={<div style={{ height: `100%` }} />}
-								lat={this.state.defaultLat}
-								lng={this.state.defaultLng}
-								locations={this.state.locations}
-								showingInfoWindow={this.state.showingInfoWindow}
-								onMarkerClick={this.onMarkerClick}
-								onMapClick={this.onMapClick}
-								activeMarker={this.activeMarker}
-								cardHover={this.state.cardHover}
-							/>
 						</Grid>
 					</Grid>
 				</div>
