@@ -9,7 +9,6 @@
 		"@testing-library/react": "^9.5.0",
 		"@testing-library/user-event": "^7.2.1",
 		"arrow-keys-react": "^1.0.6",
-		"concurrently": "^5.2.0",
 		"express": "^4.17.1",
 		"mysql": "^2.18.1",
 		"react": "^16.13.1",
@@ -26,6 +25,7 @@
 		"start-react": "react-scripts start",
 		"start": "node server.js",
 		"server": "nodemon server.js",
+		"start-all": "concurrently --kill-others \"nodemon server.js\"  \"react-scripts start\"",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
@@ -46,6 +46,7 @@
 		]
 	},
 	"devDependencies": {
+		"concurrently": "^5.3.0",
 		"enzyme": "^3.11.0",
 		"enzyme-adapter-react-16": "^1.15.3",
 		"enzyme-to-json": "^3.5.0",
