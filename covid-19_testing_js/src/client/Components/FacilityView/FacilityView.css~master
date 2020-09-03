@@ -1,0 +1,38 @@
+.facility-view h1 {
+	justify-content: center;
+}
+
+.title-grid {
+	background-color: blue;
+	justify-content: center;
+}
+.facility-title {
+	float: left;
+	background-color: purple;
+}
+.map-grid {
+	background-color: red;
+	justify-content: center;
+	height: 35vh;
+}
+
+.facility-address {
+	background-color: brown;
+	height: 5vh;
+}
+
+.facility-map {
+	margin-top: -10%;
+	background-color: grey;
+	height: 35vh;
+}
+
+.info-grid {
+	justify-content: center;
+	background-color: aqua;
+	height: 40vh;
+}
+
+.info {
+	background-color: seagreen;
+}

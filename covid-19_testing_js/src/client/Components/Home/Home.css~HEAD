@@ -1,0 +1,29 @@
+.line {
+	width: 52em;
+	margin: 0 auto;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 400;
+	position: relative;
+	font-size: 3rem;
+	margin-top: 20%;
+	margin-bottom: -3%;
+	width: 16em;
+	text-align: center;
+	overflow: hidden;
+	transform: translateY(-50%);
+	white-space: nowrap;
+}
+
+.anim-typewriter {
+	text-align: center;
+	animation: typewriter 1.3s steps(32) 0.25s 1 normal both;
+}
+
+@keyframes typewriter {
+	from {
+		width: 0ch;
+	}
+	to {
+		width: 32ch;
+	}
+}

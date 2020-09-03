@@ -12,6 +12,7 @@ class App extends Component {
 	state = {};
 
 	render() {
+		//console.log('API KEY -> ' + process.env.REACT_APP_GOOGLE_API_KEY);
 		return (
 			<div>
 				<Router>
