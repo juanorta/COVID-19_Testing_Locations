@@ -1,0 +1,65 @@
+.card {
+	background-color: white;
+	height: 20rem;
+	border-radius: 30px;
+	box-shadow: -0.25px 1px 5px 0.5px #888888;
+	margin-left: 0.5rem;
+	text-align: left;
+	transition: box-shadow 0.35s;
+}
+
+.card button {
+	background-color: #ff3b42;
+	color: white;
+	height: 3rem;
+	width: 30%;
+	border: none;
+	justify-content: center;
+	cursor: pointer;
+	border-radius: 30px;
+	font-size: 1.2rem;
+	margin-top: 1rem;
+	margin-left: 33%;
+}
+
+.card h2 {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	font-size: 1.5rem;
+	padding-left: 3rem;
+}
+
+.card h3 {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 500;
+	padding-left: 3rem;
+	font-size: 1.5rem;
+}
+
+.card h4 {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 500;
+	padding-left: 3rem;
+	font-size: 1.5rem;
+}
+
+.card button:focus {
+	outline: none;
+}
+
+.card button:hover {
+	background-color: #fa121a;
+}
+
+.card:hover {
+	box-shadow: -0.25px 1px 5px 4px #888888;
+}
+
+.map-marker {
+	color: #fa121a;
+}
+
+.facility-type {
+	color: #fa121a;
+	padding-right: 0.5rem;
+}
