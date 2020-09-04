@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import Home from './Components/Home/Home';
-import CityForm from './Components/CityForm/CityForm';
-import CityView from './Components/CityView/CityView';
+import Home from './components/Home/Home';
+import CityForm from './components/CityForm/CityForm';
+import CityView from './components/CityView/CityView';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import FacilityView from './Components/FacilityView/FacilityView';
+import FacilityView from './components/FacilityView/FacilityView';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 class App extends Component {
