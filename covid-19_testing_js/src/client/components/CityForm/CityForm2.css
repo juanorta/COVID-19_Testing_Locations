@@ -20,7 +20,7 @@
 .search-box2 {
 	background-color: #ff3b42;
 	position: absolute;
-	top: 50%;
+	top: 45%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	border-radius: 200px;

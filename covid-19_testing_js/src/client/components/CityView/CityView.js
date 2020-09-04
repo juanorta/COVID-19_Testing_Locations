@@ -52,6 +52,12 @@ function Map(props) {
 		setLoad(0);
 	}
 
+	function handleCenterChange2() {
+		console.log(this.getCenter().toJSON());
+		lat = this.getCenter().toJSON().lat;
+		lng = this.getCenter().toJSON().lng;
+		setLoad(0);
+	}
 	//sets the zoom level to the current zoom
 	//this prevents the map from loading to the default city zoom on every marker click
 	function handleZoomChange() {
@@ -73,6 +79,7 @@ function Map(props) {
 				setSelectedMarker(null);
 			}}
 			onZoomChanged={handleZoomChange}
+			onCenterChanged={handleCenterChange2}
 			onGoogleApiLoaded={console.log('loaded')}
 		>
 			{props.locations.map((location) => (
@@ -266,7 +273,7 @@ class CityView extends Component {
 						<Grid
 							className="location-column-container"
 							item
-							lg={3}
+							lg={4}
 							xs={0}
 						>
 							<h1>
