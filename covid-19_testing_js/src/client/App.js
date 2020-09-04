@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-<<<<<<< HEAD
 import Home from './components/Home/Home';
 import CityForm from './components/CityForm/CityForm';
 import CityView from './components/CityView/CityView';
-=======
-import Home from './Components/Home/Home';
-//import CityForm from './Components/CityForm/CityForm';
-import CityForm from './Components/CityForm/CityForm';
-import CityView from './Components/CityView/CityView';
->>>>>>> master
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FacilityView from './components/FacilityView/FacilityView';
@@ -19,7 +12,6 @@ class App extends Component {
 	state = {};
 
 	render() {
-		//console.log('API KEY -> ' + process.env.REACT_APP_GOOGLE_API_KEY);
 		return (
 			<div>
 				<Router>

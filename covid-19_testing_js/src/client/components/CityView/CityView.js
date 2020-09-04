@@ -22,7 +22,6 @@ import {
 import AutoComplete from 'react-google-autocomplete';
 import SiteCard from '../Card/Card';
 import CityForm2 from '../CityForm/CityForm2';
-
 import MapStyles from '../MapStyles';
 
 const options = {
@@ -61,13 +60,6 @@ function Map(props) {
 		console.log('currentzoom ' + currentZoom);
 	}
 
-	function handleCenterChange2() {
-		console.log('center changed ' + this.getCenter().toJSON());
-		lat = this.getCenter().toJSON().lat;
-		lng = this.getCenter().toJSON().lng;
-		setLoad(0);
-	}
-
 	return (
 		<GoogleMap
 			key={new Date().getTime()}
@@ -82,7 +74,6 @@ function Map(props) {
 			}}
 			onZoomChanged={handleZoomChange}
 			onGoogleApiLoaded={console.log('loaded')}
-			onCenterChanged={handleCenterChange2}
 		>
 			{props.locations.map((location) => (
 				<Marker
@@ -221,7 +212,7 @@ class CityView extends Component {
 		console.log(this.state);
 	}
 	handleMouseLeave() {
-		this.setState({ cardHover: '' });
+		//	this.setState({ cardHover: '' });
 	}
 
 	render() {
@@ -250,12 +241,11 @@ class CityView extends Component {
 							className="location-map-container"
 							item
 							lg={12}
-							md={12}
-							xs={12}
-							sm={12}
+							xs={0}
+							sm={0}
 						>
 							<WrappedMap
-								googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKHj80KlN5Y0jRboQGOcx_PYJj2odSTsk&libraries=geometry,drawing,places"
+								googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5EDlBAl8nkDsIXYsXNm7e6ty1cmpeKAE&libraries=geometry,drawing,places"
 								loadingElement={
 									<div style={{ height: `100%` }} />
 								}
@@ -277,8 +267,7 @@ class CityView extends Component {
 							className="location-column-container"
 							item
 							lg={3}
-							md={12}
-							xs={12}
+							xs={0}
 						>
 							<h1>
 								Locations in {this.state.city},{' '}
