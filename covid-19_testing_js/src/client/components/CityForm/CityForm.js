@@ -10,6 +10,7 @@ import {
 	withRouter,
 	button,
 	Link,
+	useHistory,
 } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import { FaSearch, FaMapMarker } from 'react-icons/fa';
@@ -22,6 +23,7 @@ import {
 import AutoComplete from 'react-google-autocomplete';
 import Geocode from 'react-geocode';
 import PropTypes from 'prop-types';
+import { browseHistory } from 'react-router';
 
 class CityForm extends Component {
 	constructor(props) {
@@ -33,10 +35,12 @@ class CityForm extends Component {
 			placeSelected: false,
 		};
 		console.log(this.state);
+		//const history = useHistory();
 	}
-	static contextTypes = {
-		router: PropTypes.object,
-	};
+
+	// static contextTypes = {
+	// 	router: PropTypes.object,
+	// };
 
 	componentDidMount() {
 		this.geocoder = new google.maps.Geocoder();
@@ -81,7 +85,11 @@ class CityForm extends Component {
 							console.log(this.state);
 						}
 					);
-					this.context.router.history.push(
+					// this.context.router.history.push(
+					// 	`/citystate/${this.state.city}&${this.state.state}`
+					// );
+
+					this.props.history.push(
 						`/citystate/${this.state.city}&${this.state.state}`
 					);
 				} else {
@@ -142,4 +150,4 @@ class CityForm extends Component {
 	}
 }
 
-export default CityForm;
+export default withRouter(CityForm);

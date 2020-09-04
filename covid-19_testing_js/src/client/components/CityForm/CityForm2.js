@@ -28,9 +28,9 @@ class CityForm2 extends Component {
 	}
 	typingTimer = null;
 	//sets city everytime there's a change in the textbox
-	static contextTypes = {
-		router: PropTypes.object,
-	};
+	// static contextTypes = {
+	// 	router: PropTypes.object,
+	// };
 	componentDidMount() {
 		this.geocoder = new google.maps.Geocoder();
 	}
@@ -62,7 +62,11 @@ class CityForm2 extends Component {
 							console.log(this.state);
 						}
 					);
-					this.context.router.history.push(
+					// this.context.router.history.push(
+					// 	`/citystate/${this.state.city}&${this.state.state}`
+					// );
+
+					this.props.history.push(
 						`/citystate/${this.state.city}&${this.state.state}`
 					);
 				} else {
@@ -127,4 +131,4 @@ class CityForm2 extends Component {
 	}
 }
 
-export default CityForm2;
+export default withRouter(CityForm2);
