@@ -10,7 +10,7 @@ class Home extends Component {
 		return (
 			<div className="home">
 				<h1 className="line anim-typewriter">
-					COVID-19 Testing Location Finder
+					test COVID-19 Testing Location Finder
 				</h1>
 
 				<CityForm />
