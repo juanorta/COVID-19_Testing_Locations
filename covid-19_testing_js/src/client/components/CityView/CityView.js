@@ -245,7 +245,7 @@ class CityView extends Component {
 							sm={0}
 						>
 							<WrappedMap
-								googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5EDlBAl8nkDsIXYsXNm7e6ty1cmpeKAE&libraries=geometry,drawing,places"
+								googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKHj80KlN5Y0jRboQGOcx_PYJj2odSTsk&libraries=geometry,drawing,places"
 								loadingElement={
 									<div style={{ height: `100%` }} />
 								}
