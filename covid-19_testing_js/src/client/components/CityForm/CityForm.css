@@ -70,6 +70,10 @@
 	}
 }
 
+.search-btn:hover {
+	cursor: pointer;
+}
+
 .search-box:hover > .textbox {
 	width: 240px;
 	padding: 0 6px;

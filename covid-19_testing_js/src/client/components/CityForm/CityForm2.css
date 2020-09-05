@@ -51,6 +51,11 @@
 	justify-content: center;
 	align-items: center;
 }
+
+.search-btn2:hover {
+	cursor: pointer;
+}
+
 .search-box2:hover > .textbox2 {
 	width: 240px;
 	padding: 0 6px;

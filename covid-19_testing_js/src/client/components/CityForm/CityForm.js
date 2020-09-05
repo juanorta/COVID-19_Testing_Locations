@@ -33,6 +33,7 @@ class CityForm extends Component {
 			selected: false,
 			state: 'stateDefault',
 			placeSelected: false,
+			city2: 'uh',
 		};
 		console.log(this.state);
 		//const history = useHistory();
@@ -63,7 +64,12 @@ class CityForm extends Component {
 	//if the input is a city, it sets the city and state of that location and sends it to the url
 	geocodeAddress = (address) => {
 		console.log('PARSE CALLED = ' + address);
-		setTimeout(function () {}, 3000);
+		//setTimeout(function () {}, 3000);
+		if (address == 'temple' || address == 'Temple') {
+			address = 'temple tx';
+		} else if (address == 'georgetown' || address == 'Georgetown') {
+			address = 'georgetown tx';
+		}
 		this.geocoder.geocode(
 			{ address: address },
 			function handleResults(results, status) {
@@ -74,6 +80,28 @@ class CityForm extends Component {
 						'Geocoder results ->' +
 							results[0].address_components[0].short_name
 					);
+
+					if (
+						results[0].address_components[0].short_name ==
+						'New York'
+					) {
+						this.setState(
+							{
+								city:
+									results[0].address_components[0].long_name,
+								state:
+									results[0].address_components[0].long_name,
+								selected: true,
+							},
+							() => {
+								console.log(this.state);
+							}
+						);
+
+						this.props.history.push(
+							`/citystate/${this.state.city}&${this.state.state}`
+						);
+					}
 
 					this.setState(
 						{
@@ -118,13 +146,28 @@ class CityForm extends Component {
 			this.geocodeAddress(place.formatted_address);
 		}
 	};
+
+	handleChange = (event) => {
+		console.log(event.target.value);
+		this.setState({
+			city2: event.target.value,
+		});
+	};
+
+	//grabs city2 and puts it in the geocoder
+	handleClick = (event) => {
+		//get whatever value is set from handle change city2 state2
+		// put that value in the geocoder
+		this.geocodeAddress(this.state.city2);
+	};
 	render() {
 		return (
 			<div className="form">
 				<form onSubmit={this.handleSubmit} className="search-box">
 					<AutoComplete
+						onChange={this.handleChange}
 						onPlaceSelected={this.onPlaceSelectedHandler}
-						onMouseEnter={this.handleCityChange}
+						//onMouseEnter={this.handleCityChange}
 						type="text"
 						className="textbox"
 						placeholder="Enter City"
@@ -140,7 +183,7 @@ class CityForm extends Component {
 							</a>
 						</Link>
 					) : (
-						<a className="search-btn">
+						<a className="search-btn" onClick={this.handleClick}>
 							<FaSearch /> <button />
 						</a>
 					)}

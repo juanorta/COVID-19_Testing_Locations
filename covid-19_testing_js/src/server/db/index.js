@@ -2,7 +2,7 @@ const mysql = require('mysql');
 
 //connection to database
 const pool = mysql.createPool({
-	connectionLimit: 10,
+	connectionLimit: 100,
 	password: 'diegito1',
 	user: 'root',
 	database: 'covid19',
