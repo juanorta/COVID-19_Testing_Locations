@@ -138,7 +138,9 @@ class CityForm2 extends Component {
 	handleClick = (event) => {
 		//get whatever value is set from handle change city2 state2
 		// put that value in the geocoder
-		this.geocodeAddress(this.state.city2);
+		if (event.detail == 1) {
+			this.geocodeAddress(this.state.city2);
+		}
 	};
 	render() {
 		return (

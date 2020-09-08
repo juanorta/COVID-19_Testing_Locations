@@ -32,7 +32,6 @@ class CityForm extends Component {
 			city: 'default',
 			selected: false,
 			state: 'stateDefault',
-			placeSelected: false,
 			city2: 'uh',
 		};
 		console.log(this.state);
@@ -135,6 +134,9 @@ class CityForm extends Component {
 		console.log(place.formatted_address);
 		console.log(place);
 
+		// this.setState({ autocompleteSelected: true }, () => {
+		// 	console.log(this.state);
+		// });
 		if (place.formatted_address === undefined) {
 			console.log('place is undefined');
 			//geocode place.name
@@ -156,9 +158,12 @@ class CityForm extends Component {
 
 	//grabs city2 and puts it in the geocoder
 	handleClick = (event) => {
+		console.log(event.detail);
 		//get whatever value is set from handle change city2 state2
 		// put that value in the geocoder
-		this.geocodeAddress(this.state.city2);
+		if (event.detail == 1) {
+			this.geocodeAddress(this.state.city2);
+		}
 	};
 	render() {
 		return (

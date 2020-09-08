@@ -23,6 +23,7 @@ import AutoComplete from 'react-google-autocomplete';
 import SiteCard from '../Card/Card';
 import CityForm2 from '../CityForm/CityForm2';
 import MapStyles from '../MapStyles';
+import FacilityView from '../FacilityView/FacilityView';
 
 const options = {
 	styles: MapStyles,
@@ -157,6 +158,7 @@ class CityView extends Component {
 				},
 			],
 			cardHover: '',
+			moreInfoSelected: false,
 		};
 	}
 
@@ -276,37 +278,55 @@ class CityView extends Component {
 							lg={4}
 							xs={0}
 						>
-							<h1>
-								Locations in {this.state.city},{' '}
-								{this.state.state}{' '}
-							</h1>
+							{this.state.moreInfoSelected ? (
+								<FacilityView />
+							) : (
+								<div>
+									<h1>
+										Locations in {this.state.city},{' '}
+										{this.state.state}{' '}
+									</h1>
 
-							<ul>
-								{this.state.locations.map((location) => (
-									<li
-										key={location.id}
-										onMouseOver={() => {
-											this.handleMouseOver(location.id);
-										}}
-										onMouseLeave={() => {
-											this.handleMouseLeave();
-										}}
-									>
-										<SiteCard
-											locationFacility={location.facility}
-											locationAddress={location.address}
-											locationFacilityType={
-												location.facility_type
-											}
-											phoneNumber={location.phoneNumber}
-											eligibility={location.eligibility}
-											link={location.link}
-											lat={location.lat}
-											lng={location.lng}
-										/>
-									</li>
-								))}
-							</ul>
+									<ul>
+										{this.state.locations.map(
+											(location) => (
+												<li
+													key={location.id}
+													onMouseOver={() => {
+														this.handleMouseOver(
+															location.id
+														);
+													}}
+													onMouseLeave={() => {
+														this.handleMouseLeave();
+													}}
+												>
+													<SiteCard
+														locationFacility={
+															location.facility
+														}
+														locationAddress={
+															location.address
+														}
+														locationFacilityType={
+															location.facility_type
+														}
+														phoneNumber={
+															location.phoneNumber
+														}
+														eligibility={
+															location.eligibility
+														}
+														link={location.link}
+														lat={location.lat}
+														lng={location.lng}
+													/>
+												</li>
+											)
+										)}
+									</ul>
+								</div>
+							)}
 						</Grid>
 					</Grid>
 				</div>

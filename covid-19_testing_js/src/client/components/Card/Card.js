@@ -2,8 +2,13 @@ import React from 'react';
 import './Card.css';
 import { Link } from 'react-router-dom';
 import { FaMapMarker, FaClinicMedical } from 'react-icons/fa';
+import CityView from '../CityView/CityView';
 
 const SiteCard = (props) => {
+	function handleClick() {
+		console.log('more info clicked');
+	}
+
 	return (
 		<div className="card">
 			<h2>{props.locationFacility}</h2>
@@ -21,10 +26,11 @@ const SiteCard = (props) => {
 				</a>
 				{props.locationFacilityType}
 			</h4>
+			<button onClick={handleClick}>More Info</button>
 
-			<Link to={`/address/${props.locationAddress}`}>
+			{/* <Link to={`/address/${props.locationAddress}`}>
 				<button>More Info</button>
-			</Link>
+			</Link> */}
 		</div>
 	);
 };
