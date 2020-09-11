@@ -24,6 +24,7 @@ import SiteCard from '../Card/Card';
 import CityForm2 from '../CityForm/CityForm2';
 import MapStyles from '../MapStyles';
 import FacilityView from '../FacilityView/FacilityView';
+import { FaMapMarkedAlt, FaTimes, FaList } from 'react-icons/fa';
 
 const options = {
 	styles: MapStyles,
@@ -33,15 +34,15 @@ function Map(props) {
 	let lat;
 	let lng;
 	const [selectedMarker, setSelectedMarker] = useState(null);
-	const [currentZoom, setCurrentZoom] = useState(11);
+	const [currentZoom, setCurrentZoom] = useState(10);
 	const [load, setLoad] = useState(1);
 	var center; // a latLng
-	var offsetX = 0.01; // move center one quarter map width left
-	var offsetY = 0.23; // move center one quarter map height down
+	var offsetX = parseFloat(props.offsetX); // move center one quarter map width left
+	var offsetY = parseFloat(props.offsetY); // move center one quarter map height down
 
 	//will set the center coordinates to a city's until a marker is clicked
 	if (load == 1) {
-		console.log('true');
+		//console.log('true');
 		lat = parseFloat(props.lat) - offsetX;
 		lng = parseFloat(props.lng) - offsetY;
 	}
@@ -54,7 +55,7 @@ function Map(props) {
 	}
 
 	function handleCenterChange2() {
-		console.log(this.getCenter().toJSON());
+		//console.log(this.getCenter().toJSON());
 		lat = this.getCenter().toJSON().lat;
 		lng = this.getCenter().toJSON().lng;
 		setLoad(0);
@@ -62,9 +63,9 @@ function Map(props) {
 	//sets the zoom level to the current zoom
 	//this prevents the map from loading to the default city zoom on every marker click
 	function handleZoomChange() {
-		console.log('zoom changed ' + this.getZoom());
+		//console.log('zoom changed ' + this.getZoom());
 		setCurrentZoom(this.getZoom());
-		console.log('currentzoom ' + currentZoom);
+		//console.log('currentzoom ' + currentZoom);
 	}
 
 	return (
@@ -75,13 +76,13 @@ function Map(props) {
 				lat: lat,
 				lng: lng,
 			}}
-			defaultOptions={{ styles: MapStyles }}
+			defaultOptions={{ styles: MapStyles, disableDefaultUI: true }}
 			onClick={() => {
 				setSelectedMarker(null);
 			}}
 			onZoomChanged={handleZoomChange}
 			onCenterChanged={handleCenterChange2}
-			onGoogleApiLoaded={console.log('loaded')}
+			//onGoogleApiLoaded={console.log('loaded')}
 		>
 			{props.locations.map((location) => (
 				<Marker
@@ -145,10 +146,12 @@ class CityView extends Component {
 		super(props);
 
 		this.state = {
+			columnSize: 4,
+			offsetX: 0.01,
+			offsetY: 0.23,
 			locations: [],
 			city: props.match.params.city,
 			state: props.match.params.state,
-			found: false,
 			defaultLat: '',
 			defaultLng: '',
 			markers: [
@@ -157,12 +160,22 @@ class CityView extends Component {
 					lng: '',
 				},
 			],
+			drawerOpen: true,
 			cardHover: '',
 			moreInfoSelected: false,
+			facility: '',
+			address: '',
+			type: '',
+			number: '',
+			eligibility: '',
+			link: '',
 		};
+		//	this.moreInfoSelected = this.moreInfoSelected.bind(this);
 	}
 
 	componentDidMount() {
+		this.handleScreenResize();
+		this.handleMapOffsets();
 		this.geocoder = new google.maps.Geocoder();
 		fetch(
 			`/api/covid_db/citystate/${this.state.city}&${this.state.state}`,
@@ -184,7 +197,8 @@ class CityView extends Component {
 	}
 
 	componentDidUpdate() {
-		console.log('update');
+		//this.handleScreenResize();
+		//	console.log('update');
 	}
 
 	geocodeAddress = (address) => {
@@ -211,22 +225,101 @@ class CityView extends Component {
 	};
 
 	componentWillReceiveProps() {
-		console.log('willreceive');
+		//console.log('willreceive');
 
 		window.location.reload(true);
 	}
 
 	handleMouseOver(locationID) {
 		this.setState({ cardHover: locationID });
-		console.log(this.state);
+		//	console.log(this.state);
 	}
 	handleMouseLeave() {
 		//	this.setState({ cardHover: '' });
 	}
 
+	handleMoreInfo = (
+		facility,
+		address,
+		type,
+		phoneNumber,
+		eligibility,
+		link
+	) => () => {
+		//console.log('facility: ' +facility, address, type, phoneNumber, eligibility, link);
+		console.log('facility: ' + facility);
+		console.log('address: ' + address);
+		console.log('type: ' + type);
+		console.log('number: ' + phoneNumber);
+		console.log('eligibility: ' + eligibility);
+		console.log('link: ' + link);
+
+		this.setState(
+			{
+				moreInfoSelected: true,
+				facility: facility,
+				address: address,
+				type: type,
+				number: phoneNumber,
+				eligibility: eligibility,
+				link: link,
+			},
+			() => {
+				console.log(this.state);
+			}
+		);
+	};
+
+	handleCloseMoreInfo = () => {
+		//	console.log('closed');
+		this.setState(
+			{
+				moreInfoSelected: false,
+				facility: '',
+				address: '',
+				type: '',
+				number: '',
+				eligibility: '',
+				link: '',
+			},
+			() => {
+				console.log(this.state);
+			}
+		);
+	};
+
+	handleDrawerToggle = () => {
+		this.setState(
+			(prevState) => {
+				return { drawerOpen: !prevState.drawerOpen };
+			},
+			() => {
+				console.log(this.state.drawerOpen);
+			}
+		);
+	};
+
+	handleScreenResize = () => {
+		console.log('ok');
+		if (window.innerWidth <= 2560 && window.innerWidth > 1824) {
+			this.setState({ columnSize: 3 });
+		}
+	};
+
+	handleMapOffsets = () => {
+		console.log('ok');
+		if (window.innerWidth <= 768) {
+			this.setState({ offsetX: 0, offsetY: 0 });
+		}
+	};
+
 	render() {
 		//setTimeout(this.MapWithAMarker, 1000);
+		// if (window.innerWidth < 2560 && window.innerWidth > 1824) {
+		// 	this.handleScreenResize();
+		// }
 
+		//this.handleScreenResize();
 		if (this.state.locations.length == 0) {
 			return (
 				<div>
@@ -240,18 +333,34 @@ class CityView extends Component {
 			);
 		}
 
+		let toggleLocationContainer = 'location-column-container';
+		if (this.state.drawerOpen == false) {
+			console.log('drawer closed');
+			toggleLocationContainer = 'location-column-container closed';
+			console.log(toggleLocationContainer);
+		} else if (this.state.drawerOpen == true) {
+			console.log('drawer open');
+			toggleLocationContainer = 'location-column-container';
+			console.log(toggleLocationContainer);
+		}
 		return (
 			<div className="city-view">
-				<CityForm2 />
+				<div className="navbar">
+					<CityForm2 />
 
+					<FaList
+						className="show-list"
+						onClick={this.handleDrawerToggle}
+					/>
+				</div>
 				<div className="locations">
 					<Grid className="location-grid" container>
 						<Grid
 							className="location-map-container"
 							item
 							lg={12}
-							xs={0}
-							sm={0}
+							xs={12}
+							sm={12}
 						>
 							<WrappedMap
 								googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKHj80KlN5Y0jRboQGOcx_PYJj2odSTsk&libraries=geometry,drawing,places"
@@ -270,19 +379,36 @@ class CityView extends Component {
 								onMapClick={this.onMapClick}
 								activeMarker={this.activeMarker}
 								cardHover={this.state.cardHover}
+								offsetX={this.state.offsetX}
+								offsetY={this.state.offsetY}
 							/>
 						</Grid>
 						<Grid
-							className="location-column-container"
+							className={toggleLocationContainer}
 							item
-							lg={4}
+							lg={this.state.columnSize}
 							xs={0}
 						>
+							{/* <div className="collapse-button">
+								<button onClick={this.handleDrawerToggle}>
+									collapse side panel
+								</button>
+							</div> */}
 							{this.state.moreInfoSelected ? (
-								<FacilityView />
+								<FacilityView
+									handleCloseMoreInfo={
+										this.handleCloseMoreInfo
+									}
+									facility={this.state.facility}
+									address={this.state.address}
+									type={this.state.type}
+									number={this.state.number}
+									eligibility={this.state.eligibility}
+									link={this.state.link}
+								/>
 							) : (
 								<div>
-									<h1>
+									<h1 className="header">
 										Locations in {this.state.city},{' '}
 										{this.state.state}{' '}
 									</h1>
@@ -302,6 +428,9 @@ class CityView extends Component {
 													}}
 												>
 													<SiteCard
+														handleMoreInfo={
+															this.handleMoreInfo
+														}
 														locationFacility={
 															location.facility
 														}
@@ -324,6 +453,7 @@ class CityView extends Component {
 												</li>
 											)
 										)}
+										{/* end of map */}
 									</ul>
 								</div>
 							)}

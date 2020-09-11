@@ -5,9 +5,9 @@ import { FaMapMarker, FaClinicMedical } from 'react-icons/fa';
 import CityView from '../CityView/CityView';
 
 const SiteCard = (props) => {
-	function handleClick() {
-		console.log('more info clicked');
-	}
+	// function handleClick() {
+	// 	console.log('more info clicked');
+	// }
 
 	return (
 		<div className="card">
@@ -19,14 +19,25 @@ const SiteCard = (props) => {
 				</a>{' '}
 				{props.locationAddress}
 			</h3>
-			<h4>
+			<h3>
 				{' '}
 				<a className="facility-type">
-					<FaClinicMedical size="1.5rem" />
+					<FaClinicMedical />
 				</a>
 				{props.locationFacilityType}
-			</h4>
-			<button onClick={handleClick}>More Info</button>
+			</h3>
+			<button
+				onClick={props.handleMoreInfo(
+					props.locationFacility,
+					props.locationAddress,
+					props.locationFacilityType,
+					props.phoneNumber,
+					props.eligibility,
+					props.link
+				)}
+			>
+				More Info
+			</button>
 
 			{/* <Link to={`/address/${props.locationAddress}`}>
 				<button>More Info</button>

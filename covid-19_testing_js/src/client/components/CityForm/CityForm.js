@@ -119,6 +119,7 @@ class CityForm extends Component {
 					this.props.history.push(
 						`/citystate/${this.state.city}&${this.state.state}`
 					);
+					return;
 				} else {
 					console.log('not ok');
 				}

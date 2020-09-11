@@ -29,28 +29,13 @@ class FacilityView extends Component {
 
 		return (
 			<div className="facility-view">
-				<CityForm2 />
-				<Grid className="title-grid" container>
-					<Grid className="facility-title" item lg={6}>
-						{/* {this.state.locations.map((location) => {
-							return <h1>{location.facility}</h1>;
-						})} */}
-					</Grid>
-				</Grid>
-
-				<Grid className="map-grid" container>
-					<Grid className="facility-map" item lg={6}>
-						{/* {this.state.locations.map((location) => {
-							return <h1>{location.address}</h1>;
-						})} */}
-					</Grid>
-				</Grid>
-
-				<Grid className="info-grid" container>
-					<Grid className="info" item lg={6}>
-						<h1>INFo</h1>
-					</Grid>
-				</Grid>
+				<button onClick={this.props.handleCloseMoreInfo}>back</button>
+				<h1>{this.props.facility}</h1>
+				<h2>Address: {this.props.address}</h2>
+				<h2>Type: {this.props.type}</h2>
+				<h2>Number: {this.props.number}</h2>
+				<h2>Eligibility: {this.props.eligibility}</h2>
+				<h2>Link: {this.props.link}</h2>
 			</div>
 		);
 	}

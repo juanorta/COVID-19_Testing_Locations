@@ -57,14 +57,14 @@ class CityForm2 extends Component {
 
 					if (
 						results[0].address_components[0].short_name ==
-						'New York'
+							'New York' ||
+						this.state.city == 'New York'
 					) {
 						this.setState(
 							{
 								city:
 									results[0].address_components[0].long_name,
-								state:
-									results[0].address_components[0].long_name,
+								state: 'New York',
 								selected: true,
 							},
 							() => {

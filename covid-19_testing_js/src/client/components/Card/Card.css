@@ -9,6 +9,7 @@
 }
 
 .card button {
+	position: absolute;
 	background-color: #ff3b42;
 	color: white;
 	height: 3rem;
@@ -18,14 +19,14 @@
 	cursor: pointer;
 	border-radius: 30px;
 	font-size: 1.2rem;
-	margin-top: 1rem;
-	margin-left: 33%;
+	margin-top: 3.3rem;
+	margin-left: 28%;
 }
 
 .card h2 {
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 700;
-	font-size: 1.5rem;
+	font-size: 1rem;
 	padding-left: 3rem;
 }
 
@@ -33,7 +34,7 @@
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 500;
 	padding-left: 3rem;
-	font-size: 1.5rem;
+	font-size: 1rem;
 }
 
 .card h4 {
@@ -62,4 +63,60 @@
 .facility-type {
 	color: #fa121a;
 	padding-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+	.card h2 {
+		font-size: 1rem;
+		padding-left: 2rem;
+	}
+	.card h3 {
+		font-size: 0.9rem;
+		padding-left: 2rem;
+	}
+	.card {
+		height: 15rem;
+	}
+	.card button {
+		position: absolute;
+		margin-top: -1.25rem;
+		margin-left: 28%;
+		font-size: 1rem;
+	}
+}
+
+@media (min-width: 1824px) {
+	.card {
+		height: 15rem;
+	}
+	.card button {
+		position: absolute;
+		margin-top: -1.35rem;
+	}
+}
+
+@media (min-width: 1224px) {
+	.card {
+		height: 15rem;
+	}
+	.card button {
+		position: absolute;
+		margin-top: -1.35rem;
+	}
+}
+
+@media (max-width: 1440px) {
+	.card {
+		height: 15rem;
+	}
+	.card h2 {
+		font-size: 0.9rem;
+	}
+	.card h3 {
+		font-size: 0.9rem;
+	}
+	.card button {
+		font-size: 0.95rem;
+		height: 2.75rem;
+	}
 }

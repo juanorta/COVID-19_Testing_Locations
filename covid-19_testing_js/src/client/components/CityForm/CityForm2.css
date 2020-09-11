@@ -32,11 +32,11 @@
 	background: none;
 	outline: none;
 	float: left;
-	width: 0px;
+	width: 240px;
 	color: white;
 	font-size: 1.25rem;
 	transition: 0.25s;
-	line-height: 40px;
+	line-height: 20px;
 	height: 1.5rem;
 }
 
@@ -45,6 +45,7 @@
 	float: right;
 	width: 40px;
 	height: 20px;
+
 	border-radius: 50%;
 	background: #ff3b42;
 	display: flex;
@@ -57,11 +58,25 @@
 }
 
 .search-box2:hover > .textbox2 {
-	width: 240px;
-	padding: 0 6px;
+	/* width: 240px;
+	padding: 0 6px; */
 }
 
 .textbox2:focus {
 	width: 240px;
 	padding: 0 6px;
+}
+
+@media (max-width: 768px) {
+	.search-btn2 {
+		margin-top: -2rem;
+	}
+	.search-box2 {
+		margin-left: 3rem;
+	}
+
+	.textbox2:focus {
+		width: 240px;
+		padding: 0 0px;
+	}
 }
