@@ -17,7 +17,8 @@
 }
 
 .search-box {
-	background-color: #ff3b42;
+	/* background-color: #ff3b42; */
+	background-image: linear-gradient(to right, #ff3b42, #f5b380);
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -55,7 +56,7 @@
 	width: 40px;
 	height: 40px;
 	border-radius: 50%;
-	background: #ff3b42;
+	background: transparent;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -86,4 +87,80 @@
 
 .pac-container {
 	width: 1rem;
+}
+
+@media (max-width: 768px) {
+	.search-btn {
+		margin-top: -2.2rem;
+		height: 25px;
+		width: 25px;
+	}
+	.search-box {
+		margin-top: -5rem;
+		margin-left: 0.25rem;
+		height: 0.5rem;
+	}
+
+	.textbox {
+		width: 200px;
+		height: 2rem;
+		margin-top: -0.8rem;
+		font-size: 1.25rem;
+		background-color: transparent;
+	}
+
+	.textbox:focus {
+		width: 240px;
+		/*line-height: 1.5rem; */
+		/* padding: 0 0px; */
+		height: 2.5rem;
+		line-height: 2rem;
+	}
+}
+@media (min-width: 768px) {
+	.search-btn {
+		margin-top: -0.2rem;
+	}
+}
+
+@media (max-width: 1440px) and (min-width: 1224px) {
+	.search-box {
+		margin-top: -3rem;
+		height: 0.5rem;
+	}
+
+	.search-btn {
+		height: 25px;
+		width: 25px;
+		margin-top: -0.4rem;
+	}
+
+	.textbox {
+		margin-top: -0.9rem;
+		font-size: 1.1rem;
+	}
+}
+
+@media (min-width: 1440px) and (max-width: 1920px) {
+	.search-box {
+		margin-top: -3rem;
+		height: 0.75rem;
+	}
+
+	.search-btn {
+		height: 25px;
+		width: 25px;
+		/* margin-top: -2rem; */
+	}
+
+	.textbox {
+		margin-top: -0.7rem;
+		font-size: 1.1rem;
+	}
+}
+
+@media (max-width: 2559px) and (min-width: 1824px) {
+	.search-btn {
+		margin-top: -0.1rem;
+	}
 }

@@ -10,7 +10,8 @@
 
 .card button {
 	position: absolute;
-	background-color: #ff3b42;
+	/* background-color: #ff3b42; */
+	background-image: linear-gradient(to right, #ff3b42, #fd8743);
 	color: white;
 	height: 3rem;
 	width: 30%;
@@ -118,5 +119,27 @@
 	.card button {
 		font-size: 0.95rem;
 		height: 2.75rem;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 1224px) {
+	.card button {
+		position: absolute;
+		margin-top: -1rem;
+	}
+
+	.card h2 {
+		font-size: 1.05rem;
+	}
+
+	.card h3 {
+		font-size: 1.05rem;
+	}
+}
+
+@media (min-width: 1440px) and (max-width: 1920px) {
+	.card button {
+		height: 2.5rem;
+		font-size: 1rem;
 	}
 }

@@ -24,7 +24,13 @@ import SiteCard from '../Card/Card';
 import CityForm2 from '../CityForm/CityForm2';
 import MapStyles from '../MapStyles';
 import FacilityView from '../FacilityView/FacilityView';
-import { FaMapMarkedAlt, FaTimes, FaList } from 'react-icons/fa';
+import {
+	FaMapMarkedAlt,
+	FaTimes,
+	FaList,
+	FaMapMarkerAlt,
+} from 'react-icons/fa';
+import ProgressBar from '../ProgressBar/ProgressBar';
 
 const options = {
 	styles: MapStyles,
@@ -33,8 +39,9 @@ const options = {
 function Map(props) {
 	let lat;
 	let lng;
+	console.log(props.defaultZoom);
 	const [selectedMarker, setSelectedMarker] = useState(null);
-	const [currentZoom, setCurrentZoom] = useState(10);
+	const [currentZoom, setCurrentZoom] = useState(props.defaultZoom);
 	const [load, setLoad] = useState(1);
 	var center; // a latLng
 	var offsetX = parseFloat(props.offsetX); // move center one quarter map width left
@@ -76,7 +83,11 @@ function Map(props) {
 				lat: lat,
 				lng: lng,
 			}}
-			defaultOptions={{ styles: MapStyles, disableDefaultUI: true }}
+			defaultOptions={{
+				styles: MapStyles,
+				disableDefaultUI: true,
+				gestureHandling: 'greedy',
+			}}
 			onClick={() => {
 				setSelectedMarker(null);
 			}}
@@ -149,6 +160,8 @@ class CityView extends Component {
 			columnSize: 4,
 			offsetX: 0.01,
 			offsetY: 0.23,
+			defaultZoom: 11,
+			isLoaded: true,
 			locations: [],
 			city: props.match.params.city,
 			state: props.match.params.state,
@@ -171,11 +184,13 @@ class CityView extends Component {
 			link: '',
 		};
 		//	this.moreInfoSelected = this.moreInfoSelected.bind(this);
+		this.myRef = React.createRef();
 	}
 
 	componentDidMount() {
 		this.handleScreenResize();
 		this.handleMapOffsets();
+		this.handleLoad();
 		this.geocoder = new google.maps.Geocoder();
 		fetch(
 			`/api/covid_db/citystate/${this.state.city}&${this.state.state}`,
@@ -198,7 +213,8 @@ class CityView extends Component {
 
 	componentDidUpdate() {
 		//this.handleScreenResize();
-		//	console.log('update');
+		// console.log('update');
+		// this.handleLoad();
 	}
 
 	geocodeAddress = (address) => {
@@ -291,7 +307,7 @@ class CityView extends Component {
 	handleDrawerToggle = () => {
 		this.setState(
 			(prevState) => {
-				return { drawerOpen: !prevState.drawerOpen };
+				return { drawerOpen: !prevState.drawerOpen, isLoaded: false };
 			},
 			() => {
 				console.log(this.state.drawerOpen);
@@ -303,6 +319,10 @@ class CityView extends Component {
 		console.log('ok');
 		if (window.innerWidth <= 2560 && window.innerWidth > 1824) {
 			this.setState({ columnSize: 3 });
+		} else if (window.innerWidth <= 768) {
+			this.setState({ defaultZoom: 10 });
+		} else if (window.innerWidth >= 1224 && window.innerWidth <= 1440) {
+			this.setState({ defaultZoom: 10 });
 		}
 	};
 
@@ -313,13 +333,23 @@ class CityView extends Component {
 		}
 	};
 
+	handleLoad = () => {
+		this.setState({ isLoaded: true });
+	};
+	/* <script>
+// When the user scrolls the page, execute myFunction  */
+
 	render() {
+		// window.onscroll = function () {
+		// 	this.myFunction();
+		// };
 		//setTimeout(this.MapWithAMarker, 1000);
 		// if (window.innerWidth < 2560 && window.innerWidth > 1824) {
 		// 	this.handleScreenResize();
 		// }
 
 		//this.handleScreenResize();
+
 		if (this.state.locations.length == 0) {
 			return (
 				<div>
@@ -334,25 +364,51 @@ class CityView extends Component {
 		}
 
 		let toggleLocationContainer = 'location-column-container';
+		let icon = 'show-list';
+		//let count;
 		if (this.state.drawerOpen == false) {
-			console.log('drawer closed');
+			//count = 0;
+
+			// console.log('count false -> ' + count);
 			toggleLocationContainer = 'location-column-container closed';
+			icon = 'show-list closed';
+			//count = 1;
 			console.log(toggleLocationContainer);
 		} else if (this.state.drawerOpen == true) {
-			console.log('drawer open');
+			// console.log('count true -> ' + count);
+
 			toggleLocationContainer = 'location-column-container';
+
+			if (this.state.isLoaded == true) {
+				icon = 'show-list';
+			} else {
+				icon = 'show-list closed';
+			}
 			console.log(toggleLocationContainer);
 		}
 		return (
 			<div className="city-view">
 				<div className="navbar">
 					<CityForm2 />
-
-					<FaList
-						className="show-list"
-						onClick={this.handleDrawerToggle}
-					/>
+					{/* <ProgressBar /> */}
+					{/* <div class="progress">
+						<div class="progress-container">
+							<div class="progress-bar" id="myBar"></div>
+						</div>
+					</div> */}
+					{this.state.drawerOpen ? (
+						<FaMapMarkedAlt
+							className={icon}
+							onClick={this.handleDrawerToggle}
+						/>
+					) : (
+						<FaList
+							className={icon}
+							onClick={this.handleDrawerToggle}
+						/>
+					)}
 				</div>
+
 				<div className="locations">
 					<Grid className="location-grid" container>
 						<Grid
@@ -381,13 +437,15 @@ class CityView extends Component {
 								cardHover={this.state.cardHover}
 								offsetX={this.state.offsetX}
 								offsetY={this.state.offsetY}
+								defaultZoom={this.state.defaultZoom}
 							/>
 						</Grid>
 						<Grid
 							className={toggleLocationContainer}
 							item
 							lg={this.state.columnSize}
-							xs={0}
+							md={12}
+							xs={12}
 						>
 							{/* <div className="collapse-button">
 								<button onClick={this.handleDrawerToggle}>

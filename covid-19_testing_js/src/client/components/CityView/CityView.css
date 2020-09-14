@@ -88,6 +88,11 @@
 	position: absolute;
 	margin-top: -65px;
 	top: 128px;
+	animation: bounceIn 4s;
+}
+
+.show-list.closed {
+	animation: bounceIn 0s;
 }
 
 .show-list::after {
@@ -118,10 +123,19 @@
 	.show-list {
 		margin-top: -9rem;
 		position: absolute;
-		width: 40px;
-		height: 40px;
+		width: 30px;
+		height: 30px;
 		position: absolute;
-		margin-top: -1rem;
+		margin-top: -0.8rem;
+	}
+
+	.header {
+		/* background-color: blue; */
+		text-align: center;
+	}
+
+	.locations h1 {
+		font-size: 2.4rem;
 	}
 }
 
@@ -134,7 +148,7 @@
 	}
 }
 
-@media (max-width: 1447px) and (min-width: 1224px) {
+@media (max-width: 1440px) and (min-width: 1224px) {
 	.locations h1 {
 		font-size: 2.5rem;
 	}
@@ -142,15 +156,54 @@
 		height: 92vh;
 	}
 	.city-view {
-		margin-top: -3.75rem;
+		margin-top: -4.3rem;
 	}
 	.locations {
-		margin-top: -123px;
+		margin-top: -143px;
 	}
 
 	.show-list {
 		margin-top: -45px;
 		padding-left: 0.3rem;
+	}
+
+	.show-list {
+		height: 35px;
+		width: 35px;
+	}
+}
+
+@media (min-width: 1441px) and (max-width: 1920px) {
+	.city-view {
+		margin-top: -3.5rem;
+	}
+	.locations {
+		margin-top: -140px;
+	}
+	.show-list {
+		margin-top: -3.5rem;
+		height: 35px;
+		width: 35px;
+	}
+	.locations h1 {
+		font-size: 2.25rem;
+	}
+}
+
+@keyframes bounceIn {
+	0%,
+	20%,
+	50%,
+	80%,
+	100% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+	40% {
+		transform: translateY(-20px);
+	}
+	60% {
+		transform: translateY(-15px);
 	}
 }
 
