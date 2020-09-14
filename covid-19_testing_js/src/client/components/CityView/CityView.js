@@ -39,7 +39,7 @@ const options = {
 function Map(props) {
 	let lat;
 	let lng;
-	console.log(props.defaultZoom);
+	//console.log(props.defaultZoom);
 	const [selectedMarker, setSelectedMarker] = useState(null);
 	const [currentZoom, setCurrentZoom] = useState(props.defaultZoom);
 	const [load, setLoad] = useState(1);
@@ -191,6 +191,9 @@ class CityView extends Component {
 		this.handleScreenResize();
 		this.handleMapOffsets();
 		this.handleLoad();
+		//console.log(this.myRef.current.current.clientHeight);
+		console.log(this.myRef.current);
+
 		this.geocoder = new google.maps.Geocoder();
 		fetch(
 			`/api/covid_db/citystate/${this.state.city}&${this.state.state}`,
@@ -263,12 +266,12 @@ class CityView extends Component {
 		link
 	) => () => {
 		//console.log('facility: ' +facility, address, type, phoneNumber, eligibility, link);
-		console.log('facility: ' + facility);
-		console.log('address: ' + address);
-		console.log('type: ' + type);
-		console.log('number: ' + phoneNumber);
-		console.log('eligibility: ' + eligibility);
-		console.log('link: ' + link);
+		// console.log('facility: ' + facility);
+		// console.log('address: ' + address);
+		// console.log('type: ' + type);
+		// console.log('number: ' + phoneNumber);
+		// console.log('eligibility: ' + eligibility);
+		// console.log('link: ' + link);
 
 		this.setState(
 			{
@@ -281,7 +284,7 @@ class CityView extends Component {
 				link: link,
 			},
 			() => {
-				console.log(this.state);
+				//	console.log(this.state);
 			}
 		);
 	};
@@ -310,13 +313,13 @@ class CityView extends Component {
 				return { drawerOpen: !prevState.drawerOpen, isLoaded: false };
 			},
 			() => {
-				console.log(this.state.drawerOpen);
+				//console.log(this.state.drawerOpen);
 			}
 		);
 	};
 
 	handleScreenResize = () => {
-		console.log('ok');
+		//console.log('ok');
 		if (window.innerWidth <= 2560 && window.innerWidth > 1824) {
 			this.setState({ columnSize: 3 });
 		} else if (window.innerWidth <= 768) {
@@ -327,7 +330,7 @@ class CityView extends Component {
 	};
 
 	handleMapOffsets = () => {
-		console.log('ok');
+		//console.log('ok');
 		if (window.innerWidth <= 768) {
 			this.setState({ offsetX: 0, offsetY: 0 });
 		}
@@ -336,20 +339,21 @@ class CityView extends Component {
 	handleLoad = () => {
 		this.setState({ isLoaded: true });
 	};
-	/* <script>
-// When the user scrolls the page, execute myFunction  */
+
+	handleScroll = () => {
+		let scrollTop = this.myRef.current.scrollTop;
+		let scrollHeight = this.myRef.current.scrollHeight;
+		let clientHeight = this.myRef.current.clientHeight;
+
+		let height = scrollHeight - clientHeight;
+
+		let scrolled = `${(scrollTop / height) * 100}%`;
+
+		console.log('scroll');
+		document.getElementById('myBar').style.width = `${scrolled}`;
+	};
 
 	render() {
-		// window.onscroll = function () {
-		// 	this.myFunction();
-		// };
-		//setTimeout(this.MapWithAMarker, 1000);
-		// if (window.innerWidth < 2560 && window.innerWidth > 1824) {
-		// 	this.handleScreenResize();
-		// }
-
-		//this.handleScreenResize();
-
 		if (this.state.locations.length == 0) {
 			return (
 				<div>
@@ -373,7 +377,7 @@ class CityView extends Component {
 			toggleLocationContainer = 'location-column-container closed';
 			icon = 'show-list closed';
 			//count = 1;
-			console.log(toggleLocationContainer);
+			//	console.log(toggleLocationContainer);
 		} else if (this.state.drawerOpen == true) {
 			// console.log('count true -> ' + count);
 
@@ -384,18 +388,20 @@ class CityView extends Component {
 			} else {
 				icon = 'show-list closed';
 			}
-			console.log(toggleLocationContainer);
+			//console.log(toggleLocationContainer);
 		}
 		return (
 			<div className="city-view">
 				<div className="navbar">
 					<CityForm2 />
-					{/* <ProgressBar /> */}
-					{/* <div class="progress">
-						<div class="progress-container">
-							<div class="progress-bar" id="myBar"></div>
-						</div>
-					</div> */}
+					<div className="scroll-container">
+						<div
+							className="indicator"
+							id="myBar"
+							style={{ width: '0%' }}
+						></div>
+					</div>
+
 					{this.state.drawerOpen ? (
 						<FaMapMarkedAlt
 							className={icon}
@@ -446,12 +452,9 @@ class CityView extends Component {
 							lg={this.state.columnSize}
 							md={12}
 							xs={12}
+							ref={this.myRef}
+							onScroll={this.handleScroll}
 						>
-							{/* <div className="collapse-button">
-								<button onClick={this.handleDrawerToggle}>
-									collapse side panel
-								</button>
-							</div> */}
 							{this.state.moreInfoSelected ? (
 								<FacilityView
 									handleCloseMoreInfo={

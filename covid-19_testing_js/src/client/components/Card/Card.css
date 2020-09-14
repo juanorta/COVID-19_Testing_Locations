@@ -11,7 +11,7 @@
 .card button {
 	position: absolute;
 	/* background-color: #ff3b42; */
-	background-image: linear-gradient(to right, #ff3b42, #fd8743);
+	background-image: linear-gradient(to right, #ff3b42, #f98487);
 	color: white;
 	height: 3rem;
 	width: 30%;
