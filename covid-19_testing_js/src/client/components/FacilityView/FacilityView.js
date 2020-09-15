@@ -2,43 +2,81 @@ import React, { Component } from 'react';
 import CityForm2 from '../CityForm/CityForm2';
 import { Grid } from '@material-ui/core';
 import './FacilityView.css';
+import {
+	FaArrowLeft,
+	FaMapMarker,
+	FaClinicMedical,
+	FaLocationArrow,
+	FaPhone,
+	FaCheck,
+	FaLink,
+	FaGlobeAmericas,
+} from 'react-icons/fa';
 
-class FacilityView extends Component {
-	constructor(props) {
-		super(props);
-		//this.state = { locations: [], address: props.match.params.address };
-	}
+const FacilityView = (props) => {
+	//console.log(props.lat);
+	return (
+		<div className="facility-view">
+			<FaArrowLeft
+				className="back-arrow"
+				onClick={props.handleCloseMoreInfo}
+			></FaArrowLeft>
+			<h1>{props.facility}</h1>
+			<h2>
+				<a className="map-marker">
+					<FaMapMarker />{' '}
+				</a>
+				{props.address}
+			</h2>
+			<h2>
+				<a className="facility-type">
+					<FaClinicMedical />{' '}
+				</a>
+				{props.type}
+			</h2>
+			<h2>
+				<a className="phone-icon">
+					<FaPhone />{' '}
+				</a>
+				{props.number}
+			</h2>
+			<h2>
+				<a className="phone-icon">
+					<FaCheck />{' '}
+				</a>
+				Eligibility Required: {props.eligibility}
+			</h2>
 
-	componentDidMount() {
-		// console.log('didmount');
-		// fetch(`/api/covid_db/address/${this.state.address}`, {
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 		Accept: 'application/json',
-		// 	},
-		// })
-		// 	.then((res) => res.json())
-		// 	.then((locations) =>
-		// 		this.setState({ locations }, () =>
-		// 			console.log('Locations fetched...', locations)
-		// 		)
-		// 	);
-	}
-	render() {
-		//console.log(this.state.locations[0]);
+			<h2>
+				<a
+					className="phone-icon"
+					href={`${props.link}`}
+					target="_blank"
+				>
+					<FaLink />{' '}
+				</a>
+				View Website
+			</h2>
 
-		return (
-			<div className="facility-view">
-				<button onClick={this.props.handleCloseMoreInfo}>back</button>
-				<h1>{this.props.facility}</h1>
-				<h2>Address: {this.props.address}</h2>
-				<h2>Type: {this.props.type}</h2>
-				<h2>Number: {this.props.number}</h2>
-				<h2>Eligibility: {this.props.eligibility}</h2>
-				<h2>Link: {this.props.link}</h2>
+			<h2>
+				<a
+					onClick={props.handleViewOnMap(props.lat, props.lng)}
+					className="globe-icon"
+				>
+					<FaGlobeAmericas />{' '}
+				</a>
+				View on map
+			</h2>
+			<div className="more-info-row">
+				{/* <a className="navigation-icon">
+						<FaLocationArrow />{' '}
+					</a>
+					<a className="navigation-icon">
+						<FaLocationArrow />{' '}
+					</a> */}
 			</div>
-		);
-	}
-}
+		</div>
+	);
+};
 
 export default FacilityView;

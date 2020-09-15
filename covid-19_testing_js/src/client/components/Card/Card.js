@@ -33,7 +33,9 @@ const SiteCard = (props) => {
 					props.locationFacilityType,
 					props.phoneNumber,
 					props.eligibility,
-					props.link
+					props.link,
+					props.lat,
+					props.lng
 				)}
 			>
 				More Info

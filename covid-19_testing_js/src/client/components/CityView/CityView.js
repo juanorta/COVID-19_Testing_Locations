@@ -40,6 +40,7 @@ function Map(props) {
 	let lat;
 	let lng;
 	//console.log(props.defaultZoom);
+
 	const [selectedMarker, setSelectedMarker] = useState(null);
 	const [currentZoom, setCurrentZoom] = useState(props.defaultZoom);
 	const [load, setLoad] = useState(1);
@@ -74,7 +75,17 @@ function Map(props) {
 		setCurrentZoom(this.getZoom());
 		//console.log('currentzoom ' + currentZoom);
 	}
+	console.log(props.newLat + ' ' + props.newLng);
+	// if (props.defaultZoom != currentZoom) {
+	// 	console.log('different default');
+	// 	//handleCenterChange(1, 2);
+	// 	lat = props.newLat;
+	// 	lng = props.newLng;
+	// 	//setSelectedMarker(props.cardHover);
+	// 	setCurrentZoom(props.defaultZoom);
+	// }
 
+	console.log('current center: ' + lat + ' ' + lng);
 	return (
 		<GoogleMap
 			key={new Date().getTime()}
@@ -182,6 +193,8 @@ class CityView extends Component {
 			number: '',
 			eligibility: '',
 			link: '',
+			lat: '',
+			lng: '',
 		};
 		//	this.moreInfoSelected = this.moreInfoSelected.bind(this);
 		this.myRef = React.createRef();
@@ -263,7 +276,9 @@ class CityView extends Component {
 		type,
 		phoneNumber,
 		eligibility,
-		link
+		link,
+		lat,
+		lng
 	) => () => {
 		//console.log('facility: ' +facility, address, type, phoneNumber, eligibility, link);
 		// console.log('facility: ' + facility);
@@ -282,9 +297,11 @@ class CityView extends Component {
 				number: phoneNumber,
 				eligibility: eligibility,
 				link: link,
+				lat: lat,
+				lng: lng,
 			},
 			() => {
-				//	console.log(this.state);
+				console.log(this.state);
 			}
 		);
 	};
@@ -306,7 +323,12 @@ class CityView extends Component {
 			}
 		);
 	};
-
+	handleViewOnMap = (lat, lng) => () => {
+		//console.log('handle view on map-> ' + lat + lng);
+		this.setState({ defaultZoom: 15 }, () => {
+			console.log(this.state);
+		});
+	};
 	handleDrawerToggle = () => {
 		this.setState(
 			(prevState) => {
@@ -444,6 +466,8 @@ class CityView extends Component {
 								offsetX={this.state.offsetX}
 								offsetY={this.state.offsetY}
 								defaultZoom={this.state.defaultZoom}
+								newLat={this.state.lat}
+								newLng={this.state.lng}
 							/>
 						</Grid>
 						<Grid
@@ -460,12 +484,15 @@ class CityView extends Component {
 									handleCloseMoreInfo={
 										this.handleCloseMoreInfo
 									}
+									handleViewOnMap={this.handleViewOnMap}
 									facility={this.state.facility}
 									address={this.state.address}
 									type={this.state.type}
 									number={this.state.number}
 									eligibility={this.state.eligibility}
 									link={this.state.link}
+									lat={this.state.lat}
+									lng={this.state.lng}
 								/>
 							) : (
 								<div>
@@ -502,7 +529,7 @@ class CityView extends Component {
 															location.facility_type
 														}
 														phoneNumber={
-															location.phoneNumber
+															location.phone_number
 														}
 														eligibility={
 															location.eligibility
