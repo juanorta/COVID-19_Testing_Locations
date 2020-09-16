@@ -28,6 +28,7 @@ const SiteCard = (props) => {
 			</h3>
 			<button
 				onClick={props.handleMoreInfo(
+					props.city,
 					props.locationFacility,
 					props.locationAddress,
 					props.locationFacilityType,
@@ -48,10 +49,4 @@ const SiteCard = (props) => {
 	);
 };
 
-//make media query to decrease font size when on mobile
-/*
-<h4>Phone Number: {props.phoneNumber}</h4>
-			<h4>Eligibility: {props.eligibility}</h4>
-			<h4>Website: {props.website}</h4>
-			*/
 export default SiteCard;

@@ -36,6 +36,7 @@ const options = {
 	styles: MapStyles,
 };
 
+//handles map logic
 function Map(props) {
 	let lat;
 	let lng;
@@ -187,12 +188,14 @@ class CityView extends Component {
 			drawerOpen: true,
 			cardHover: '',
 			moreInfoSelected: false,
+			cityFView: '',
 			facility: '',
 			address: '',
 			type: '',
 			number: '',
 			eligibility: '',
 			link: '',
+
 			lat: '',
 			lng: '',
 		};
@@ -233,6 +236,7 @@ class CityView extends Component {
 		// this.handleLoad();
 	}
 
+	//gets coordinates for the city that was received
 	geocodeAddress = (address) => {
 		console.log('PARSE CALLED = ' + address);
 		setTimeout(function () {}, 3000);
@@ -262,6 +266,8 @@ class CityView extends Component {
 		window.location.reload(true);
 	}
 
+	//sends location id of card that was hovered to map function
+	//map function then makes marker bounce
 	handleMouseOver(locationID) {
 		this.setState({ cardHover: locationID });
 		//	console.log(this.state);
@@ -270,7 +276,10 @@ class CityView extends Component {
 		//	this.setState({ cardHover: '' });
 	}
 
+	//receives data from 'more info' button
+	//sets state of individual location properties to be used in FacilityView
 	handleMoreInfo = (
+		city,
 		facility,
 		address,
 		type,
@@ -280,17 +289,10 @@ class CityView extends Component {
 		lat,
 		lng
 	) => () => {
-		//console.log('facility: ' +facility, address, type, phoneNumber, eligibility, link);
-		// console.log('facility: ' + facility);
-		// console.log('address: ' + address);
-		// console.log('type: ' + type);
-		// console.log('number: ' + phoneNumber);
-		// console.log('eligibility: ' + eligibility);
-		// console.log('link: ' + link);
-
 		this.setState(
 			{
 				moreInfoSelected: true,
+				cityFView: city,
 				facility: facility,
 				address: address,
 				type: type,
@@ -306,6 +308,7 @@ class CityView extends Component {
 		);
 	};
 
+	//sets the state of the location properties to empty
 	handleCloseMoreInfo = () => {
 		//	console.log('closed');
 		this.setState(
@@ -323,12 +326,16 @@ class CityView extends Component {
 			}
 		);
 	};
+
+	//when called, changes the map zoom
 	handleViewOnMap = (lat, lng) => () => {
 		//console.log('handle view on map-> ' + lat + lng);
 		this.setState({ defaultZoom: 15 }, () => {
 			console.log(this.state);
 		});
 	};
+
+	//switches the state of drawerOpen on icon click
 	handleDrawerToggle = () => {
 		this.setState(
 			(prevState) => {
@@ -340,6 +347,7 @@ class CityView extends Component {
 		);
 	};
 
+	//adjusts the location list container to an appropriate size depending on screen size
 	handleScreenResize = () => {
 		//console.log('ok');
 		if (window.innerWidth <= 2560 && window.innerWidth > 1824) {
@@ -351,6 +359,7 @@ class CityView extends Component {
 		}
 	};
 
+	//if being viewed on a mobile device, no offsets will be useds
 	handleMapOffsets = () => {
 		//console.log('ok');
 		if (window.innerWidth <= 768) {
@@ -358,10 +367,12 @@ class CityView extends Component {
 		}
 	};
 
+	//used to indicate when map-icon should bounce
 	handleLoad = () => {
 		this.setState({ isLoaded: true });
 	};
 
+	//changes width of progress bar element on every scroll
 	handleScroll = () => {
 		let scrollTop = this.myRef.current.scrollTop;
 		let scrollHeight = this.myRef.current.scrollHeight;
@@ -493,6 +504,7 @@ class CityView extends Component {
 									link={this.state.link}
 									lat={this.state.lat}
 									lng={this.state.lng}
+									city={this.state.cityFView}
 								/>
 							) : (
 								<div>
@@ -537,6 +549,7 @@ class CityView extends Component {
 														link={location.link}
 														lat={location.lat}
 														lng={location.lng}
+														city={location.city}
 													/>
 												</li>
 											)

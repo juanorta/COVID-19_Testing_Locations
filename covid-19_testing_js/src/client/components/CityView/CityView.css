@@ -30,6 +30,7 @@
 	transform: translateX(0%);
 	transition: 0.25s;
 	height: 92vh;
+	width: 110vw;
 	overflow-y: scroll;
 	padding-right: 1rem;
 	padding-left: 2rem;

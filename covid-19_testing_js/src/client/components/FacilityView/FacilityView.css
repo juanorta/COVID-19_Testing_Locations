@@ -5,6 +5,7 @@
 .facility-view h1 {
 	justify-content: center;
 	font-size: 2rem;
+	padding-bottom: 1.5rem;
 }
 
 .back-arrow {
@@ -23,14 +24,23 @@
 
 .back-arrow:hover {
 	cursor: pointer;
-	transform: scale(1.2, 1.2);
+	transform: scale(1.35, 1.35);
+}
+
+.map-marker {
+	padding-right: 0.5rem;
 }
 
 .phone-icon {
 	color: #ff3b42;
+	padding-right: 0.5rem;
 }
 
 .globe-icon {
 	color: #ff3b42;
 	cursor: pointer;
+}
+
+.facility-view p {
+	font-size: 1.33rem;
 }

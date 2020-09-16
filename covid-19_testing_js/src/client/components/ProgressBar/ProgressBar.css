@@ -9,5 +9,5 @@
 
 .scroll-container .indicator {
 	height: 100%;
-	background: #ff3b42;
+	background-image: linear-gradient(to right, #ff3b42, #6d02b0);
 }

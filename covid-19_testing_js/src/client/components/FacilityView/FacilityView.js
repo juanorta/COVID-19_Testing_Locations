@@ -15,6 +15,29 @@ import {
 
 const FacilityView = (props) => {
 	//console.log(props.lat);
+	console.log('address-> ' + props.address);
+	console.log('type-> ' + props.type);
+	console.log('number-> ' + props.number);
+	console.log('eligibility-> ' + props.eligibility);
+	console.log('link-> ' + props.link);
+
+	let eligibilityIsFilled = true;
+	let phoneIsFilled = true;
+	let linkIsFilled = true;
+
+	//checking if strings are empty.
+	//will not display them if they're empty
+	if (props.eligibility == '') {
+		console.log('empty eligibility');
+		eligibilityIsFilled = false;
+	}
+	if (props.number == '') {
+		console.log('empty phone');
+		phoneIsFilled = false;
+	}
+	if (props.link == '') {
+		linkIsFilled = false;
+	}
 	return (
 		<div className="facility-view">
 			<FaArrowLeft
@@ -22,59 +45,63 @@ const FacilityView = (props) => {
 				onClick={props.handleCloseMoreInfo}
 			></FaArrowLeft>
 			<h1>{props.facility}</h1>
-			<h2>
+			<p>
 				<a className="map-marker">
 					<FaMapMarker />{' '}
 				</a>
-				{props.address}
-			</h2>
-			<h2>
+				<a
+					className="map-marker"
+					href={
+						'https://www.google.com/maps/place/' +
+						props.address +
+						' ' +
+						props.city
+					}
+					target="_blank"
+				>
+					{props.address}
+				</a>
+			</p>
+			<p>
 				<a className="facility-type">
 					<FaClinicMedical />{' '}
 				</a>
 				{props.type}
-			</h2>
-			<h2>
-				<a className="phone-icon">
-					<FaPhone />{' '}
-				</a>
-				{props.number}
-			</h2>
-			<h2>
-				<a className="phone-icon">
-					<FaCheck />{' '}
-				</a>
-				Eligibility Required: {props.eligibility}
-			</h2>
+			</p>
 
-			<h2>
-				<a
-					className="phone-icon"
-					href={`${props.link}`}
-					target="_blank"
-				>
-					<FaLink />{' '}
-				</a>
-				View Website
-			</h2>
-
-			<h2>
-				<a
-					onClick={props.handleViewOnMap(props.lat, props.lng)}
-					className="globe-icon"
-				>
-					<FaGlobeAmericas />{' '}
-				</a>
-				View on map
-			</h2>
-			<div className="more-info-row">
-				{/* <a className="navigation-icon">
-						<FaLocationArrow />{' '}
+			{phoneIsFilled ? (
+				<p>
+					<a className="phone-icon">
+						<FaPhone />
+						{'  '}
 					</a>
-					<a className="navigation-icon">
-						<FaLocationArrow />{' '}
-					</a> */}
-			</div>
+					{props.number}
+				</p>
+			) : null}
+
+			{eligibilityIsFilled ? (
+				<p>
+					<a className="phone-icon">
+						<FaCheck />{' '}
+					</a>
+					Eligibility Check Required: {props.eligibility}
+				</p>
+			) : null}
+
+			{linkIsFilled ? (
+				<p>
+					<a className="phone-icon">
+						<FaLink /> {'   '}
+					</a>
+					<a
+						className="phone-icon"
+						href={`${props.link}`}
+						target="_blank"
+					>
+						{props.link}
+					</a>
+				</p>
+			) : null}
 		</div>
 	);
 };
