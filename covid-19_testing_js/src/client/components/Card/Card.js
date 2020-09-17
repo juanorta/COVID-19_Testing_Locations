@@ -1,7 +1,7 @@
 import React from 'react';
 import './Card.css';
 import { Link } from 'react-router-dom';
-import { FaMapMarker, FaClinicMedical } from 'react-icons/fa';
+import { FaMapMarker, FaClinicMedical, FaMapPin } from 'react-icons/fa';
 import CityView from '../CityView/CityView';
 
 const SiteCard = (props) => {
@@ -15,15 +15,15 @@ const SiteCard = (props) => {
 			<h3>
 				{' '}
 				<a className="map-marker">
-					<FaMapMarker />{' '}
+					<FaMapPin />{' '}
 				</a>{' '}
 				{props.locationAddress}
 			</h3>
 			<h3>
 				{' '}
 				<a className="facility-type">
-					<FaClinicMedical />
-				</a>
+					<FaClinicMedical />{' '}
+				</a>{' '}
 				{props.locationFacilityType}
 			</h3>
 			<button

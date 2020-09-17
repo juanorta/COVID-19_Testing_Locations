@@ -31,6 +31,8 @@ import {
 	FaMapMarkerAlt,
 } from 'react-icons/fa';
 import ProgressBar from '../ProgressBar/ProgressBar';
+import MapIcon from '../icons/map';
+import List from '../icons/list';
 
 const options = {
 	styles: MapStyles,
@@ -273,7 +275,7 @@ class CityView extends Component {
 		//	console.log(this.state);
 	}
 	handleMouseLeave() {
-		//	this.setState({ cardHover: '' });
+		this.setState({ cardHover: '' });
 	}
 
 	//receives data from 'more info' button
@@ -320,6 +322,7 @@ class CityView extends Component {
 				number: '',
 				eligibility: '',
 				link: '',
+				cardHover: '',
 			},
 			() => {
 				console.log(this.state);
@@ -339,7 +342,11 @@ class CityView extends Component {
 	handleDrawerToggle = () => {
 		this.setState(
 			(prevState) => {
-				return { drawerOpen: !prevState.drawerOpen, isLoaded: false };
+				return {
+					drawerOpen: !prevState.drawerOpen,
+					isLoaded: false,
+					cardHover: '',
+				};
 			},
 			() => {
 				//console.log(this.state.drawerOpen);
@@ -436,15 +443,13 @@ class CityView extends Component {
 					</div>
 
 					{this.state.drawerOpen ? (
-						<FaMapMarkedAlt
-							className={icon}
-							onClick={this.handleDrawerToggle}
-						/>
+						<div className={icon} onClick={this.handleDrawerToggle}>
+							<MapIcon />
+						</div>
 					) : (
-						<FaList
-							className={icon}
-							onClick={this.handleDrawerToggle}
-						/>
+						<div className={icon} onClick={this.handleDrawerToggle}>
+							<List />
+						</div>
 					)}
 				</div>
 

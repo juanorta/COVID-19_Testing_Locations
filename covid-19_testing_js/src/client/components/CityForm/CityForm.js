@@ -24,6 +24,7 @@ import AutoComplete from 'react-google-autocomplete';
 import Geocode from 'react-geocode';
 import PropTypes from 'prop-types';
 import { browseHistory } from 'react-router';
+import Search from '../icons/search';
 
 class CityForm extends Component {
 	constructor(props) {
@@ -184,13 +185,13 @@ class CityForm extends Component {
 						<Link
 							to={`/citystate/${this.state.city}&${this.state.state}`}
 						>
-							<a className="search-btn">
+							{/* <a className="search-btn">
 								<FaSearch /> <button />
-							</a>
+							</a> */}
 						</Link>
 					) : (
 						<a className="search-btn" onClick={this.handleClick}>
-							<FaSearch /> <button />
+							<Search /> <button />
 						</a>
 					)}
 				</form>

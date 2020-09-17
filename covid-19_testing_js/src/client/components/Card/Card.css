@@ -17,32 +17,44 @@
 	width: 30%;
 	border: none;
 	justify-content: center;
+	/* text-align: center; */
 	cursor: pointer;
 	border-radius: 30px;
-	font-size: 1.2rem;
+	font-size: 1rem;
 	margin-top: 3.3rem;
 	margin-left: 28%;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 400;
+}
+
+.card button p {
+	margin-bottom: 0rem;
 }
 
 .card h2 {
 	font-family: 'Montserrat', sans-serif;
-	font-weight: 700;
+	font-weight: 600;
 	font-size: 1rem;
-	padding-left: 3rem;
+	padding-left: 2rem;
 }
 
 .card h3 {
 	font-family: 'Montserrat', sans-serif;
-	font-weight: 500;
-	padding-left: 3rem;
+	font-weight: 400;
+	padding-left: 2rem;
 	font-size: 1rem;
 }
 
 .card h4 {
 	font-family: 'Montserrat', sans-serif;
-	font-weight: 500;
-	padding-left: 3rem;
+	font-weight: 400;
+	padding-left: 2rem;
 	font-size: 1.5rem;
+}
+
+.more-info {
+	/* margin-left: -2.5rem;
+	margin-top: -1px; */
 }
 
 .card button:focus {
@@ -59,11 +71,13 @@
 
 .map-marker {
 	color: #fa121a;
+	font-size: 1.2rem;
 }
 
 .facility-type {
 	color: #fa121a;
-	padding-right: 0.5rem;
+	font-size: 1.2rem;
+	padding-right: 0.55rem;
 }
 
 @media (max-width: 768px) {

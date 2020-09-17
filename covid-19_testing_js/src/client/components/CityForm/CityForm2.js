@@ -15,6 +15,7 @@ import TextField from '@material-ui/core/TextField';
 import { FaSearch } from 'react-icons/fa';
 import AutoComplete from 'react-google-autocomplete';
 import PropTypes from 'prop-types';
+import Search from '../icons/search';
 class CityForm2 extends Component {
 	constructor(props) {
 		super(props);
@@ -158,13 +159,14 @@ class CityForm2 extends Component {
 						<Link
 							to={`/citystate/${this.state.city}&${this.state.state}`}
 						>
-							<a className="search-btn2">
+							{/* <a className="search-btn2">
 								<FaSearch /> <button />
-							</a>
+							</a> */}
 						</Link>
 					) : (
 						<a className="search-btn2" onClick={this.handleClick}>
-							<FaSearch /> <button />
+							<Search />
+							{/* <Search /> <button /> */}
 						</a>
 					)}
 				</form>
