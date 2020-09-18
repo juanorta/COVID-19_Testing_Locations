@@ -36,7 +36,8 @@ const SiteCard = (props) => {
 					props.eligibility,
 					props.link,
 					props.lat,
-					props.lng
+					props.lng,
+					props.hours
 				)}
 			>
 				More Info

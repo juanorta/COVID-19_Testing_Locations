@@ -244,7 +244,7 @@ class CityView extends Component {
 			number: '',
 			eligibility: '',
 			link: '',
-
+			hours: '',
 			lat: '',
 			lng: '',
 			onLoad: 0,
@@ -347,7 +347,8 @@ class CityView extends Component {
 		eligibility,
 		link,
 		lat,
-		lng
+		lng,
+		hours
 	) => () => {
 		this.setState(
 			{
@@ -361,6 +362,7 @@ class CityView extends Component {
 				link: link,
 				lat: lat,
 				lng: lng,
+				hours: hours,
 			},
 			() => {
 				console.log(this.state);
@@ -584,6 +586,7 @@ class CityView extends Component {
 									lat={this.state.lat}
 									lng={this.state.lng}
 									city={this.state.cityFView}
+									hours={this.state.hours}
 								/>
 							) : (
 								<div>
@@ -629,6 +632,7 @@ class CityView extends Component {
 														lat={location.lat}
 														lng={location.lng}
 														city={location.city}
+														hours={location.hours}
 													/>
 												</li>
 											)

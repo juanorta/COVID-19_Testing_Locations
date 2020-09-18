@@ -11,6 +11,8 @@ import {
 	FaCheck,
 	FaLink,
 	FaGlobeAmericas,
+	FaClock,
+	FaMapPin,
 } from 'react-icons/fa';
 
 const FacilityView = (props) => {
@@ -24,6 +26,7 @@ const FacilityView = (props) => {
 	let eligibilityIsFilled = true;
 	let phoneIsFilled = true;
 	let linkIsFilled = true;
+	let hoursIsFilled = true;
 
 	//checking if strings are empty.
 	//will not display them if they're empty
@@ -38,6 +41,9 @@ const FacilityView = (props) => {
 	if (props.link == '') {
 		linkIsFilled = false;
 	}
+	if (props.hours == '') {
+		hoursIsFilled = false;
+	}
 	return (
 		<div className="facility-view">
 			<FaArrowLeft
@@ -47,7 +53,7 @@ const FacilityView = (props) => {
 			<h1>{props.facility}</h1>
 			<p>
 				<a className="map-marker">
-					<FaMapMarker />{' '}
+					<FaMapPin />{' '}
 				</a>
 				<a
 					className="map-marker"
@@ -100,6 +106,15 @@ const FacilityView = (props) => {
 					>
 						{props.link}
 					</a>
+				</p>
+			) : null}
+
+			{hoursIsFilled ? (
+				<p>
+					<a className="phone-icon">
+						<FaClock />{' '}
+					</a>
+					Hours of Operation: {props.hours}
 				</p>
 			) : null}
 		</div>

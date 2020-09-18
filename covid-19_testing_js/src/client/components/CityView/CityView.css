@@ -27,7 +27,7 @@
 
 .location-column-container {
 	/* display: none; */
-	animation: 1s ease 0s 1 slideInFromLeft;
+	animation: 0.5s ease 0s 1 slideInFromLeft;
 	transform: translateX(0%);
 	transition: 0.25s;
 	height: 92vh;
@@ -145,7 +145,7 @@
 	}
 
 	.locations h1 {
-		font-size: 2.4rem;
+		font-size: 2rem;
 	}
 }
 

@@ -48,3 +48,17 @@
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 400;
 }
+
+@media only screen and (max-width: 600px) {
+	.facility-view h1 {
+		font-size: 1.5rem;
+	}
+
+	.facility-view p {
+		font-size: 1rem;
+	}
+
+	.facility-view a {
+		font-size: 1rem;
+	}
+}
