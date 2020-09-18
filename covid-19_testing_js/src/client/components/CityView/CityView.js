@@ -39,14 +39,39 @@ const options = {
 };
 
 //handles map logic
+let animation = 2;
+//let safecounter = 0;
+let counter = 0;
+
 function Map(props) {
 	let lat;
 	let lng;
+	//counter = 0;
+	console.log('counter = ' + counter);
+	if (counter == 3) {
+		counter = 0;
+	}
+	console.log('on load = ' + props.onLoad);
+
+	counter++;
+
+	console.log('counter = ' + counter);
+	console.log('props counter = ' + props.counter);
 	//console.log(props.defaultZoom);
+	//let count = props.counter;
+	// let count = 1;
+
+	//count++;
+	//let count = 1;
+
+	//count++;
+	//console.log('load counter -> ' + props.counter);
 
 	const [selectedMarker, setSelectedMarker] = useState(null);
 	const [currentZoom, setCurrentZoom] = useState(props.defaultZoom);
 	const [load, setLoad] = useState(1);
+	const [dropCount, setDrop] = useState(0);
+	//const [animation, setAnimation] = useState('');
 	var center; // a latLng
 	var offsetX = parseFloat(props.offsetX); // move center one quarter map width left
 	var offsetY = parseFloat(props.offsetY); // move center one quarter map height down
@@ -60,15 +85,15 @@ function Map(props) {
 
 	//changes the center of a map to the coordinates of the selected marker
 	function handleCenterChange(selectedLat, selectedLng) {
-		lat = selectedLat;
-		lng = selectedLng;
+		lat = parseFloat(selectedLat);
+		lng = parseFloat(selectedLng);
 		setLoad(0);
 	}
 
 	function handleCenterChange2() {
 		//console.log(this.getCenter().toJSON());
-		lat = this.getCenter().toJSON().lat;
-		lng = this.getCenter().toJSON().lng;
+		lat = parseFloat(this.getCenter().toJSON().lat);
+		lng = parseFloat(this.getCenter().toJSON().lng);
 		setLoad(0);
 	}
 	//sets the zoom level to the current zoom
@@ -76,26 +101,48 @@ function Map(props) {
 	function handleZoomChange() {
 		//console.log('zoom changed ' + this.getZoom());
 		setCurrentZoom(this.getZoom());
+		//props.updateCount();
 		//console.log('currentzoom ' + currentZoom);
 	}
-	console.log(props.newLat + ' ' + props.newLng);
-	// if (props.defaultZoom != currentZoom) {
-	// 	console.log('different default');
-	// 	//handleCenterChange(1, 2);
-	// 	lat = props.newLat;
-	// 	lng = props.newLng;
-	// 	//setSelectedMarker(props.cardHover);
-	// 	setCurrentZoom(props.defaultZoom);
+
+	// if (count == 0) {
+	// 	setAnimation(google.maps.Animation.DROP);
 	// }
 
-	console.log('current center: ' + lat + ' ' + lng);
+	function hi() {
+		console.log('HI CALLED');
+
+		//	props.updateCount();
+	}
+
+	// let animation;
+	// let count = props.counter;
+	// console.log('counter = ' + props.counter);
+	// if (setDrop == 0) {
+	// 	//setDrop(1);
+
+	// 	animation = google.maps.Animation.DROP;
+	// 	setDrop(1);
+	// 	//count++;
+	// 	//props.updateCount();
+	// }
+
+	// function drop() {
+	// 	return google.maps.Animation.DROP;
+	// }
+	console.log(props.newLat + ' ' + props.newLng);
+
+	if (counter != 1) {
+		animation = 0;
+	}
+
 	return (
 		<GoogleMap
 			key={new Date().getTime()}
 			defaultZoom={currentZoom}
-			center={{
-				lat: lat,
-				lng: lng,
+			defaultCenter={{
+				lat: parseFloat(lat),
+				lng: parseFloat(lng),
 			}}
 			defaultOptions={{
 				styles: MapStyles,
@@ -107,7 +154,7 @@ function Map(props) {
 			}}
 			onZoomChanged={handleZoomChange}
 			onCenterChanged={handleCenterChange2}
-			//onGoogleApiLoaded={console.log('loaded')}
+			//	onGoogleApiLoaded={hi()}
 		>
 			{props.locations.map((location) => (
 				<Marker
@@ -116,14 +163,13 @@ function Map(props) {
 						lat: parseFloat(location.lat),
 						lng: parseFloat(location.lng),
 					}}
-					animation={
-						props.cardHover === location.id
-							? google.maps.Animation.BOUNCE
-							: null
-					}
+					defaultAnimation={animation}
 					onClick={() => {
 						setSelectedMarker(location);
-						handleCenterChange(location.lat, location.lng);
+						handleCenterChange(
+							parseFloat(location.lat),
+							parseFloat(location.lng)
+						);
 					}}
 					icon={{
 						url: '/marker.svg',
@@ -131,6 +177,7 @@ function Map(props) {
 					}}
 				/>
 			))}
+
 			{selectedMarker && (
 				<InfoWindow
 					key={selectedMarker.id}
@@ -200,6 +247,7 @@ class CityView extends Component {
 
 			lat: '',
 			lng: '',
+			onLoad: 0,
 		};
 		//	this.moreInfoSelected = this.moreInfoSelected.bind(this);
 		this.myRef = React.createRef();
@@ -209,6 +257,8 @@ class CityView extends Component {
 		this.handleScreenResize();
 		this.handleMapOffsets();
 		this.handleLoad();
+		let onLoad = 1;
+		console.log('onload->' + onLoad);
 		//console.log(this.myRef.current.current.clientHeight);
 		console.log(this.myRef.current);
 
@@ -234,7 +284,7 @@ class CityView extends Component {
 
 	componentDidUpdate() {
 		//this.handleScreenResize();
-		// console.log('update');
+		//	console.log('update');
 		// this.handleLoad();
 	}
 
@@ -248,8 +298,12 @@ class CityView extends Component {
 				if (status === google.maps.GeocoderStatus.OK) {
 					this.setState(
 						{
-							defaultLat: results[0].geometry.location.lat(),
-							defaultLng: results[0].geometry.location.lng(),
+							defaultLat: parseFloat(
+								results[0].geometry.location.lat()
+							),
+							defaultLng: parseFloat(
+								results[0].geometry.location.lng()
+							),
 						},
 						() => {
 							console.log(this.state);
@@ -261,6 +315,10 @@ class CityView extends Component {
 			}.bind(this)
 		);
 	};
+
+	componentDidCatch() {
+		console.log('uh');
+	}
 
 	componentWillReceiveProps() {
 		//console.log('willreceive');
@@ -376,7 +434,7 @@ class CityView extends Component {
 
 	//used to indicate when map-icon should bounce
 	handleLoad = () => {
-		this.setState({ isLoaded: true });
+		this.setState({ isLoaded: true, onLoad: 1 });
 	};
 
 	//changes width of progress bar element on every scroll
@@ -393,6 +451,13 @@ class CityView extends Component {
 		document.getElementById('myBar').style.width = `${scrolled}`;
 	};
 
+	updateCount = () => {
+		//console.log('called');
+		this.setState({ counter: this.state.counter + 1 }, () => {
+			console.log('called');
+		});
+	};
+
 	render() {
 		if (this.state.locations.length == 0) {
 			return (
@@ -406,6 +471,13 @@ class CityView extends Component {
 				</div>
 			);
 		}
+
+		// if (this.state.counter == 0) {
+		// 	console.log('counter is 0');
+		// 	this.updateCount();
+		// } else if (this.state.counter == 1) {
+		// 	console.log('counter is 1');
+		// }
 
 		let toggleLocationContainer = 'location-column-container';
 		let icon = 'show-list';
@@ -471,8 +543,8 @@ class CityView extends Component {
 									<div style={{ height: `91vh` }} />
 								}
 								mapElement={<div style={{ height: `100%` }} />}
-								lat={this.state.defaultLat}
-								lng={this.state.defaultLng}
+								lat={parseFloat(this.state.defaultLat)}
+								lng={parseFloat(this.state.defaultLng)}
 								locations={this.state.locations}
 								showingInfoWindow={this.state.showingInfoWindow}
 								onMarkerClick={this.onMarkerClick}
@@ -484,6 +556,8 @@ class CityView extends Component {
 								defaultZoom={this.state.defaultZoom}
 								newLat={this.state.lat}
 								newLng={this.state.lng}
+								onLoad={this.state.onLoad}
+								updateCount={this.updateCount}
 							/>
 						</Grid>
 						<Grid
@@ -523,14 +597,14 @@ class CityView extends Component {
 											(location) => (
 												<li
 													key={location.id}
-													onMouseOver={() => {
-														this.handleMouseOver(
-															location.id
-														);
-													}}
-													onMouseLeave={() => {
-														this.handleMouseLeave();
-													}}
+													// onMouseOver={() => {
+													// 	this.handleMouseOver(
+													// 		location.id
+													// 	);
+													// }}
+													// onMouseLeave={() => {
+													// 	this.handleMouseLeave();
+													// }}
 												>
 													<SiteCard
 														handleMoreInfo={
@@ -572,3 +646,9 @@ class CityView extends Component {
 }
 
 export default CityView;
+
+// animation={
+// 	props.cardHover === location.id
+// 		? google.maps.Animation.BOUNCE
+// 		: null
+// }
