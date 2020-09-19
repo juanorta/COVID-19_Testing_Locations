@@ -13,6 +13,7 @@ import {
 	FaGlobeAmericas,
 	FaClock,
 	FaMapPin,
+	FaMapMarkedAlt,
 } from 'react-icons/fa';
 
 const FacilityView = (props) => {
@@ -44,6 +45,8 @@ const FacilityView = (props) => {
 	if (props.hours == '') {
 		hoursIsFilled = false;
 	}
+	console.log('id==== ' + props.id);
+	console.log('zoom = ' + props.zoom);
 	return (
 		<div className="facility-view">
 			<FaArrowLeft
@@ -51,6 +54,23 @@ const FacilityView = (props) => {
 				onClick={props.handleCloseMoreInfo}
 			></FaArrowLeft>
 			<h1>{props.facility}</h1>
+
+			<p>
+				<a
+					className="map-marker2"
+					onClick={props.bounceMarker(props.id, props.zoom)}
+				>
+					<FaMapMarkedAlt />
+				</a>
+
+				<a
+					className="map-marker2"
+					onClick={props.bounceMarker(props.id, props.zoom)}
+				>
+					View on map
+				</a>
+			</p>
+
 			<p>
 				<a className="map-marker">
 					<FaMapPin />{' '}

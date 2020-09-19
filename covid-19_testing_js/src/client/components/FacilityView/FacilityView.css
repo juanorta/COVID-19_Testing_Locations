@@ -31,6 +31,14 @@
 
 .map-marker {
 	padding-right: 0.5rem;
+	cursor: pointer;
+}
+
+.map-marker2 {
+	padding-right: 0.5rem;
+	cursor: pointer;
+	color: #ff3b42;
+	display: inline-block;
 }
 
 .phone-icon {

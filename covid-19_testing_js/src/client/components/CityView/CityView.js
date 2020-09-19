@@ -46,26 +46,19 @@ let counter = 0;
 function Map(props) {
 	let lat;
 	let lng;
+
+	let cardhover = props.cardHover;
 	//counter = 0;
-	console.log('counter = ' + counter);
-	if (counter == 3) {
-		counter = 0;
-	}
-	console.log('on load = ' + props.onLoad);
+	// console.log('counter = ' + counter);
+	// if (counter == 3) {
+	// 	counter = 0;
+	// }
+	// console.log('on load = ' + props.onLoad);
 
-	counter++;
+	// counter++;
 
-	console.log('counter = ' + counter);
-	console.log('props counter = ' + props.counter);
-	//console.log(props.defaultZoom);
-	//let count = props.counter;
-	// let count = 1;
-
-	//count++;
-	//let count = 1;
-
-	//count++;
-	//console.log('load counter -> ' + props.counter);
+	// console.log('counter = ' + counter);
+	// console.log('props counter = ' + props.counter);
 
 	const [selectedMarker, setSelectedMarker] = useState(null);
 	const [currentZoom, setCurrentZoom] = useState(props.defaultZoom);
@@ -85,6 +78,7 @@ function Map(props) {
 
 	//changes the center of a map to the coordinates of the selected marker
 	function handleCenterChange(selectedLat, selectedLng) {
+		cardhover = 0;
 		lat = parseFloat(selectedLat);
 		lng = parseFloat(selectedLng);
 		setLoad(0);
@@ -92,6 +86,7 @@ function Map(props) {
 
 	function handleCenterChange2() {
 		//console.log(this.getCenter().toJSON());
+		cardhover = 0;
 		lat = parseFloat(this.getCenter().toJSON().lat);
 		lng = parseFloat(this.getCenter().toJSON().lng);
 		setLoad(0);
@@ -100,36 +95,16 @@ function Map(props) {
 	//this prevents the map from loading to the default city zoom on every marker click
 	function handleZoomChange() {
 		//console.log('zoom changed ' + this.getZoom());
+		cardhover = 0;
 		setCurrentZoom(this.getZoom());
 		//props.updateCount();
 		//console.log('currentzoom ' + currentZoom);
 	}
 
-	// if (count == 0) {
-	// 	setAnimation(google.maps.Animation.DROP);
-	// }
-
-	function hi() {
-		console.log('HI CALLED');
-
-		//	props.updateCount();
+	function stopBounce() {
+		cardhover = 0;
 	}
 
-	// let animation;
-	// let count = props.counter;
-	// console.log('counter = ' + props.counter);
-	// if (setDrop == 0) {
-	// 	//setDrop(1);
-
-	// 	animation = google.maps.Animation.DROP;
-	// 	setDrop(1);
-	// 	//count++;
-	// 	//props.updateCount();
-	// }
-
-	// function drop() {
-	// 	return google.maps.Animation.DROP;
-	// }
 	console.log(props.newLat + ' ' + props.newLng);
 
 	if (counter != 1) {
@@ -163,7 +138,11 @@ function Map(props) {
 						lat: parseFloat(location.lat),
 						lng: parseFloat(location.lng),
 					}}
-					defaultAnimation={animation}
+					defaultAnimation={
+						cardhover === location.id
+							? google.maps.Animation.BOUNCE
+							: null
+					}
 					onClick={() => {
 						setSelectedMarker(location);
 						handleCenterChange(
@@ -247,7 +226,9 @@ class CityView extends Component {
 			hours: '',
 			lat: '',
 			lng: '',
+			id: '',
 			onLoad: 0,
+			changeMarkerColor: '/marker.svg',
 		};
 		//	this.moreInfoSelected = this.moreInfoSelected.bind(this);
 		this.myRef = React.createRef();
@@ -317,7 +298,7 @@ class CityView extends Component {
 	};
 
 	componentDidCatch() {
-		console.log('uh');
+		//	console.log('uh');
 	}
 
 	componentWillReceiveProps() {
@@ -348,7 +329,8 @@ class CityView extends Component {
 		link,
 		lat,
 		lng,
-		hours
+		hours,
+		id
 	) => () => {
 		this.setState(
 			{
@@ -363,6 +345,7 @@ class CityView extends Component {
 				lat: lat,
 				lng: lng,
 				hours: hours,
+				id: id,
 			},
 			() => {
 				console.log(this.state);
@@ -383,6 +366,8 @@ class CityView extends Component {
 				eligibility: '',
 				link: '',
 				cardHover: '',
+				hours: '',
+				id: '',
 			},
 			() => {
 				console.log(this.state);
@@ -458,6 +443,18 @@ class CityView extends Component {
 		this.setState({ counter: this.state.counter + 1 }, () => {
 			console.log('called');
 		});
+	};
+
+	bounceMarker = (id, zoom) => () => {
+		//console.log('hey-> ' + id);
+		// if (this.state.id === id) {
+		// 	console.log('state id-> ' + this.state.id + '  id-> ' + id);
+		// } else
+		if (zoom == 10) {
+			this.setState({ cardHover: id, drawerOpen: false });
+		} else {
+			this.setState({ cardHover: id });
+		}
 	};
 
 	render() {
@@ -560,6 +557,7 @@ class CityView extends Component {
 								newLng={this.state.lng}
 								onLoad={this.state.onLoad}
 								updateCount={this.updateCount}
+								changeMarkerColor={this.state.changeMarkerColor}
 							/>
 						</Grid>
 						<Grid
@@ -576,6 +574,7 @@ class CityView extends Component {
 									handleCloseMoreInfo={
 										this.handleCloseMoreInfo
 									}
+									bounceMarker={this.bounceMarker}
 									handleViewOnMap={this.handleViewOnMap}
 									facility={this.state.facility}
 									address={this.state.address}
@@ -587,6 +586,8 @@ class CityView extends Component {
 									lng={this.state.lng}
 									city={this.state.cityFView}
 									hours={this.state.hours}
+									id={this.state.id}
+									zoom={this.state.defaultZoom}
 								/>
 							) : (
 								<div>
@@ -613,6 +614,10 @@ class CityView extends Component {
 														handleMoreInfo={
 															this.handleMoreInfo
 														}
+														bounceMarker={
+															this.bounceMarker
+														}
+														id={location.id}
 														locationFacility={
 															location.facility
 														}
@@ -633,6 +638,10 @@ class CityView extends Component {
 														lng={location.lng}
 														city={location.city}
 														hours={location.hours}
+														zoom={
+															this.state
+																.defaultZoom
+														}
 													/>
 												</li>
 											)

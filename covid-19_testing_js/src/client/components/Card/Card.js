@@ -1,13 +1,19 @@
 import React from 'react';
 import './Card.css';
 import { Link } from 'react-router-dom';
-import { FaMapMarker, FaClinicMedical, FaMapPin } from 'react-icons/fa';
+import {
+	FaMapMarker,
+	FaClinicMedical,
+	FaMapPin,
+	FaMapMarkedAlt,
+} from 'react-icons/fa';
 import CityView from '../CityView/CityView';
 
 const SiteCard = (props) => {
 	// function handleClick() {
 	// 	console.log('more info clicked');
 	// }
+	console.log(props.id);
 
 	return (
 		<div className="card">
@@ -21,10 +27,18 @@ const SiteCard = (props) => {
 			</h3>
 			<h3>
 				{' '}
-				<a className="facility-type">
-					<FaClinicMedical />{' '}
-				</a>{' '}
-				{props.locationFacilityType}
+				<div className="clinc-map-row">
+					<a className="facility-type">
+						<FaClinicMedical />{' '}
+					</a>{' '}
+					{props.locationFacilityType}
+					<a
+						className="view-on-map"
+						onClick={props.bounceMarker(props.id, props.zoom)}
+					>
+						<FaMapMarkedAlt /> View on map
+					</a>{' '}
+				</div>
 			</h3>
 			<button
 				onClick={props.handleMoreInfo(
@@ -37,7 +51,8 @@ const SiteCard = (props) => {
 					props.link,
 					props.lat,
 					props.lng,
-					props.hours
+					props.hours,
+					props.id
 				)}
 			>
 				More Info

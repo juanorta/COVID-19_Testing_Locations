@@ -80,6 +80,21 @@
 	padding-right: 0.55rem;
 }
 
+.view-on-map {
+	/* margin-left: 18rem; */
+	float: right;
+	margin-right: 2rem;
+	font-size: 1.2rem;
+	color: #fa121a;
+	cursor: pointer;
+	margin-top: 0.2rem;
+	transition: all 0.2s ease-in-out;
+}
+
+.view-on-map:hover {
+	transform: scale(1.1, 1.1);
+}
+
 @media (max-width: 768px) {
 	.card h2 {
 		font-size: 1rem;
@@ -96,6 +111,10 @@
 		position: absolute;
 		margin-top: -1.25rem;
 		margin-left: 28%;
+		font-size: 1rem;
+	}
+
+	.view-on-map {
 		font-size: 1rem;
 	}
 }
