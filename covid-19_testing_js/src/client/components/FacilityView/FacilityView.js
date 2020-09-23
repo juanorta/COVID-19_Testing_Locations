@@ -32,11 +32,11 @@ const FacilityView = (props) => {
 	//checking if strings are empty.
 	//will not display them if they're empty
 	if (props.eligibility == '') {
-		console.log('empty eligibility');
+		//console.log('empty eligibility');
 		eligibilityIsFilled = false;
 	}
 	if (props.number == '') {
-		console.log('empty phone');
+		//console.log('empty phone');
 		phoneIsFilled = false;
 	}
 	if (props.link == '') {
@@ -45,7 +45,7 @@ const FacilityView = (props) => {
 	if (props.hours == '') {
 		hoursIsFilled = false;
 	}
-	console.log('id==== ' + props.id);
+	// console.log('id==== ' + props.id);
 	console.log('zoom = ' + props.zoom);
 	return (
 		<div className="facility-view">

@@ -13,7 +13,7 @@ const SiteCard = (props) => {
 	// function handleClick() {
 	// 	console.log('more info clicked');
 	// }
-	console.log(props.id);
+	//	console.log(props.id);
 
 	return (
 		<div className="card">

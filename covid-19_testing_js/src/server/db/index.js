@@ -41,21 +41,21 @@ sitesDB.one = (id) => {
 	});
 };
 
-sitesDB.stateQuery = (state) => {
-	return new Promise((resolve, reject) => {
-		pool.query(
-			`SELECT * FROM test_sites WHERE state = ?`,
-			[state],
-			(err, results) => {
-				if (err) {
-					return reject(err);
-				}
-				//console.log('ok');
-				return resolve(results);
-			}
-		);
-	});
-};
+// sitesDB.stateQuery = (state) => {
+// 	return new Promise((resolve, reject) => {
+// 		pool.query(
+// 			`SELECT * FROM test_sites WHERE state = ?`,
+// 			[state],
+// 			(err, results) => {
+// 				if (err) {
+// 					return reject(err);
+// 				}
+// 				//console.log('ok');
+// 				return resolve(results);
+// 			}
+// 		);
+// 	});
+// };
 
 sitesDB.cityQuery = (city) => {
 	return new Promise((resolve, reject) => {
@@ -94,6 +94,22 @@ sitesDB.cityStateQuery = (city, state) => {
 		pool.query(
 			`SELECT * FROM test_sites WHERE city = ? AND state = ?`,
 			[city, state],
+			(err, results) => {
+				if (err) {
+					return reject(err);
+				}
+				//console.log('ok');
+				return resolve(results);
+			}
+		);
+	});
+};
+
+sitesDB.userLocationQuery = (lat, lng, radius, state) => {
+	return new Promise((resolve, reject) => {
+		pool.query(
+			`SELECT * FROM test_sites WHERE state = ?`,
+			[state],
 			(err, results) => {
 				if (err) {
 					return reject(err);

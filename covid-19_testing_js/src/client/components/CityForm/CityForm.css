@@ -5,15 +5,22 @@
 	margin-top: -3.5%;
 	text-align: center;
 }
+
 .form h1 {
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 500;
 }
 .form button {
-	display: none;
+	/* display: none; */
 }
 ::placeholder {
 	color: white;
+}
+
+.location-button {
+	background-color: blue;
+	height: 3rem;
+	margin-left: 4rem;
 }
 
 .search-box {
@@ -41,7 +48,7 @@
 }
 .textbox {
 	border: none;
-	background: none;
+	background: blue;
 	outline: none;
 	float: left;
 	width: 0px;
@@ -49,6 +56,9 @@
 	font-size: 1.5rem;
 	transition: 0.25s;
 	line-height: 40px;
+	/* background-color: black; */
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 500;
 }
 
 .search-btn {
@@ -62,6 +72,61 @@
 	display: flex;
 	justify-content: center;
 	align-items: center; */
+}
+
+.dropdown {
+	float: left;
+	height: 1.5rem;
+	width: 15rem;
+	margin-top: -0.4rem;
+	margin-left: -3rem;
+	margin-right: 4rem;
+	background-color: transparent;
+	/* border: none; */
+	color: white;
+	font-size: 1rem;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 500;
+	border-width: 1px;
+	border-color: white;
+	border-right: white;
+	border-top: white;
+	border-bottom: white;
+	padding-left: 4rem;
+}
+
+.use-location-wrapper {
+	background-color: white;
+	margin-left: -0.5rem;
+	margin-top: 1.8rem;
+	width: 260px;
+	font-size: 1.2rem;
+	height: 35px;
+	border: solid grey 2px;
+}
+
+.use-location-wrapper:hover {
+	background-image: linear-gradient(to right, #ff3b42, #f98487);
+	cursor: pointer;
+}
+
+.use-location-wrapper:hover .my-location {
+	color: white;
+}
+
+.my-location {
+	margin-top: 0.35rem;
+	height: 20px;
+	background-color: transparent;
+	color: black;
+	width: 260px;
+	margin-left: -1rem;
+}
+
+.my-location p {
+	height: 20px;
+	display: inline;
+	margin-left: 1.5rem;
 }
 
 @keyframes fadeIn {
@@ -78,8 +143,8 @@
 }
 
 .search-box:hover > .textbox {
-	width: 240px;
-	padding: 0 6px;
+	/* width: 240px;
+	padding: 0 6px; */
 }
 
 .search-box:hover {
@@ -87,8 +152,8 @@
 }
 
 .textbox:focus {
-	width: 240px;
-	padding: 0 6px;
+	/* width: 240px;
+	padding: 0 6px; */
 }
 
 .pac-container {
@@ -111,19 +176,33 @@
 	}
 
 	.textbox {
-		width: 200px;
+		width: 300px;
 		height: 2rem;
 		margin-top: -0.8rem;
-		font-size: 1.2rem;
+		font-size: 1rem;
 		background-color: transparent;
 	}
 
+	.dropdown {
+		width: 6rem;
+
+		height: 1.5rem;
+		float: right;
+		margin-top: -2rem;
+		font-size: 1rem;
+		padding-left: 1.2rem;
+		border-width: 0.25px;
+		border-color: transparent;
+		border-left-color: white;
+		border-radius: 0%;
+	}
+
 	.textbox:focus {
-		width: 240px;
+		/* width: 300px; */
 		/*line-height: 1.5rem; */
 		/* padding: 0 0px; */
-		height: 2.5rem;
-		line-height: 2rem;
+		/* height: 2.5rem;
+		line-height: 2rem; */
 	}
 }
 @media only screen and (min-width: 600px) {
@@ -202,7 +281,7 @@
 	}
 	.textbox {
 		/* width: 200px; */
-		width: 0px;
+		width: 300px;
 		height: 2.5rem;
 		margin-top: -0.8rem;
 		font-size: 1.25rem;

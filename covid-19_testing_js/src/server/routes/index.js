@@ -18,16 +18,16 @@ router.get('/', async (req, res) => {
 	}
 });
 
-router.get('/state/:state', async (req, res) => {
-	try {
-		let results = await db.stateQuery(req.params.state);
-		//return res.status(200).json(results);
+// router.get('/state/:state', async (req, res) => {
+// 	try {
+// 		let results = await db.stateQuery(req.params.state);
+// 		//return res.status(200).json(results);
 
-		return res.json(results);
-	} catch (e) {
-		return res.sendStatus(500);
-	}
-});
+// 		return res.json(results);
+// 	} catch (e) {
+// 		return res.sendStatus(500);
+// 	}
+// });
 
 router.get('/id/:id', async (req, res) => {
 	try {
@@ -67,4 +67,23 @@ router.get('/citystate/:city&:state', async (req, res) => {
 		return res.sendStatus(500);
 	}
 });
+
+router.get('/userlocation/:lat&:lng&:radius&:state', async (req, res) => {
+	try {
+		let results = await db.userLocationQuery(
+			req.params.lat,
+			req.params.lng,
+			req.params.radius,
+			req.params.state
+		);
+		console.log('ok');
+
+		//res.status(200).json(results);
+		//res.status(200);
+		return res.json(results);
+	} catch (e) {
+		return res.sendStatus(500);
+	}
+});
+
 module.exports = router;

@@ -18,6 +18,7 @@ import {
 	GoogleMap,
 	Marker,
 	InfoWindow,
+	Circle,
 } from 'react-google-maps';
 import AutoComplete from 'react-google-autocomplete';
 import SiteCard from '../Card/Card';
@@ -48,17 +49,6 @@ function Map(props) {
 	let lng;
 
 	let cardhover = props.cardHover;
-	//counter = 0;
-	// console.log('counter = ' + counter);
-	// if (counter == 3) {
-	// 	counter = 0;
-	// }
-	// console.log('on load = ' + props.onLoad);
-
-	// counter++;
-
-	// console.log('counter = ' + counter);
-	// console.log('props counter = ' + props.counter);
 
 	const [selectedMarker, setSelectedMarker] = useState(null);
 	const [currentZoom, setCurrentZoom] = useState(props.defaultZoom);
@@ -156,6 +146,17 @@ function Map(props) {
 					}}
 				/>
 			))}
+
+			<Circle
+				defaultCenter={{
+					lat: props.lat,
+					lng: props.lng,
+				}}
+				radius={24000}
+				options={{
+					strokeColor: '#ff0000',
+				}}
+			/>
 
 			{selectedMarker && (
 				<InfoWindow
@@ -346,6 +347,7 @@ class CityView extends Component {
 				lng: lng,
 				hours: hours,
 				id: id,
+				cardHover: 0,
 			},
 			() => {
 				console.log(this.state);
@@ -402,19 +404,21 @@ class CityView extends Component {
 	//adjusts the location list container to an appropriate size depending on screen size
 	handleScreenResize = () => {
 		//console.log('ok');
+		console.log('width = ' + window.innerWidth);
 		if (window.innerWidth <= 2560 && window.innerWidth > 1824) {
 			this.setState({ columnSize: 3 });
-		} else if (window.innerWidth <= 768) {
-			this.setState({ defaultZoom: 10 });
-		} else if (window.innerWidth >= 1224 && window.innerWidth <= 1440) {
+		} else if (window.innerWidth <= 1279) {
 			this.setState({ defaultZoom: 10 });
 		}
+		// } else if (window.innerWidth >= 1224 && window.innerWidth <= 1440) {
+		// 	this.setState({ defaultZoom: 10 });
+		// }
 	};
 
 	//if being viewed on a mobile device, no offsets will be useds
 	handleMapOffsets = () => {
 		//console.log('ok');
-		if (window.innerWidth <= 768) {
+		if (window.innerWidth <= 1279) {
 			this.setState({ offsetX: 0, offsetY: 0 });
 		}
 	};
@@ -446,14 +450,30 @@ class CityView extends Component {
 	};
 
 	bounceMarker = (id, zoom) => () => {
-		//console.log('hey-> ' + id);
-		// if (this.state.id === id) {
-		// 	console.log('state id-> ' + this.state.id + '  id-> ' + id);
-		// } else
-		if (zoom == 10) {
-			this.setState({ cardHover: id, drawerOpen: false });
-		} else {
-			this.setState({ cardHover: id });
+		for (let i = 0; i < 630; i++) {
+			let myLatLngA = new google.maps.LatLng({
+				lat: 31.0706176,
+				lng: -97.6388096,
+			});
+			let myLatLngB = new google.maps.LatLng({
+				lat: 33.211996,
+				lng: -97.149138,
+			});
+			let result = google.maps.geometry.spherical.computeDistanceBetween(
+				myLatLngA,
+				myLatLngB
+			);
+			console.log(result * 0.000621371192 + ' miles');
+
+			//console.log('hey-> ' + id);
+			// if (this.state.id === id) {
+			// 	console.log('state id-> ' + this.state.id + '  id-> ' + id);
+			// } else
+			if (zoom == 10) {
+				this.setState({ cardHover: id, drawerOpen: false });
+			} else {
+				this.setState({ cardHover: id });
+			}
 		}
 	};
 
