@@ -46,10 +46,6 @@ class CityForm extends Component {
 		console.log(this.state);
 		this.setWrapperRef = this.setWrapperRef.bind(this);
 		this.handleClickOutside = this.handleClickOutside.bind(this);
-		this.getlocation = this.getlocation.bind(this);
-		this.getCoordinates = this.getCoordinates.bind(this);
-		this.handleLocationError = this.handleLocationError.bind(this);
-		//		this.setUserlocation = this.setUserlocation.bind(this);
 		//const history = useHistory();
 	}
 
@@ -74,7 +70,6 @@ class CityForm extends Component {
 		console.log('location');
 
 		navigator.geolocation.getCurrentPosition((position) => {
-			alert('using navigator');
 			this.setState(
 				{
 					lat: position.coords.latitude,
@@ -91,28 +86,6 @@ class CityForm extends Component {
 		//console.log(navigator.geolocation.getCurrentPosition(position));
 	};
 
-	getlocation() {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-				this.getCoordinates,
-				this.handleLocationError
-			);
-		} else {
-			alert('geolocation is not supported by this browser');
-		}
-	}
-
-	getCoordinates(position) {
-		alert('ok');
-		alert(
-			'lat = ' +
-				position.coords.latitude +
-				' ' +
-				'lng = ' +
-				position.coords.longitude
-		);
-	}
-
 	handleClickOutside(event) {
 		//console.log('click outside called');
 		if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
@@ -127,22 +100,6 @@ class CityForm extends Component {
 		//this.setState({ textboxClicked: true });
 	}
 
-	handleLocationError(error) {
-		switch (error.code) {
-			case error.PERMISSION_DENIED:
-				alert('User denied the request for Geolocation.');
-				break;
-			case error.POSITION_UNAVAILABLE:
-				alert('Location information is unavailable.');
-				break;
-			case error.TIMEOUT:
-				alert('The request to get user location timed out.');
-				break;
-			case error.UNKNOWN_ERROR:
-				alert('An unknown error occurred.');
-				break;
-		}
-	}
 	handleSubmit = (event) => {
 		console.log('submit');
 
@@ -402,12 +359,12 @@ class CityForm extends Component {
 
 	render() {
 		return (
-			<div className="ah">
+			<div className="form">
 				{this.state.userLocation ? (
 					<div className="location">location</div>
 				) : null}
 
-				{/* <form
+				<form
 					onSubmit={this.handleSubmit}
 					className="search-box"
 					ref={this.setWrapperRef}
@@ -420,8 +377,8 @@ class CityForm extends Component {
 						className="textbox"
 						placeholder={this.state.placeholder}
 						onClick={this.textClickHandler}
-					/> */}
-				{/* <select className="dropdown" onChange={this.handleDropDown}>
+					/>
+					<select className="dropdown" onChange={this.handleDropDown}>
 						<option value="0" onClick={this.clearCoordinates}>
 							Radius
 						</option>
@@ -429,9 +386,9 @@ class CityForm extends Component {
 						<option value="10">10 miles</option>
 						<option value="25">25 miles</option>
 						<option value="50">50 miles</option>
-					</select> */}
-				{/* {console.log('selected -> ' + this.state.selected)} */}
-				{/* {this.state.selected ? (
+					</select>
+					{/* {console.log('selected -> ' + this.state.selected)} */}
+					{/* {this.state.selected ? (
 						<Link
 							to={`/citystate/${this.state.city}&${this.state.state}`}
 						>
@@ -440,25 +397,22 @@ class CityForm extends Component {
 							</a>
 						</Link>
 					) : ( */}
-				{/* <a className="search-btn" onClick={this.handleClick}>
+					<a className="search-btn" onClick={this.handleClick}>
 						<Search /> <button />
-					</a> */}
-				{/* // )} */}
-				{/* {this.state.textboxClicked ? (
-						<div
-							className="use-location-wrapper"
-							onClick={this.setUserlocation}
-						>
-							<div className="my-location">
+					</a>
+					{/* // )} */}
+					{this.state.textboxClicked ? (
+						<div className="use-location-wrapper">
+							<div
+								className="my-location"
+								onClick={this.setUserlocation}
+							>
 								<FaLocationArrow />
 								<p>Use My Location</p>
 							</div>
 						</div>
-					) : null} */}
-				{/* </form> */}
-				<button className="location-button" onClick={this.getlocation}>
-					hi
-				</button>
+					) : null}
+				</form>
 			</div>
 		);
 	}
