@@ -105,7 +105,7 @@ sitesDB.cityStateQuery = (city, state) => {
 	});
 };
 
-sitesDB.userLocationQuery = (lat, lng, radius, state) => {
+sitesDB.userLocationQuery = (locationAccess, city, lat, lng, radius, state) => {
 	return new Promise((resolve, reject) => {
 		pool.query(
 			`SELECT * FROM test_sites WHERE state = ?`,

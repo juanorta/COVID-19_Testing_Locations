@@ -69,6 +69,21 @@
 	box-shadow: -0.25px 1px 5px 4px #888888;
 }
 
+.car-container {
+	/* background-color: blue; */
+}
+
+.car-container h3 {
+	margin-left: 1.95rem;
+}
+
+.car {
+	margin-top: auto;
+	position: absolute;
+	margin-top: 0.05rem;
+	margin-left: 1.85rem;
+}
+
 .map-marker {
 	color: #fa121a;
 	font-size: 1.2rem;
@@ -101,7 +116,7 @@
 		padding-left: 2rem;
 	}
 	.card h3 {
-		font-size: 0.9rem;
+		font-size: 1 0.9rem;
 		padding-left: 2rem;
 	}
 	.card {

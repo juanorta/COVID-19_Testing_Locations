@@ -29,6 +29,14 @@
 	transform: scale(1.35, 1.35);
 }
 
+.view-map {
+	margin-left: -5rem;
+	position: absolute;
+	margin-left: 0.3rem;
+	color: #fa121a;
+	cursor: pointer;
+}
+
 .map-marker {
 	padding-right: 0.5rem;
 	cursor: pointer;

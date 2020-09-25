@@ -32,7 +32,7 @@ class App extends Component {
 							component={FacilityView}
 						/>
 						<Route
-							path="/userlocation/:lat&:lng&:radius&:state"
+							path="/userlocation/:locationAccess&:city&:lat&:lng&:radius&:state"
 							component={UserView}
 						/>
 					</Switch>

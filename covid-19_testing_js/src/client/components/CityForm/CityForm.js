@@ -191,7 +191,7 @@ class CityForm extends Component {
 									},
 									() => {
 										this.props.history.push(
-											`/userlocation/${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
+											`/userlocation/${this.state.userLocation}&${this.state.city}&${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
 										);
 									}
 								);
@@ -203,7 +203,7 @@ class CityForm extends Component {
 									},
 									() => {
 										this.props.history.push(
-											`/userlocation/${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
+											`/userlocation/${this.state.userLocation}&${this.state.city}&${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
 										);
 									}
 								);
@@ -213,12 +213,14 @@ class CityForm extends Component {
 						console.log('user coordinates');
 						this.setState(
 							{
+								city:
+									results[0].address_components[0].long_name,
 								state:
 									results[0].address_components[4].long_name,
 							},
 							() => {
 								this.props.history.push(
-									`/userlocation/${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
+									`/userlocation/${this.state.userLocation}&${this.state.city}&${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
 								);
 							}
 						);
@@ -235,7 +237,7 @@ class CityForm extends Component {
 					if (this.state.radius != 0) {
 						console.log('radius not zero = ' + this.state.radius);
 						this.props.history.push(
-							`/userlocation/${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
+							`/userlocation/${this.state.userLocation}&${this.state.city}&${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
 						);
 					} else {
 						console.log('radius zero');

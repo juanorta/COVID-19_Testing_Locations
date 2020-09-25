@@ -34,6 +34,8 @@ import {
 import ProgressBar from '../ProgressBar/ProgressBar';
 import MapIcon from '../icons/map';
 import List from '../icons/list';
+import '../Loading/Loading';
+import Loading from '../Loading/Loading';
 
 const options = {
 	styles: MapStyles,
@@ -198,6 +200,7 @@ class CityView extends Component {
 		super(props);
 
 		this.state = {
+			loading: true,
 			columnSize: 4,
 			offsetX: 0.01,
 			offsetY: 0.23,
@@ -256,18 +259,12 @@ class CityView extends Component {
 		)
 			.then((res) => res.json())
 			.then((locations) =>
-				this.setState({ locations }, () =>
+				this.setState({ locations, loading: false }, () =>
 					console.log('Locations fetched...', locations)
 				)
 			);
 
 		this.geocodeAddress(this.state.city + this.state.state);
-	}
-
-	componentDidUpdate() {
-		//this.handleScreenResize();
-		//	console.log('update');
-		// this.handleLoad();
 	}
 
 	//gets coordinates for the city that was received
@@ -450,35 +447,22 @@ class CityView extends Component {
 	};
 
 	bounceMarker = (id, zoom) => () => {
-		for (let i = 0; i < 630; i++) {
-			let myLatLngA = new google.maps.LatLng({
-				lat: 31.0706176,
-				lng: -97.6388096,
-			});
-			let myLatLngB = new google.maps.LatLng({
-				lat: 33.211996,
-				lng: -97.149138,
-			});
-			let result = google.maps.geometry.spherical.computeDistanceBetween(
-				myLatLngA,
-				myLatLngB
-			);
-			console.log(result * 0.000621371192 + ' miles');
-
-			//console.log('hey-> ' + id);
-			// if (this.state.id === id) {
-			// 	console.log('state id-> ' + this.state.id + '  id-> ' + id);
-			// } else
-			if (zoom == 10) {
-				this.setState({ cardHover: id, drawerOpen: false });
-			} else {
-				this.setState({ cardHover: id });
-			}
+		//console.log('hey-> ' + id);
+		// if (this.state.id === id) {
+		// 	console.log('state id-> ' + this.state.id + '  id-> ' + id);
+		// } else
+		if (zoom == 10) {
+			this.setState({ cardHover: id, drawerOpen: false });
+		} else {
+			this.setState({ cardHover: id });
 		}
 	};
 
 	render() {
-		if (this.state.locations.length == 0) {
+		if (this.state.loading === true) {
+			return <Loading />;
+		}
+		if (this.state.loading === false && this.state.locations.length == 0) {
 			return (
 				<div>
 					<h3 style={{ textAlign: 'center', marginTop: '20%' }}>
@@ -490,6 +474,15 @@ class CityView extends Component {
 				</div>
 			);
 		}
+
+		// <div>
+		// 			<h3 style={{ textAlign: 'center', marginTop: '20%' }}>
+		// 				{' '}
+		// 				No locations found in '{this.state.city}'
+		// 				<Link to="/"> click here </Link> to enter a different
+		// 				city
+		// 			</h3>
+		// 		</div>
 
 		// if (this.state.counter == 0) {
 		// 	console.log('counter is 0');

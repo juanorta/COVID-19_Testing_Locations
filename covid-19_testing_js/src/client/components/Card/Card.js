@@ -6,6 +6,7 @@ import {
 	FaClinicMedical,
 	FaMapPin,
 	FaMapMarkedAlt,
+	FaCar,
 } from 'react-icons/fa';
 import CityView from '../CityView/CityView';
 
@@ -14,17 +15,37 @@ const SiteCard = (props) => {
 	// 	console.log('more info clicked');
 	// }
 	//	console.log(props.id);
-
+	let miles = true;
+	if (props.miles == null) {
+		console.log('empty miles');
+		miles = false;
+	}
 	return (
 		<div className="card">
 			<h2>{props.locationFacility}</h2>
-			<h3>
-				{' '}
-				<a className="map-marker">
-					<FaMapPin />{' '}
-				</a>{' '}
-				{props.locationAddress}
-			</h3>
+			{miles === true ? (
+				<div className="car-container">
+					{' '}
+					<a
+						className="car"
+						style={{ height: '0.5rem', color: '#fa121a' }}
+					>
+						<FaCar />{' '}
+					</a>{' '}
+					<h3> {props.miles} miles away</h3>
+				</div>
+			) : (
+				<div>
+					<h3>
+						{' '}
+						<a className="map-marker">
+							<FaMapPin />{' '}
+						</a>{' '}
+						{props.locationAddress} miles away
+					</h3>
+				</div>
+			)}
+
 			<h3>
 				{' '}
 				<div className="clinc-map-row">
@@ -52,7 +73,8 @@ const SiteCard = (props) => {
 					props.lat,
 					props.lng,
 					props.hours,
-					props.id
+					props.id,
+					props.miles
 				)}
 			>
 				More Info

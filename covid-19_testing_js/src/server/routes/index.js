@@ -68,22 +68,27 @@ router.get('/citystate/:city&:state', async (req, res) => {
 	}
 });
 
-router.get('/userlocation/:lat&:lng&:radius&:state', async (req, res) => {
-	try {
-		let results = await db.userLocationQuery(
-			req.params.lat,
-			req.params.lng,
-			req.params.radius,
-			req.params.state
-		);
-		console.log('ok');
+router.get(
+	'/userlocation/:locationAccess&:city&:lat&:lng&:radius&:state',
+	async (req, res) => {
+		try {
+			let results = await db.userLocationQuery(
+				req.params.locationAccess,
+				req.params.city,
+				req.params.lat,
+				req.params.lng,
+				req.params.radius,
+				req.params.state
+			);
+			console.log('ok');
 
-		//res.status(200).json(results);
-		//res.status(200);
-		return res.json(results);
-	} catch (e) {
-		return res.sendStatus(500);
+			//res.status(200).json(results);
+			//res.status(200);
+			return res.json(results);
+		} catch (e) {
+			return res.sendStatus(500);
+		}
 	}
-});
+);
 
 module.exports = router;

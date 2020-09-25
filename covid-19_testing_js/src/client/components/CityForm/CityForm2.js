@@ -10,10 +10,12 @@ import {
 	withRouter,
 	button,
 	Link,
+	useHistory,
 } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaMapMarker, FaLocationArrow } from 'react-icons/fa';
 import AutoComplete from 'react-google-autocomplete';
+import Geocode from 'react-geocode';
 import PropTypes from 'prop-types';
 import Search from '../icons/search';
 class CityForm2 extends Component {
@@ -25,22 +27,78 @@ class CityForm2 extends Component {
 			state: 'stateDefault',
 			found: true,
 			selected: false,
-			city2: '',
+			city2: 'uh',
+			radius: 0,
+			clicked: 'none',
+			lat: '',
+			lng: '',
+			textboxClicked: false,
+			placeholder: 'Enter City',
+			userLocation: false,
+			placeSelected: false,
 		};
+		this.setWrapperRef = this.setWrapperRef.bind(this);
+		this.handleClickOutside = this.handleClickOutside.bind(this);
 	}
-	typingTimer = null;
+
 	//sets city everytime there's a change in the textbox
 	// static contextTypes = {
 	// 	router: PropTypes.object,
 	// };
 	componentDidMount() {
 		this.geocoder = new google.maps.Geocoder();
+
+		document.addEventListener('mousedown', this.handleClickOutside);
+		console.log(navigator.geolocation.getCurrentPosition);
 	}
 
+	setUserlocation = () => {
+		console.log('location');
+
+		navigator.geolocation.getCurrentPosition((position) => {
+			this.setState(
+				{
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+					textboxClicked: false,
+					placeholder: 'My Location',
+					userLocation: true,
+				},
+				() => {
+					console.log(this.state);
+				}
+			);
+		});
+		//console.log(navigator.geolocation.getCurrentPosition(position));
+	};
+
+	handleClickOutside(event) {
+		//console.log('click outside called');
+		if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+			if (this.state.lat == '') {
+				setTimeout(() => {
+					console.log('empty lat');
+					this.setState({ textboxClicked: false });
+				}, 125);
+			}
+		}
+
+		//this.setState({ textboxClicked: true });
+	}
+
+	handleSubmit = (event) => {
+		console.log('submit');
+
+		event.preventDefault();
+	};
 	//takes in user input and converts that into a address object that contains a lot of information about the input
 	//if the input is a city, it sets the city and state of that location and sends it to the url
 	geocodeAddress = (address) => {
-		//console.log('PARSE CALLED = ' + address);
+		console.log('PARSE CALLED = ' + address);
+		console.log('USER LOCATION SELECTED = ' + this.state.userLocation);
+
+		//console.log('PLACE SELECTED = ' + this.state.placeSelected);
+		//setTimeout(function () {}, 3000);
 		if (address == 'temple' || address == 'Temple') {
 			address = 'temple tx';
 		} else if (address == 'georgetown' || address == 'Georgetown') {
@@ -51,6 +109,7 @@ class CityForm2 extends Component {
 			function handleResults(results, status) {
 				if (status === google.maps.GeocoderStatus.OK) {
 					console.log(results);
+					console.log(results[0].geometry.location.toString());
 					console.log(
 						'Geocoder results ->' +
 							results[0].address_components[0].short_name
@@ -58,50 +117,123 @@ class CityForm2 extends Component {
 
 					if (
 						results[0].address_components[0].short_name ==
-							'New York' ||
-						this.state.city == 'New York'
+						'New York'
 					) {
 						this.setState(
 							{
 								city:
 									results[0].address_components[0].long_name,
-								state: 'New York',
-								selected: true,
+								state:
+									results[0].address_components[0].long_name,
 							},
 							() => {
 								console.log(this.state);
 							}
 						);
 
-						this.props.history.push(
-							`/citystate/${this.state.city}&${this.state.state}`
+						// this.props.history.push(
+						// 	`/citystate/${this.state.city}&${this.state.state}`
+						// );
+					}
+
+					if (this.state.state == 'stateDefault') {
+						this.setState(
+							{
+								city:
+									results[0].address_components[0].long_name,
+								state:
+									results[0].address_components[2].long_name,
+								lat: results[0].geometry.location.lat(),
+								lng: results[0].geometry.location.lng(),
+
+								// selected: true,
+							},
+							() => {
+								console.log(this.state);
+							}
 						);
 					}
 
-					this.setState(
-						{
-							city: results[0].address_components[0].long_name,
-							state: results[0].address_components[2].long_name,
-							selected: true,
-						},
-						() => {
-							console.log(this.state);
-						}
-					);
 					// this.context.router.history.push(
 					// 	`/citystate/${this.state.city}&${this.state.state}`
 					// );
 
-					this.props.history.push(
-						`/citystate/${this.state.city}&${this.state.state}`
-					);
+					if (this.state.clicked == true) {
+						if (this.state.radius == 0) {
+							this.props.history.push(
+								`/citystate/${this.state.city}&${this.state.state}`
+							);
+						}
+						if (this.state.radius != 0) {
+							//check if onplacecalled is true. if it is, look up coordinates for this.state.city
+							console.log('no user coordinates but has radius');
+							if (this.state.placeSelected === true) {
+								console.log('USE THIS.STATE.CITY');
+								this.setState(
+									{
+										lat: this.state.lat,
+										lng: this.state.lng,
+									},
+									() => {
+										this.props.history.push(
+											`/userlocation/${this.state.userLocation}&${this.state.city}&${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
+										);
+									}
+								);
+							} else {
+								this.setState(
+									{
+										lat: results[0].geometry.location.lat(),
+										lng: results[0].geometry.location.lng(),
+									},
+									() => {
+										this.props.history.push(
+											`/userlocation/${this.state.userLocation}&${this.state.city}&${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
+										);
+									}
+								);
+							}
+						}
+					} else if (this.state.clicked == false) {
+						console.log('user coordinates');
+						this.setState(
+							{
+								city:
+									results[0].address_components[0].long_name,
+								state:
+									results[0].address_components[4].long_name,
+							},
+							() => {
+								this.props.history.push(
+									`/userlocation/${this.state.userLocation}&${this.state.city}&${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
+								);
+							}
+						);
+					}
+					// this.props.history.push(
+					// 	`/citystate/${this.state.city}&${this.state.state}`
+					// );
+					return;
 				} else {
-					console.log('not ok');
+					// this.props.history.push(
+					// 	`/userlocation/${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
+					// );
+					console.log(status);
+					if (this.state.radius != 0) {
+						console.log('radius not zero = ' + this.state.radius);
+						this.props.history.push(
+							`/userlocation/${this.state.userLocation}&${this.state.city}&${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
+						);
+					} else {
+						console.log('radius zero');
+						this.props.history.push(
+							`/citystate/${this.state.city}&${this.state.state}`
+						);
+					}
 				}
 			}.bind(this)
 		);
 	};
-
 	// receives user-entered input and autocomplete-selected input as 'place.'
 	// on submit, if place.formatted_address is undefined, then it was a user-entered input and feeds that info to
 	// the geocoder
@@ -110,65 +242,160 @@ class CityForm2 extends Component {
 		console.log(place.formatted_address);
 		console.log(place);
 
+		console.log('place selected handler called');
+
 		if (place.formatted_address === undefined) {
 			console.log('place is undefined');
 			//geocode place.name
-
-			this.geocodeAddress(place.name);
+			this.setState(
+				{
+					placeSelected: true,
+				},
+				() => {
+					this.geocodeAddress(place.name);
+				}
+			);
 		} else {
 			console.log('not undefined');
 			//geocode formatted_address
-			this.geocodeAddress(place.formatted_address);
+			this.setState(
+				{
+					placeSelected: true,
+				},
+				() => {
+					this.geocodeAddress(place.formatted_address);
+				}
+			);
 		}
-	};
-	handleSubmit = (event) => {
-		console.log('submit');
-
-		event.preventDefault();
 	};
 
 	//grabs city2 and puts it in the geocoder
 	handleChange = (event) => {
 		console.log(event.target.value);
+
+		if (this.state.lat != '') {
+			this.setState(
+				{ placeholder: 'Enter City', lat: '', lng: '' },
+				() => {
+					console.log(this.state);
+				}
+			);
+		}
+
 		this.setState({
 			city2: event.target.value,
+			textboxClicked: false,
 		});
 	};
 
 	//grabs city2 and puts it in the geocoder
 	handleClick = (event) => {
+		console.log(event.detail);
 		//get whatever value is set from handle change city2 state2
 		// put that value in the geocoder
-		if (event.detail == 1) {
-			this.geocodeAddress(this.state.city2);
+		//let city2 = event.target.city;
+
+		if (event.detail == 1 && this.state.userLocation === false) {
+			this.setState({ clicked: true }, () => {
+				this.geocodeAddress(this.state.city2);
+			});
+		} else if (event.detail == 1 && this.state.userLocation === true) {
+			this.setState({ clicked: false });
+
+			this.geocodeAddress(this.state.lat + ' ' + this.state.lng);
+			// this.props.history.push(
+			// 	`/userlocation/${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
+			// );
+		} else {
+			console.log('doesnt match either');
+		}
+	};
+
+	handleDropDown = (event) => {
+		console.log(event.target.value);
+
+		if (event.target.value == 0) {
+			this.clearCoordinates();
+		}
+
+		this.setState({ radius: event.target.value }, () => {
+			console.log(this.state);
+		});
+	};
+
+	textClickHandler = () => {
+		console.log('textbox clicked');
+		if (this.state.lat != '') {
+			this.setState({ textboxClicked: false });
+		} else {
+			this.setState({ textboxClicked: true });
+		}
+	};
+
+	setWrapperRef(node) {
+		this.wrapperRef = node;
+	}
+
+	clearCoordinates = () => {
+		if (this.state.userLocation != true) {
+			this.setState({ lat: '', lng: '' }, () => {
+				console.log(this.state);
+			});
 		}
 	};
 	render() {
 		return (
 			<div className="form">
-				<form onSubmit={this.handleSubmit} className="search-box2">
+				<form
+					onSubmit={this.handleSubmit}
+					className="search-box2"
+					ref={this.setWrapperRef}
+				>
 					<AutoComplete
 						onChange={this.handleChange}
 						type="text"
 						onPlaceSelected={this.onPlaceSelectedHandler}
 						className="textbox2"
-						placeholder="Enter City"
+						placeholder={this.state.placeholder}
+						onClick={this.textClickHandler}
 					/>
+					<select
+						className="dropdown2"
+						onChange={this.handleDropDown}
+					>
+						<option value="0" onClick={this.clearCoordinates}>
+							Radius
+						</option>
+						<option value="5">5 miles</option>
+						<option value="10">10 miles</option>
+						<option value="25">25 miles</option>
+						<option value="50">50 miles</option>
+					</select>
 
-					{this.state.selected ? (
+					{/* {this.state.selected ? (
 						<Link
 							to={`/citystate/${this.state.city}&${this.state.state}`}
-						>
-							{/* <a className="search-btn2">
+						> */}
+					{/* <a className="search-btn2">
 								<FaSearch /> <button />
 							</a> */}
-						</Link>
-					) : (
-						<a className="search-btn2" onClick={this.handleClick}>
-							<Search />
-							{/* <Search /> <button /> */}
-						</a>
-					)}
+					{/* </Link>
+					// ) : ( */}
+					<a className="search-btn2" onClick={this.handleClick}>
+						<Search /> <button />
+					</a>
+					{this.state.textboxClicked ? (
+						<div className="use-location-wrapper">
+							<div
+								className="my-location"
+								onClick={this.setUserlocation}
+							>
+								<FaLocationArrow />
+								<p>Use My Location</p>
+							</div>
+						</div>
+					) : null}
+					{/* )} */}
 				</form>
 			</div>
 		);

@@ -14,6 +14,7 @@ import {
 	FaClock,
 	FaMapPin,
 	FaMapMarkedAlt,
+	FaCar,
 } from 'react-icons/fa';
 
 const FacilityView = (props) => {
@@ -28,6 +29,7 @@ const FacilityView = (props) => {
 	let phoneIsFilled = true;
 	let linkIsFilled = true;
 	let hoursIsFilled = true;
+	let miles = true;
 
 	//checking if strings are empty.
 	//will not display them if they're empty
@@ -45,6 +47,14 @@ const FacilityView = (props) => {
 	if (props.hours == '') {
 		hoursIsFilled = false;
 	}
+
+	console.log(props.miles);
+	if (props.miles == undefined) {
+		console.log('miles not null');
+		miles = false;
+	}
+	//console.log('yolololo');
+
 	// console.log('id==== ' + props.id);
 	console.log('zoom = ' + props.zoom);
 	return (
@@ -55,6 +65,16 @@ const FacilityView = (props) => {
 			></FaArrowLeft>
 			<h1>{props.facility}</h1>
 
+			{miles ? (
+				<p>
+					<a className="map-marker">
+						<FaCar />
+						{'  '}
+					</a>
+					{props.miles} miles away
+				</p>
+			) : null}
+
 			<p>
 				<a
 					className="map-marker2"
@@ -64,7 +84,7 @@ const FacilityView = (props) => {
 				</a>
 
 				<a
-					className="map-marker2"
+					className="view-map"
 					onClick={props.bounceMarker(props.id, props.zoom)}
 				>
 					View on map
