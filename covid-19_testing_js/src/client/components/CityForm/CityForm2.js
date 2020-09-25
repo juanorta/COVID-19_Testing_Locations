@@ -36,6 +36,59 @@ class CityForm2 extends Component {
 			placeholder: 'Enter City',
 			userLocation: false,
 			placeSelected: false,
+			states: [
+				'Alabama',
+				'Alaska',
+				'Arizona',
+				'Arkansas',
+				'California',
+				'Colorado',
+				'Connecticut',
+				'Delaware',
+				'Florida',
+				'Georgia',
+				'Hawaii',
+				'Idaho',
+				'Illinois',
+				'Indiana',
+				'Iowa',
+				'Kansas',
+				'Kentucky',
+				'Louisiana',
+				'Maine',
+				'Maryland',
+				'Massachusetts',
+				'Michigan',
+				'Minnesota',
+				'Mississippi',
+				'Missouri',
+				'Montana',
+				'Nebraska',
+				'Nevada',
+				'New Hampshire',
+				'New Jersey',
+				'New Mexico',
+				'New York',
+				'North Carolina',
+				'North Dakota',
+				'Ohio',
+				'Oklahoma',
+				'Oregon',
+				'Pennsylvania',
+				'Rhode Island',
+				'South Carolina',
+				'South Dakota',
+				'Tennessee',
+				'Texas',
+				'Utah',
+				'Vermont',
+				'Virginia',
+				'Washington',
+				'West Virginia',
+				'Wisconsin',
+				'Wyoming',
+				'District of Columbia',
+			],
 		};
 		this.setWrapperRef = this.setWrapperRef.bind(this);
 		this.handleClickOutside = this.handleClickOutside.bind(this);
@@ -96,9 +149,7 @@ class CityForm2 extends Component {
 	geocodeAddress = (address) => {
 		console.log('PARSE CALLED = ' + address);
 		console.log('USER LOCATION SELECTED = ' + this.state.userLocation);
-
-		//console.log('PLACE SELECTED = ' + this.state.placeSelected);
-		//setTimeout(function () {}, 3000);
+		let stateResult = '';
 		if (address == 'temple' || address == 'Temple') {
 			address = 'temple tx';
 		} else if (address == 'georgetown' || address == 'Georgetown') {
@@ -114,6 +165,31 @@ class CityForm2 extends Component {
 						'Geocoder results ->' +
 							results[0].address_components[0].short_name
 					);
+
+					for (
+						let i = 0;
+						i < results[0].address_components.length;
+						i++
+					) {
+						// console.log(
+						// 	i + ' ' + results[0].address_components[i].long_name
+						// );
+						for (let j = 0; j < this.state.states.length; j++) {
+							if (
+								results[0].address_components[i].long_name ==
+								this.state.states[j]
+							) {
+								console.log(
+									'address_components[' +
+										i +
+										'] = ' +
+										this.state.states[j]
+								);
+
+								stateResult = this.state.states[j];
+							}
+						}
+					}
 
 					if (
 						results[0].address_components[0].short_name ==
@@ -141,8 +217,7 @@ class CityForm2 extends Component {
 							{
 								city:
 									results[0].address_components[0].long_name,
-								state:
-									results[0].address_components[2].long_name,
+								state: stateResult,
 								lat: results[0].geometry.location.lat(),
 								lng: results[0].geometry.location.lng(),
 
@@ -385,9 +460,9 @@ class CityForm2 extends Component {
 						<Search /> <button />
 					</a>
 					{this.state.textboxClicked ? (
-						<div className="use-location-wrapper">
+						<div className="use-location-wrapper2">
 							<div
-								className="my-location"
+								className="my-location2"
 								onClick={this.setUserlocation}
 							>
 								<FaLocationArrow />

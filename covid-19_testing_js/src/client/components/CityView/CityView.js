@@ -459,7 +459,7 @@ class CityView extends Component {
 	};
 
 	render() {
-		if (this.state.loading === true) {
+		if (this.state.loading == true) {
 			return <Loading />;
 		}
 		if (this.state.loading === false && this.state.locations.length == 0) {

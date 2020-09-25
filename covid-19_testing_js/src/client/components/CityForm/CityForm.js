@@ -42,6 +42,59 @@ class CityForm extends Component {
 			placeholder: 'Enter City',
 			userLocation: false,
 			placeSelected: false,
+			states: [
+				'Alabama',
+				'Alaska',
+				'Arizona',
+				'Arkansas',
+				'California',
+				'Colorado',
+				'Connecticut',
+				'Delaware',
+				'Florida',
+				'Georgia',
+				'Hawaii',
+				'Idaho',
+				'Illinois',
+				'Indiana',
+				'Iowa',
+				'Kansas',
+				'Kentucky',
+				'Louisiana',
+				'Maine',
+				'Maryland',
+				'Massachusetts',
+				'Michigan',
+				'Minnesota',
+				'Mississippi',
+				'Missouri',
+				'Montana',
+				'Nebraska',
+				'Nevada',
+				'New Hampshire',
+				'New Jersey',
+				'New Mexico',
+				'New York',
+				'North Carolina',
+				'North Dakota',
+				'Ohio',
+				'Oklahoma',
+				'Oregon',
+				'Pennsylvania',
+				'Rhode Island',
+				'South Carolina',
+				'South Dakota',
+				'Tennessee',
+				'Texas',
+				'Utah',
+				'Vermont',
+				'Virginia',
+				'Washington',
+				'West Virginia',
+				'Wisconsin',
+				'Wyoming',
+				'District of Columbia',
+			],
 		};
 		console.log(this.state);
 		this.setWrapperRef = this.setWrapperRef.bind(this);
@@ -111,7 +164,7 @@ class CityForm extends Component {
 	geocodeAddress = (address) => {
 		console.log('PARSE CALLED = ' + address);
 		console.log('USER LOCATION SELECTED = ' + this.state.userLocation);
-
+		let stateResult = '';
 		//console.log('PLACE SELECTED = ' + this.state.placeSelected);
 		//setTimeout(function () {}, 3000);
 		if (address == 'temple' || address == 'Temple') {
@@ -129,6 +182,31 @@ class CityForm extends Component {
 						'Geocoder results ->' +
 							results[0].address_components[0].short_name
 					);
+
+					for (
+						let i = 0;
+						i < results[0].address_components.length;
+						i++
+					) {
+						// console.log(
+						// 	i + ' ' + results[0].address_components[i].long_name
+						// );
+						for (let j = 0; j < this.state.states.length; j++) {
+							if (
+								results[0].address_components[i].long_name ==
+								this.state.states[j]
+							) {
+								console.log(
+									'address_components[' +
+										i +
+										'] = ' +
+										this.state.states[j]
+								);
+
+								stateResult = this.state.states[j];
+							}
+						}
+					}
 
 					if (
 						results[0].address_components[0].short_name ==
@@ -156,8 +234,7 @@ class CityForm extends Component {
 							{
 								city:
 									results[0].address_components[0].long_name,
-								state:
-									results[0].address_components[2].long_name,
+								state: stateResult,
 								lat: results[0].geometry.location.lat(),
 								lng: results[0].geometry.location.lng(),
 
@@ -360,6 +437,11 @@ class CityForm extends Component {
 	};
 
 	render() {
+		//console.log(this.state.states);
+
+		// for (let i = 0; i < this.state.states.length; i++) {
+		// 	console.log(i + ' = ' + this.state.states[i]);
+		// }
 		return (
 			<div className="form">
 				{this.state.userLocation ? (

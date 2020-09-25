@@ -313,7 +313,11 @@ class UserView extends Component {
 				loading: false,
 			});
 		});
-		console.log(this.state.locations);
+		console.log(this.state.locations.length);
+		if (this.state.locations == 0) {
+			this.setState({ loading: false });
+		}
+		//this.forceUpdate();
 	};
 
 	handleMouseOver(locationID) {
@@ -518,6 +522,7 @@ class UserView extends Component {
 		if (this.state.loading === true) {
 			return <Loading />;
 		}
+
 		if (this.state.loading === false && this.state.locations.length == 0) {
 			return (
 				<div>
@@ -554,6 +559,7 @@ class UserView extends Component {
 			}
 			//console.log(toggleLocationContainer);
 		}
+
 		return (
 			<div className="city-view">
 				<div className="navbar">
