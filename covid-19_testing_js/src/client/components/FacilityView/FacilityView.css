@@ -1,5 +1,6 @@
 .facility-view {
 	margin-top: 3rem;
+	position: relative;
 }
 
 .facility-view h1 {
@@ -11,6 +12,8 @@
 }
 
 .back-arrow {
+	position: relative;
+	z-index: 600;
 	color: #ff3b42;
 	height: 30px;
 	width: 30px;
@@ -66,6 +69,9 @@
 }
 
 @media only screen and (max-width: 600px) {
+	.facility-view {
+		margin-top: 3px;
+	}
 	.facility-view h1 {
 		font-size: 1.5rem;
 	}

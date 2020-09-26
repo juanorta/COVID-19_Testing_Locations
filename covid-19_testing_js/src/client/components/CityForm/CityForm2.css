@@ -5,6 +5,8 @@
 	margin-top: -3%;
 	margin-bottom: -4.5%;
 	text-align: center;
+	z-index: 300;
+	background-color: transparent;
 }
 .form h1 {
 	font-family: 'Montserrat', sans-serif;
@@ -13,7 +15,7 @@
 .form button {
 	display: none;
 }
-::placeholder {
+.placeholder {
 	color: white;
 }
 
@@ -21,7 +23,7 @@
 	/* background-color: #ff3b42; */
 	background-image: linear-gradient(to right, #ff3b42, #f98487);
 	position: absolute;
-	top: 43%;
+	top: 45%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	border-radius: 200px;
@@ -44,7 +46,6 @@
 	width: 240px;
 	color: white;
 	font-size: 1.25rem;
-	transition: 0.25s;
 	line-height: 20px;
 	height: 1.5rem;
 	font-family: 'Montserrat', sans-serif;
@@ -85,26 +86,47 @@
 	border-top: white;
 	border-bottom: white;
 	padding-left: 4rem;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 400;
 }
 
-.form .use-location-wrapper {
+.use-location-wrapper2 {
 	background-color: white;
 	margin-left: -0.5rem;
-	margin-top: 1.8rem;
-	width: 260px;
+	margin-top: 1.2rem;
+	width: 220px;
 	font-size: 1.2rem;
-	height: 25px;
+	height: 35px;
 	border: solid grey 2px;
-	z-index: 2000;
+	position: absolute;
+	z-index: 500;
 }
 
-.form .my-location {
-	margin-top: 0.1rem;
+.my-location2 {
+	margin-top: 0.25rem;
 	height: 20px;
 	background-color: transparent;
 	color: black;
 	width: 260px;
-	margin-left: -1rem;
+	margin-left: -1.5rem;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 500;
+}
+
+.my-location2 p {
+	height: 20px;
+	display: inline;
+	margin-left: 1.5rem;
+	font-size: 1.2rem;
+}
+
+.use-location-wrapper2:hover {
+	background-image: linear-gradient(to right, #ff3b42, #f98487);
+	cursor: pointer;
+}
+
+.use-location-wrapper2:hover .my-location2 {
+	color: white;
 }
 
 .search-btn2:hover {
@@ -129,7 +151,160 @@
 	}
 }
 
-@media (max-width: 768px) {
+@media only screen and (max-width: 600px) {
+	.test2 {
+		background: green;
+	}
+
+	.form {
+		z-index: 500;
+	}
+
+	.search-btn2 {
+		margin-top: -1rem;
+		height: 25px;
+		width: 25px;
+	}
+	.search-box2 {
+		margin-top: -1rem;
+		width: 200px;
+		margin-left: 0.25rem;
+		height: 0.5rem;
+		transition: 0.25s;
+	}
+
+	.textbox2 {
+		width: 150px;
+		height: 2rem;
+		margin-top: -0.8rem;
+		font-size: 1rem;
+		background-color: transparent;
+	}
+
+	.dropdown2 {
+		width: 6rem;
+		display: none;
+		height: 1.5rem;
+		float: right;
+		margin-top: -0.5rem;
+		font-size: 1rem;
+		padding-left: 1.2rem;
+		border-width: 0.25px;
+		border-color: transparent;
+		border-left-color: white;
+		border-radius: 0%;
+	}
+
+	.use-location-wrapper2 {
+		font-size: 0.8rem;
+		margin-top: 1.5rem;
+		height: 1.7rem;
+	}
+
+	.my-location2 p {
+		height: 20px;
+		display: inline;
+		margin-left: 1.5rem;
+		font-size: 0.9rem;
+	}
+
+	.search-box2:hover {
+		width: 340px;
+		/* line-height: 1.5rem;
+		 padding: 0 0px; 
+		height: 2.5rem;
+		line-height: 2rem; */
+	}
+	.search-box2:hover > .dropdown2 {
+		display: block;
+		/* line-height: 1.5rem;
+		 padding: 0 0px; 
+		height: 2.5rem;
+		line-height: 2rem; */
+	}
+
+	.search-box2:hover > .search-btn2 {
+		margin-right: -7rem;
+		/* line-height: 1.5rem;
+		 padding: 0 0px; 
+		height: 2.5rem;
+		line-height: 2rem; */
+	}
+
+	.textbox2:focus > .dropdown2 {
+		display: flex;
+	}
+}
+
+@media only screen and (min-width: 768px) {
+	.test {
+		background: blue;
+	}
+
+	.search-box2 {
+		margin-top: -30px;
+		height: 0.5rem;
+	}
+	.search-btn2 {
+		height: 25px;
+		width: 25px;
+		margin-top: -1rem;
+	}
+	.textbox2 {
+		/* width: 200px; */
+		height: 4.5rem;
+		margin-top: -0.8rem;
+		font-size: 1.25rem;
+		background-color: transparent;
+		color: white;
+	}
+}
+
+@media only screen and (min-width: 992px) {
+	.test {
+		background: orange;
+	}
+	.textbox2 {
+		/* width: 200px; */
+		width: 0px;
+		height: 2.5rem;
+		margin-top: -0.8rem;
+		font-size: 1.25rem;
+		background-color: transparent;
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.test {
+		background: pink;
+	}
+
+	.search-box2 {
+		margin-top: -0px;
+		height: 0.25rem;
+	}
+	.search-btn2 {
+		height: 25px;
+		width: 25px;
+		margin-top: -1rem;
+	}
+	.textbox2 {
+		/* width: 200px; */
+		width: 300px;
+		height: 2.5rem;
+		margin-top: -1.1rem;
+		font-size: 1.15rem;
+		background-color: transparent;
+	}
+
+	.dropdown2 {
+		margin-top: -0.55rem;
+		height: 1.5rem;
+		font-size: 1.15rem;
+	}
+}
+
+/* @media (max-width: 768px) {
 	.search-btn2 {
 		margin-top: -2.5rem;
 		height: 25px;
@@ -149,14 +324,14 @@
 	.textbox2:focus {
 		width: 200px;
 		line-height: 1.5rem;
-		/* padding: 0 0px; */
+		/* padding: 0 0px; 
 	}
 
 	.dropdown2 {
 		background-color: green;
 	}
-}
-@media (max-width: 1440px) and (min-width: 1224px) {
+} */
+/* @media (max-width: 1440px) and (min-width: 1224px) {
 	.search-box2 {
 		height: 0rem;
 	}
@@ -172,13 +347,13 @@
 		font-size: 1.1rem;
 	}
 	.dropdown2 {
-		/* background-color: green; */
+		/* background-color: green; 
 		height: 1.2rem;
 		margin-top: -0.5rem;
 	}
-}
+} */
 
-@media (min-width: 1440px) and (max-width: 1920px) {
+/* @media (min-width: 1440px) and (max-width: 1920px) {
 	.search-box2 {
 		height: 0rem;
 	}
@@ -194,16 +369,16 @@
 		font-size: 1.1rem;
 	}
 	.dropdown2 {
-		/* background-color: green; */
+		/* background-color: green;
 		height: 1.2rem;
 		margin-top: -0.5rem;
 	}
-}
+} */
 
-@media (min-width: 1824px) {
+/* @media (min-width: 1824px) {
 	.textbox2:focus {
 		width: 270px;
 		line-height: 1.5rem;
-		/* padding: 0 0px; */
+		/* padding: 0 0px; 
 	}
-}
+} */

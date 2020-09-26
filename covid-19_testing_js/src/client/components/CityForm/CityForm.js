@@ -25,6 +25,7 @@ import Geocode from 'react-geocode';
 import PropTypes from 'prop-types';
 import { browseHistory } from 'react-router';
 import Search from '../icons/search';
+import TextboxLoad from '../Loading/TextboxLoad';
 
 class CityForm extends Component {
 	constructor(props) {
@@ -42,6 +43,7 @@ class CityForm extends Component {
 			placeholder: 'Enter City',
 			userLocation: false,
 			placeSelected: false,
+			userLocationLoading: '',
 			states: [
 				'Alabama',
 				'Alaska',
@@ -121,6 +123,7 @@ class CityForm extends Component {
 
 	setUserlocation = () => {
 		console.log('location');
+		this.setState({ userLocationLoading: true });
 
 		navigator.geolocation.getCurrentPosition((position) => {
 			this.setState(
@@ -130,6 +133,7 @@ class CityForm extends Component {
 					textboxClicked: false,
 					placeholder: 'My Location',
 					userLocation: true,
+					userLocationLoading: false,
 				},
 				() => {
 					console.log(this.state);
@@ -444,10 +448,6 @@ class CityForm extends Component {
 		// }
 		return (
 			<div className="form">
-				{this.state.userLocation ? (
-					<div className="location">location</div>
-				) : null}
-
 				<form
 					onSubmit={this.handleSubmit}
 					className="search-box"
@@ -462,6 +462,12 @@ class CityForm extends Component {
 						placeholder={this.state.placeholder}
 						onClick={this.textClickHandler}
 					/>
+					{this.state.userLocationLoading ? (
+						<div className="spin-container">
+							<TextboxLoad />
+						</div>
+					) : null}
+
 					<select className="dropdown" onChange={this.handleDropDown}>
 						<option value="0" onClick={this.clearCoordinates}>
 							Radius

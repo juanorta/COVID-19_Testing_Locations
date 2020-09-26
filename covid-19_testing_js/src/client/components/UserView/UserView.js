@@ -227,10 +227,7 @@ class UserView extends Component {
 	}
 
 	componentDidMount() {
-		console.log('state = ' + this.state.state);
-		console.log('lat = ' + this.state.defaultLat);
-		console.log('lng = ' + this.state.defaultLng);
-		console.log('radius = ' + this.state.radius);
+		console.log(window.innerWidth);
 		this.handleScreenResize();
 		this.handleMapOffsets();
 		this.handleLoad();
@@ -412,7 +409,7 @@ class UserView extends Component {
 	handleScreenResize = () => {
 		//console.log('ok');
 		console.log('width = ' + window.innerWidth);
-		if (window.innerWidth <= 2560 && window.innerWidth > 1824) {
+		if (window.innerWidth > 1824) {
 			this.setState({ columnSize: 3 });
 		}
 		if (

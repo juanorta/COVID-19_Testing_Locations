@@ -2,6 +2,7 @@ import React from 'react';
 import Lottie from 'react-lottie';
 // import * as data from '../Loading/data.json';
 import * as handwashing from './handwashing.json';
+import './loading.css';
 
 const defaultOptions = {
 	loop: true,
@@ -15,7 +16,7 @@ const defaultOptions = {
 
 const Loading = () => {
 	return (
-		<div style={{ marginTop: '20%' }}>
+		<div className="loading">
 			<Lottie options={defaultOptions} height={200} width={200} />
 		</div>
 	);

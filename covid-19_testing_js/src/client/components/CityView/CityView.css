@@ -35,11 +35,12 @@
 	overflow-y: scroll;
 	padding-right: 1rem;
 	padding-left: 2rem;
-	z-index: 100;
+
 	background-color: white;
 	position: absolute;
 	top: 130;
 	left: 0;
+	z-index: 400;
 }
 
 .show-list {
@@ -121,6 +122,7 @@
 @media (max-width: 768px) {
 	.location-column-container {
 		height: 76vh;
+		z-index: 500;
 	}
 	.locations {
 		margin-top: -135px;
@@ -135,7 +137,8 @@
 		width: 30px;
 		height: 30px;
 		position: absolute;
-		margin-top: -0.8rem;
+		margin-top: -1.75rem;
+		z-index: 500;
 	}
 
 	.header {

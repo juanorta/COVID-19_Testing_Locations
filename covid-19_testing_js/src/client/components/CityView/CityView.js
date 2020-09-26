@@ -604,6 +604,7 @@ class CityView extends Component {
 								/>
 							) : (
 								<div>
+									<div className="helper"></div>
 									<h1 className="header">
 										Locations in {this.state.city},{' '}
 										{this.state.state}{' '}

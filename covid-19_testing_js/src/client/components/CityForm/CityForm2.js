@@ -18,6 +18,7 @@ import AutoComplete from 'react-google-autocomplete';
 import Geocode from 'react-geocode';
 import PropTypes from 'prop-types';
 import Search from '../icons/search';
+import TextboxLoad from '../Loading/TextboxLoad';
 class CityForm2 extends Component {
 	constructor(props) {
 		super(props);
@@ -36,6 +37,7 @@ class CityForm2 extends Component {
 			placeholder: 'Enter City',
 			userLocation: false,
 			placeSelected: false,
+			userLocationLoading: '',
 			states: [
 				'Alabama',
 				'Alaska',
@@ -107,7 +109,7 @@ class CityForm2 extends Component {
 
 	setUserlocation = () => {
 		console.log('location');
-
+		this.setState({ userLocationLoading: true });
 		navigator.geolocation.getCurrentPosition((position) => {
 			this.setState(
 				{
@@ -116,6 +118,7 @@ class CityForm2 extends Component {
 					textboxClicked: false,
 					placeholder: 'My Location',
 					userLocation: true,
+					userLocationLoading: false,
 				},
 				() => {
 					console.log(this.state);
@@ -434,6 +437,11 @@ class CityForm2 extends Component {
 						placeholder={this.state.placeholder}
 						onClick={this.textClickHandler}
 					/>
+					{this.state.userLocationLoading ? (
+						<div className="spin-container">
+							<TextboxLoad />
+						</div>
+					) : null}
 					<select
 						className="dropdown2"
 						onChange={this.handleDropDown}
