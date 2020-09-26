@@ -296,8 +296,7 @@ class CityForm extends Component {
 							{
 								city:
 									results[0].address_components[0].long_name,
-								state:
-									results[0].address_components[4].long_name,
+								state: stateResult,
 							},
 							() => {
 								this.props.history.push(
