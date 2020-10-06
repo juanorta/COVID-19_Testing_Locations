@@ -5,12 +5,12 @@ console.log(process.env);
 
 //connection to database
 const pool = mysql.createPool({
-	connectionLimit: process.env.REACT_APP_DB_CONNECTION_LIMIT,
-	password: process.env.REACT_APP_DB_PASS,
-	user: process.env.REACT_APP_DB_USER,
-	database: process.env.REACT_APP_DB,
-	host: process.env.REACT_APP_DB_HOST,
-	port: process.env.REACT_APP_DB_PORT,
+	connectionLimit: 99,
+	password: 'Diegito12#',
+	user: 'root',
+	database: 'covid19',
+	host: 'covid2.crn8sokbxdw9.us-east-2.rds.amazonaws.com',
+	port: 3306,
 });
 
 let sitesDB = {};
