@@ -142,10 +142,6 @@ function Map(props) {
 							parseFloat(location.lng)
 						);
 					}}
-					icon={{
-						url: '/marker.svg',
-						scaledSize: new window.google.maps.Size(45, 45),
-					}}
 				/>
 			))}
 
@@ -547,7 +543,7 @@ class CityView extends Component {
 							sm={12}
 						>
 							<WrappedMap
-								googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKHj80KlN5Y0jRboQGOcx_PYJj2odSTsk&libraries=geometry,drawing,places"
+								googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJqYsvcCWQGQvK2wvl67_8BS-Kz92KwRw&libraries=geometry,drawing,places"
 								loadingElement={
 									<div style={{ height: `100%` }} />
 								}
@@ -604,7 +600,6 @@ class CityView extends Component {
 								/>
 							) : (
 								<div>
-									<div className="helper"></div>
 									<h1 className="header">
 										Locations in {this.state.city},{' '}
 										{this.state.state}{' '}
@@ -662,6 +657,7 @@ class CityView extends Component {
 										)}
 										{/* end of map */}
 									</ul>
+									<div className="helper"></div>
 								</div>
 							)}
 						</Grid>

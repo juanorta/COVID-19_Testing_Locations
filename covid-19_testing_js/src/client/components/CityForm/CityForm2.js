@@ -472,8 +472,7 @@ class CityForm2 extends Component {
 								className="my-location2"
 								onClick={this.setUserlocation}
 							>
-								<FaLocationArrow />
-								<p>Use My Location</p>
+								<p>My Location</p>
 							</div>
 						</div>
 					) : null}

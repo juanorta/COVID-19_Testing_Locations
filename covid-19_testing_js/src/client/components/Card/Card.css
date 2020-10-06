@@ -112,12 +112,12 @@
 
 @media (max-width: 768px) {
 	.card h2 {
-		font-size: 1rem;
-		padding-left: 2rem;
+		font-size: 0.6rem;
+		padding-left: 1.2rem;
 	}
 	.card h3 {
 		font-size: 1 0.9rem;
-		padding-left: 2rem;
+		padding-left: 1.3rem;
 	}
 	.card {
 		height: 15rem;
@@ -131,6 +131,10 @@
 
 	.view-on-map {
 		font-size: 1rem;
+	}
+
+	.car {
+		margin-left: 1.2rem;
 	}
 }
 
@@ -188,6 +192,17 @@
 @media (min-width: 1440px) and (max-width: 1920px) {
 	.card button {
 		height: 2.5rem;
-		font-size: 1rem;
+		font-size: 0.9rem;
+	}
+
+	.card h3 {
+		font-size: 0.9rem;
+	}
+
+	.card h2 {
+		font-size: 0.9rem;
+	}
+	.card a {
+		font-size: 0.9rem;
 	}
 }

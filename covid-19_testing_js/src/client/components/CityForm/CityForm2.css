@@ -3,10 +3,11 @@
 	position: relative;
 	font-size: 2rem;
 	margin-top: -3%;
-	margin-bottom: -4.5%;
+	margin-bottom: -7.5%;
 	text-align: center;
 	z-index: 300;
 	background-color: transparent;
+	padding-bottom: -1rem;
 }
 .form h1 {
 	font-family: 'Montserrat', sans-serif;
@@ -99,7 +100,7 @@
 	height: 35px;
 	border: solid grey 2px;
 	position: absolute;
-	z-index: 500;
+	z-index: 700;
 }
 
 .my-location2 {
@@ -117,7 +118,7 @@
 	height: 20px;
 	display: inline;
 	margin-left: 1.5rem;
-	font-size: 1.2rem;
+	font-size: 1rem;
 }
 
 .use-location-wrapper2:hover {
@@ -174,9 +175,10 @@
 	}
 
 	.textbox2 {
-		width: 150px;
+		width: 140px;
 		height: 2rem;
 		margin-top: -0.8rem;
+		margin-left: -0.5rem;
 		font-size: 1rem;
 		background-color: transparent;
 	}
@@ -204,12 +206,12 @@
 	.my-location2 p {
 		height: 20px;
 		display: inline;
-		margin-left: 1.5rem;
+		margin-left: -0.5rem;
 		font-size: 0.9rem;
 	}
 
 	.search-box2:hover {
-		width: 340px;
+		width: 300px;
 		/* line-height: 1.5rem;
 		 padding: 0 0px; 
 		height: 2.5rem;
@@ -236,41 +238,89 @@
 	}
 }
 
-@media only screen and (min-width: 768px) {
-	.test {
-		background: blue;
+@media only screen and (max-width: 1199px) {
+	.test2 {
+		background: green;
 	}
 
-	.search-box2 {
-		margin-top: -30px;
-		height: 0.5rem;
+	.form {
+		z-index: 500;
 	}
+
 	.search-btn2 {
+		margin-top: -1rem;
 		height: 25px;
 		width: 25px;
+	}
+	.search-box2 {
 		margin-top: -1rem;
+		width: 200px;
+		margin-left: 0.25rem;
+		height: 0.5rem;
+		transition: 0.25s;
 	}
-	.textbox2 {
-		/* width: 200px; */
-		height: 4.5rem;
-		margin-top: -0.8rem;
-		font-size: 1.25rem;
-		background-color: transparent;
-		color: white;
-	}
-}
 
-@media only screen and (min-width: 992px) {
-	.test {
-		background: orange;
-	}
 	.textbox2 {
-		/* width: 200px; */
-		width: 0px;
-		height: 2.5rem;
+		width: 140px;
+		height: 2rem;
 		margin-top: -0.8rem;
-		font-size: 1.25rem;
+		margin-left: -0.5rem;
+		font-size: 1rem;
 		background-color: transparent;
+	}
+
+	.dropdown2 {
+		width: 6rem;
+		display: none;
+		height: 1.5rem;
+		float: right;
+		margin-top: -0.5rem;
+		font-size: 1rem;
+		padding-left: 1.2rem;
+		border-width: 0.25px;
+		border-color: transparent;
+		border-left-color: white;
+		border-radius: 0%;
+	}
+
+	.use-location-wrapper2 {
+		font-size: 0.8rem;
+		margin-top: 1.5rem;
+		height: 1.7rem;
+	}
+
+	.my-location2 p {
+		height: 20px;
+		display: inline;
+		margin-left: -0.5rem;
+		font-size: 0.9rem;
+	}
+
+	.search-box2:hover {
+		width: 300px;
+		/* line-height: 1.5rem;
+			 padding: 0 0px; 
+			height: 2.5rem;
+			line-height: 2rem; */
+	}
+	.search-box2:hover > .dropdown2 {
+		display: block;
+		/* line-height: 1.5rem;
+			 padding: 0 0px; 
+			height: 2.5rem;
+			line-height: 2rem; */
+	}
+
+	.search-box2:hover > .search-btn2 {
+		margin-right: -7rem;
+		/* line-height: 1.5rem;
+			 padding: 0 0px; 
+			height: 2.5rem;
+			line-height: 2rem; */
+	}
+
+	.textbox2:focus > .dropdown2 {
+		display: flex;
 	}
 }
 
@@ -280,8 +330,8 @@
 	}
 
 	.search-box2 {
-		margin-top: -0px;
-		height: 0.25rem;
+		margin-top: -4px;
+		height: 0rem;
 	}
 	.search-btn2 {
 		height: 25px;
@@ -293,17 +343,76 @@
 		width: 300px;
 		height: 2.5rem;
 		margin-top: -1.1rem;
-		font-size: 1.15rem;
+		font-size: 1rem;
 		background-color: transparent;
 	}
 
 	.dropdown2 {
 		margin-top: -0.55rem;
 		height: 1.5rem;
-		font-size: 1.15rem;
+		font-size: 1rem;
+	}
+	.use-location-wrapper2 {
+		font-size: 0.8rem;
+		margin-left: 3.5rem;
+		height: 1.7rem;
+		width: 11rem;
+	}
+
+	.my-location2 p {
+		margin-left: -3rem;
+	}
+
+	.my-location2 {
+		margin-left: -1rem;
 	}
 }
 
+@media only screen and (min-width: 1921px) {
+	.test {
+		background: pink;
+	}
+	/* .form {
+		margin-top: 1%;
+	} */
+	.search-box2 {
+		margin-top: -12px;
+		height: 0rem;
+	}
+	.search-btn2 {
+		height: 25px;
+		width: 25px;
+		margin-top: -1rem;
+	}
+	.textbox2 {
+		/* width: 200px; */
+		width: 300px;
+		height: 2.5rem;
+		margin-top: -1.1rem;
+		font-size: 1rem;
+		background-color: transparent;
+	}
+
+	.dropdown2 {
+		margin-top: -0.55rem;
+		height: 1.5rem;
+		font-size: 1rem;
+	}
+	.use-location-wrapper2 {
+		font-size: 0.8rem;
+		margin-left: 3.5rem;
+		height: 1.7rem;
+		width: 11rem;
+	}
+
+	.my-location2 p {
+		margin-left: -3rem;
+	}
+
+	.my-location2 {
+		margin-left: -1rem;
+	}
+}
 /* @media (max-width: 768px) {
 	.search-btn2 {
 		margin-top: -2.5rem;

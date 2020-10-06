@@ -41,7 +41,7 @@ const SiteCard = (props) => {
 						<a className="map-marker">
 							<FaMapPin />{' '}
 						</a>{' '}
-						{props.locationAddress} miles away
+						{props.locationAddress}
 					</h3>
 				</div>
 			)}

@@ -204,6 +204,7 @@ class UserView extends Component {
 					lng: '',
 				},
 			],
+			amount: '',
 			drawerOpen: true,
 			cardHover: '',
 			moreInfoSelected: false,
@@ -227,7 +228,7 @@ class UserView extends Component {
 	}
 
 	componentDidMount() {
-		console.log(window.innerWidth);
+		console.log('INNER WIDTH => ' + window.innerWidth);
 		this.handleScreenResize();
 		this.handleMapOffsets();
 		this.handleLoad();
@@ -250,7 +251,7 @@ class UserView extends Component {
 
 		setTimeout(() => {
 			this.getLocations();
-		}, 3000);
+		}, 4000);
 		// this.geocodeAddress(this.state.city + this.state.state);
 	}
 
@@ -412,45 +413,47 @@ class UserView extends Component {
 		if (window.innerWidth > 1824) {
 			this.setState({ columnSize: 3 });
 		}
+
 		if (
 			window.innerWidth <= 2560 &&
-			window.innerWidth > 1824 &&
+			window.innerWidth >= 1920 &&
 			this.state.radius == 5
 		) {
 			this.setState({ defaultZoom: 12 });
 		}
 		if (
 			window.innerWidth <= 2560 &&
-			window.innerWidth > 1824 &&
+			window.innerWidth >= 1921 &&
 			this.state.radius == 10
 		) {
 			this.setState({ defaultZoom: 12 });
 		}
 		if (
 			window.innerWidth <= 2560 &&
-			window.innerWidth > 1824 &&
+			window.innerWidth >= 1921 &&
 			this.state.radius == 25
 		) {
 			this.setState({ defaultZoom: 10 });
 		}
 		if (
 			window.innerWidth <= 2560 &&
-			window.innerWidth > 1824 &&
+			window.innerWidth >= 1921 &&
 			this.state.radius == 50
 		) {
-			this.setState({ defaultZoom: 9 });
-		}
-		if (window.innerWidth <= 1279 && this.state.radius == 10) {
 			this.setState({ defaultZoom: 10 });
 		}
 
-		if (window.innerWidth <= 1279 && this.state.radius == 5) {
+		if (window.innerWidth <= 1440 && this.state.radius == 10) {
+			this.setState({ defaultZoom: 10 });
+		}
+
+		if (window.innerWidth <= 1440 && this.state.radius == 5) {
 			this.setState({ defaultZoom: 11 });
 		}
-		if (window.innerWidth <= 1279 && this.state.radius == 25) {
+		if (window.innerWidth <= 1440 && this.state.radius == 25) {
 			this.setState({ defaultZoom: 9 });
 		}
-		if (window.innerWidth <= 1279 && this.state.radius == 50) {
+		if (window.innerWidth <= 1440 && this.state.radius == 50) {
 			this.setState({ defaultZoom: 8 });
 		}
 
@@ -590,7 +593,7 @@ class UserView extends Component {
 							sm={12}
 						>
 							<WrappedMap
-								googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKHj80KlN5Y0jRboQGOcx_PYJj2odSTsk&libraries=geometry,drawing,places"
+								googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJqYsvcCWQGQvK2wvl67_8BS-Kz92KwRw&libraries=geometry,drawing,places"
 								loadingElement={
 									<div style={{ height: `100%` }} />
 								}

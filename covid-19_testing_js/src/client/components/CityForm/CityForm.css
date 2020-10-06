@@ -176,16 +176,17 @@
 	}
 	.search-box {
 		margin-top: -5rem;
-		width: 320px;
+		width: 300px;
 		margin-left: 0.25rem;
 		height: 0.5rem;
 		transition: 0.25s;
 	}
 
 	.textbox {
-		width: 150px;
+		margin-left: -0.5rem;
+		width: 140px;
 		height: 2rem;
-		margin-top: -0.8rem;
+		margin-top: -1rem;
 		font-size: 1rem;
 		background-color: transparent;
 	}
@@ -218,7 +219,7 @@
 	}
 
 	.search-box:hover {
-		width: 340px;
+		/* width: 340px; */
 		/* line-height: 1.5rem;
 		 padding: 0 0px; 
 		height: 2.5rem;

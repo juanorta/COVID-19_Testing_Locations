@@ -30,6 +30,7 @@
 	animation: 0.5s ease 0s 1 slideInFromLeft;
 	transform: translateX(0%);
 	transition: 0.25s;
+	margin-top: 2rem;
 	height: 92vh;
 	width: 110vw;
 	overflow-y: scroll;
@@ -121,8 +122,9 @@
 
 @media (max-width: 768px) {
 	.location-column-container {
-		height: 76vh;
+		height: 91vh;
 		z-index: 500;
+		padding-bottom: 10rem;
 	}
 	.locations {
 		margin-top: -135px;
@@ -163,7 +165,7 @@
 
 @media (max-width: 1440px) and (min-width: 1224px) {
 	.locations h1 {
-		font-size: 2.5rem;
+		font-size: 2rem;
 	}
 	.location-column-container {
 		height: 92vh;
@@ -203,6 +205,22 @@
 	}
 }
 
+@media (min-width: 1921px) {
+	.city-view {
+		margin-top: -20px;
+	}
+	.locations {
+		margin-top: 1.5%;
+	}
+	.show-list {
+		margin-top: -5rem;
+		height: 35px;
+		width: 35px;
+	}
+	.locations h1 {
+		font-size: 2.25rem;
+	}
+}
 @keyframes bounceIn {
 	0%,
 	20%,
