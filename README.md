@@ -4,7 +4,7 @@ A Node/React application that will allow users to search for a COVID-19 testing 
 
 # What I Learned
  
-* Webscraping and gathering data using JUnit and Selenium 
+* Webscraping and gathering data using Selenium's HtmlUnit 
 * Google's Places API, Geocoding API, Maps JavaScript API
 * Display search results with map markers on a map with Google's Maps JavaScript API
 * Build API routes and fetch data from an Amazon RDS MySQL instance with Node/Express
