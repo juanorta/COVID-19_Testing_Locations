@@ -19,6 +19,7 @@ const SiteCard = (props) => {
 	if (props.miles == null) {
 		console.log('empty miles');
 		miles = false;
+		console.log('hmm');
 	}
 	return (
 		<div className="card">
