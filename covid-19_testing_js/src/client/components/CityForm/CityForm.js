@@ -98,7 +98,7 @@ class CityForm extends Component {
 				'District of Columbia',
 			],
 		};
-		console.log(this.state);
+
 		this.setWrapperRef = this.setWrapperRef.bind(this);
 		this.handleClickOutside = this.handleClickOutside.bind(this);
 		//const history = useHistory();
@@ -107,48 +107,32 @@ class CityForm extends Component {
 	componentWillUnmount() {
 		document.removeEventListener('mousedown', this.handleClickOutside);
 	}
-	// static contextTypes = {
-	// 	router: PropTypes.object,
-	// };
-	// setUserLocation = (lat, lng) => () => {
-	// 	console.log(lat + ' ' + lng);
-	// };
 
 	componentDidMount() {
 		this.geocoder = new google.maps.Geocoder();
 
 		document.addEventListener('mousedown', this.handleClickOutside);
-		console.log(navigator.geolocation.getCurrentPosition);
 	}
 
 	setUserlocation = () => {
-		console.log('location');
 		this.setState({ userLocationLoading: true });
 
 		navigator.geolocation.getCurrentPosition((position) => {
-			this.setState(
-				{
-					lat: position.coords.latitude,
-					lng: position.coords.longitude,
-					textboxClicked: false,
-					placeholder: 'My Location',
-					userLocation: true,
-					userLocationLoading: false,
-				},
-				() => {
-					console.log(this.state);
-				}
-			);
+			this.setState({
+				lat: position.coords.latitude,
+				lng: position.coords.longitude,
+				textboxClicked: false,
+				placeholder: 'My Location',
+				userLocation: true,
+				userLocationLoading: false,
+			});
 		});
-		//console.log(navigator.geolocation.getCurrentPosition(position));
 	};
 
 	handleClickOutside(event) {
-		//console.log('click outside called');
 		if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
 			if (this.state.lat == '') {
 				setTimeout(() => {
-					console.log('empty lat');
 					this.setState({ textboxClicked: false });
 				}, 125);
 			}
@@ -158,19 +142,13 @@ class CityForm extends Component {
 	}
 
 	handleSubmit = (event) => {
-		console.log('submit');
-
 		event.preventDefault();
 	};
 
 	//takes in user input and converts that into a address object that contains a lot of information about the input
 	//if the input is a city, it sets the city and state of that location and sends it to the url
 	geocodeAddress = (address) => {
-		console.log('PARSE CALLED = ' + address);
-		console.log('USER LOCATION SELECTED = ' + this.state.userLocation);
 		let stateResult = '';
-		//console.log('PLACE SELECTED = ' + this.state.placeSelected);
-		//setTimeout(function () {}, 3000);
 		if (address == 'temple' || address == 'Temple') {
 			address = 'temple tx';
 		} else if (address == 'georgetown' || address == 'Georgetown') {
@@ -180,33 +158,16 @@ class CityForm extends Component {
 			{ address: address },
 			function handleResults(results, status) {
 				if (status === google.maps.GeocoderStatus.OK) {
-					console.log(results);
-					console.log(results[0].geometry.location.toString());
-					console.log(
-						'Geocoder results ->' +
-							results[0].address_components[0].short_name
-					);
-
 					for (
 						let i = 0;
 						i < results[0].address_components.length;
 						i++
 					) {
-						// console.log(
-						// 	i + ' ' + results[0].address_components[i].long_name
-						// );
 						for (let j = 0; j < this.state.states.length; j++) {
 							if (
 								results[0].address_components[i].long_name ==
 								this.state.states[j]
 							) {
-								console.log(
-									'address_components[' +
-										i +
-										'] = ' +
-										this.state.states[j]
-								);
-
 								stateResult = this.state.states[j];
 							}
 						}
@@ -216,17 +177,10 @@ class CityForm extends Component {
 						results[0].address_components[0].short_name ==
 						'New York'
 					) {
-						this.setState(
-							{
-								city:
-									results[0].address_components[0].long_name,
-								state:
-									results[0].address_components[0].long_name,
-							},
-							() => {
-								console.log(this.state);
-							}
-						);
+						this.setState({
+							city: results[0].address_components[0].long_name,
+							state: results[0].address_components[0].long_name,
+						});
 
 						// this.props.history.push(
 						// 	`/citystate/${this.state.city}&${this.state.state}`
@@ -234,20 +188,14 @@ class CityForm extends Component {
 					}
 
 					if (this.state.state == 'stateDefault') {
-						this.setState(
-							{
-								city:
-									results[0].address_components[0].long_name,
-								state: stateResult,
-								lat: results[0].geometry.location.lat(),
-								lng: results[0].geometry.location.lng(),
+						this.setState({
+							city: results[0].address_components[0].long_name,
+							state: stateResult,
+							lat: results[0].geometry.location.lat(),
+							lng: results[0].geometry.location.lng(),
 
-								// selected: true,
-							},
-							() => {
-								console.log(this.state);
-							}
-						);
+							// selected: true,
+						});
 					}
 
 					// this.context.router.history.push(
@@ -262,9 +210,8 @@ class CityForm extends Component {
 						}
 						if (this.state.radius != 0) {
 							//check if onplacecalled is true. if it is, look up coordinates for this.state.city
-							console.log('no user coordinates but has radius');
+
 							if (this.state.placeSelected === true) {
-								console.log('USE THIS.STATE.CITY');
 								this.setState(
 									{
 										lat: this.state.lat,
@@ -291,7 +238,6 @@ class CityForm extends Component {
 							}
 						}
 					} else if (this.state.clicked == false) {
-						console.log('user coordinates');
 						this.setState(
 							{
 								city:
@@ -305,22 +251,13 @@ class CityForm extends Component {
 							}
 						);
 					}
-					// this.props.history.push(
-					// 	`/citystate/${this.state.city}&${this.state.state}`
-					// );
 					return;
 				} else {
-					// this.props.history.push(
-					// 	`/userlocation/${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
-					// );
-					console.log(status);
 					if (this.state.radius != 0) {
-						console.log('radius not zero = ' + this.state.radius);
 						this.props.history.push(
 							`/userlocation/${this.state.userLocation}&${this.state.city}&${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
 						);
 					} else {
-						console.log('radius zero');
 						this.props.history.push(
 							`/citystate/${this.state.city}&${this.state.state}`
 						);
@@ -335,13 +272,7 @@ class CityForm extends Component {
 	// the geocoder
 	// if place is defined, then it is a autocomplete-selected input and feeds it to the geocoder.
 	onPlaceSelectedHandler = (place) => {
-		console.log(place.formatted_address);
-		console.log(place);
-
-		console.log('place selected handler called');
-
 		if (place.formatted_address === undefined) {
-			console.log('place is undefined');
 			//geocode place.name
 			this.setState(
 				{
@@ -352,7 +283,6 @@ class CityForm extends Component {
 				}
 			);
 		} else {
-			console.log('not undefined');
 			//geocode formatted_address
 			this.setState(
 				{
@@ -366,15 +296,8 @@ class CityForm extends Component {
 	};
 
 	handleChange = (event) => {
-		console.log(event.target.value);
-
 		if (this.state.lat != '') {
-			this.setState(
-				{ placeholder: 'Enter City', lat: '', lng: '' },
-				() => {
-					console.log(this.state);
-				}
-			);
+			this.setState({ placeholder: 'Enter City', lat: '', lng: '' });
 		}
 
 		this.setState({
@@ -385,7 +308,6 @@ class CityForm extends Component {
 
 	//grabs city2 and puts it in the geocoder
 	handleClick = (event) => {
-		console.log(event.detail);
 		//get whatever value is set from handle change city2 state2
 		// put that value in the geocoder
 		//let city2 = event.target.city;
@@ -402,24 +324,18 @@ class CityForm extends Component {
 			// 	`/userlocation/${this.state.lat}&${this.state.lng}&${this.state.radius}&${this.state.state}`
 			// );
 		} else {
-			console.log('doesnt match either');
 		}
 	};
 	// /citystate/${this.state.city}&${this.state.state}`
 	handleDropDown = (event) => {
-		console.log(event.target.value);
-
 		if (event.target.value == 0) {
 			this.clearCoordinates();
 		}
 
-		this.setState({ radius: event.target.value }, () => {
-			console.log(this.state);
-		});
+		this.setState({ radius: event.target.value });
 	};
 
 	textClickHandler = () => {
-		console.log('textbox clicked');
 		if (this.state.lat != '') {
 			this.setState({ textboxClicked: false });
 		} else {
@@ -433,18 +349,11 @@ class CityForm extends Component {
 
 	clearCoordinates = () => {
 		if (this.state.userLocation != true) {
-			this.setState({ lat: '', lng: '' }, () => {
-				console.log(this.state);
-			});
+			this.setState({ lat: '', lng: '' });
 		}
 	};
 
 	render() {
-		//console.log(this.state.states);
-
-		// for (let i = 0; i < this.state.states.length; i++) {
-		// 	console.log(i + ' = ' + this.state.states[i]);
-		// }
 		return (
 			<div className="form">
 				<form
@@ -476,16 +385,7 @@ class CityForm extends Component {
 						<option value="25">25 miles</option>
 						<option value="50">50 miles</option>
 					</select>
-					{/* {console.log('selected -> ' + this.state.selected)} */}
-					{/* {this.state.selected ? (
-						<Link
-							to={`/citystate/${this.state.city}&${this.state.state}`}
-						>
-							<a className="search-btn">
-								<Search /> <button />
-							</a>
-						</Link>
-					) : ( */}
+
 					<a className="search-btn" onClick={this.handleClick}>
 						<Search /> <button />
 					</a>

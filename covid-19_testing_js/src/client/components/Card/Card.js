@@ -11,15 +11,9 @@ import {
 import CityView from '../CityView/CityView';
 
 const SiteCard = (props) => {
-	// function handleClick() {
-	// 	console.log('more info clicked');
-	// }
-	//	console.log(props.id);
 	let miles = true;
 	if (props.miles == null) {
-		console.log('empty miles');
 		miles = false;
-		console.log('hmm');
 	}
 	return (
 		<div className="card">

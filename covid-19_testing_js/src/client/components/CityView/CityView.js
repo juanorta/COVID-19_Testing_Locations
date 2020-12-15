@@ -63,7 +63,6 @@ function Map(props) {
 
 	//will set the center coordinates to a city's until a marker is clicked
 	if (load == 1) {
-		//console.log('true');
 		lat = parseFloat(props.lat) - offsetX;
 		lng = parseFloat(props.lng) - offsetY;
 	}
@@ -77,7 +76,6 @@ function Map(props) {
 	}
 
 	function handleCenterChange2() {
-		//console.log(this.getCenter().toJSON());
 		cardhover = 0;
 		lat = parseFloat(this.getCenter().toJSON().lat);
 		lng = parseFloat(this.getCenter().toJSON().lng);
@@ -86,18 +84,13 @@ function Map(props) {
 	//sets the zoom level to the current zoom
 	//this prevents the map from loading to the default city zoom on every marker click
 	function handleZoomChange() {
-		//console.log('zoom changed ' + this.getZoom());
 		cardhover = 0;
 		setCurrentZoom(this.getZoom());
-		//props.updateCount();
-		//console.log('currentzoom ' + currentZoom);
 	}
 
 	function stopBounce() {
 		cardhover = 0;
 	}
-
-	console.log(props.newLat + ' ' + props.newLng);
 
 	if (counter != 1) {
 		animation = 0;
@@ -144,17 +137,6 @@ function Map(props) {
 					}}
 				/>
 			))}
-
-			<Circle
-				defaultCenter={{
-					lat: props.lat,
-					lng: props.lng,
-				}}
-				radius={24000}
-				options={{
-					strokeColor: '#ff0000',
-				}}
-			/>
 
 			{selectedMarker && (
 				<InfoWindow
@@ -239,9 +221,6 @@ class CityView extends Component {
 		this.handleMapOffsets();
 		this.handleLoad();
 		let onLoad = 1;
-		console.log('onload->' + onLoad);
-		//console.log(this.myRef.current.current.clientHeight);
-		console.log(this.myRef.current);
 
 		this.geocoder = new google.maps.Geocoder();
 		fetch(
@@ -254,50 +233,32 @@ class CityView extends Component {
 			}
 		)
 			.then((res) => res.json())
-			.then((locations) =>
-				this.setState({ locations, loading: false }, () =>
-					console.log('Locations fetched...', locations)
-				)
-			);
+			.then((locations) => this.setState({ locations, loading: false }));
 
 		this.geocodeAddress(this.state.city + this.state.state);
 	}
 
 	//gets coordinates for the city that was received
 	geocodeAddress = (address) => {
-		console.log('PARSE CALLED = ' + address);
 		setTimeout(function () {}, 3000);
 		this.geocoder.geocode(
 			{ address: address },
 			function handleResults(results, status) {
 				if (status === google.maps.GeocoderStatus.OK) {
-					this.setState(
-						{
-							defaultLat: parseFloat(
-								results[0].geometry.location.lat()
-							),
-							defaultLng: parseFloat(
-								results[0].geometry.location.lng()
-							),
-						},
-						() => {
-							console.log(this.state);
-						}
-					);
-				} else {
-					console.log('not ok');
+					this.setState({
+						defaultLat: parseFloat(
+							results[0].geometry.location.lat()
+						),
+						defaultLng: parseFloat(
+							results[0].geometry.location.lng()
+						),
+					});
 				}
 			}.bind(this)
 		);
 	};
 
-	componentDidCatch() {
-		//	console.log('uh');
-	}
-
 	componentWillReceiveProps() {
-		//console.log('willreceive');
-
 		window.location.reload(true);
 	}
 
@@ -305,7 +266,6 @@ class CityView extends Component {
 	//map function then makes marker bounce
 	handleMouseOver(locationID) {
 		this.setState({ cardHover: locationID });
-		//	console.log(this.state);
 	}
 	handleMouseLeave() {
 		this.setState({ cardHover: '' });
@@ -326,91 +286,66 @@ class CityView extends Component {
 		hours,
 		id
 	) => () => {
-		this.setState(
-			{
-				moreInfoSelected: true,
-				cityFView: city,
-				facility: facility,
-				address: address,
-				type: type,
-				number: phoneNumber,
-				eligibility: eligibility,
-				link: link,
-				lat: lat,
-				lng: lng,
-				hours: hours,
-				id: id,
-				cardHover: 0,
-			},
-			() => {
-				console.log(this.state);
-			}
-		);
+		this.setState({
+			moreInfoSelected: true,
+			cityFView: city,
+			facility: facility,
+			address: address,
+			type: type,
+			number: phoneNumber,
+			eligibility: eligibility,
+			link: link,
+			lat: lat,
+			lng: lng,
+			hours: hours,
+			id: id,
+			cardHover: 0,
+		});
 	};
 
 	//sets the state of the location properties to empty
 	handleCloseMoreInfo = () => {
-		//	console.log('closed');
-		this.setState(
-			{
-				moreInfoSelected: false,
-				facility: '',
-				address: '',
-				type: '',
-				number: '',
-				eligibility: '',
-				link: '',
-				cardHover: '',
-				hours: '',
-				id: '',
-			},
-			() => {
-				console.log(this.state);
-			}
-		);
+		this.setState({
+			moreInfoSelected: false,
+			facility: '',
+			address: '',
+			type: '',
+			number: '',
+			eligibility: '',
+			link: '',
+			cardHover: '',
+			hours: '',
+			id: '',
+		});
 	};
 
 	//when called, changes the map zoom
 	handleViewOnMap = (lat, lng) => () => {
-		//console.log('handle view on map-> ' + lat + lng);
-		this.setState({ defaultZoom: 15 }, () => {
-			console.log(this.state);
-		});
+		this.setState({ defaultZoom: 15 });
 	};
 
 	//switches the state of drawerOpen on icon click
 	handleDrawerToggle = () => {
-		this.setState(
-			(prevState) => {
-				return {
-					drawerOpen: !prevState.drawerOpen,
-					isLoaded: false,
-					cardHover: '',
-				};
-			},
-			() => {
-				//console.log(this.state.drawerOpen);
-			}
-		);
+		this.setState((prevState) => {
+			return {
+				drawerOpen: !prevState.drawerOpen,
+				isLoaded: false,
+				cardHover: '',
+			};
+		});
 	};
 
 	//adjusts the location list container to an appropriate size depending on screen size
 	handleScreenResize = () => {
-		//console.log('ok');
-		console.log('width = ' + window.innerWidth);
 		if (window.innerWidth <= 2560 && window.innerWidth > 1824) {
 			this.setState({ columnSize: 3 });
 		} else if (window.innerWidth <= 1279) {
 			this.setState({ defaultZoom: 10 });
 		}
-		// } else if (window.innerWidth >= 1224 && window.innerWidth <= 1440) {
-		// 	this.setState({ defaultZoom: 10 });
-		// }
 	};
 
 	//if being viewed on a mobile device, no offsets will be useds
 	handleMapOffsets = () => {
-		//console.log('ok');
 		if (window.innerWidth <= 1279) {
 			this.setState({ offsetX: 0, offsetY: 0 });
 		}
@@ -431,22 +366,14 @@ class CityView extends Component {
 
 		let scrolled = `${(scrollTop / height) * 100}%`;
 
-		console.log('scroll');
 		document.getElementById('myBar').style.width = `${scrolled}`;
 	};
 
 	updateCount = () => {
-		//console.log('called');
-		this.setState({ counter: this.state.counter + 1 }, () => {
-			console.log('called');
-		});
+		this.setState({ counter: this.state.counter + 1 });
 	};
 
 	bounceMarker = (id, zoom) => () => {
-		//console.log('hey-> ' + id);
-		// if (this.state.id === id) {
-		// 	console.log('state id-> ' + this.state.id + '  id-> ' + id);
-		// } else
 		if (zoom == 10) {
 			this.setState({ cardHover: id, drawerOpen: false });
 		} else {
@@ -471,36 +398,15 @@ class CityView extends Component {
 			);
 		}
 
-		// <div>
-		// 			<h3 style={{ textAlign: 'center', marginTop: '20%' }}>
-		// 				{' '}
-		// 				No locations found in '{this.state.city}'
-		// 				<Link to="/"> click here </Link> to enter a different
-		// 				city
-		// 			</h3>
-		// 		</div>
-
-		// if (this.state.counter == 0) {
-		// 	console.log('counter is 0');
-		// 	this.updateCount();
-		// } else if (this.state.counter == 1) {
-		// 	console.log('counter is 1');
-		// }
-
 		let toggleLocationContainer = 'location-column-container';
 		let icon = 'show-list';
 		//let count;
 		if (this.state.drawerOpen == false) {
 			//count = 0;
 
-			// console.log('count false -> ' + count);
 			toggleLocationContainer = 'location-column-container closed';
 			icon = 'show-list closed';
-			//count = 1;
-			//	console.log(toggleLocationContainer);
 		} else if (this.state.drawerOpen == true) {
-			// console.log('count true -> ' + count);
-
 			toggleLocationContainer = 'location-column-container';
 
 			if (this.state.isLoaded == true) {
@@ -508,7 +414,6 @@ class CityView extends Component {
 			} else {
 				icon = 'show-list closed';
 			}
-			//console.log(toggleLocationContainer);
 		}
 		return (
 			<div className="city-view">

@@ -18,13 +18,6 @@ import {
 } from 'react-icons/fa';
 
 const FacilityView = (props) => {
-	//console.log(props.lat);
-	console.log('address-> ' + props.address);
-	console.log('type-> ' + props.type);
-	console.log('number-> ' + props.number);
-	console.log('eligibility-> ' + props.eligibility);
-	console.log('link-> ' + props.link);
-
 	let eligibilityIsFilled = true;
 	let phoneIsFilled = true;
 	let linkIsFilled = true;
@@ -34,11 +27,9 @@ const FacilityView = (props) => {
 	//checking if strings are empty.
 	//will not display them if they're empty
 	if (props.eligibility == '') {
-		//console.log('empty eligibility');
 		eligibilityIsFilled = false;
 	}
 	if (props.number == '') {
-		//console.log('empty phone');
 		phoneIsFilled = false;
 	}
 	if (props.link == '') {
@@ -47,16 +38,10 @@ const FacilityView = (props) => {
 	if (props.hours == '') {
 		hoursIsFilled = false;
 	}
-
-	console.log(props.miles);
 	if (props.miles == undefined) {
-		console.log('miles not null');
 		miles = false;
 	}
-	//console.log('yolololo');
 
-	// console.log('id==== ' + props.id);
-	console.log('zoom = ' + props.zoom);
 	return (
 		<div className="facility-view">
 			<FaArrowLeft

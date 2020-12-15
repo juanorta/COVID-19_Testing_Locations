@@ -8,7 +8,6 @@ let visited = false;
 //what gets appended at the end of /api/covid_db
 router.get('/', async (req, res) => {
 	try {
-		console.log('all route called');
 		let results = await db.all();
 
 		return res.json(results);
@@ -34,7 +33,6 @@ router.get('/id/:id', async (req, res) => {
 		let results = await db.one(req.params.id);
 		//res.status(200).json(results);
 		//res.status(200);
-		console.log('id called');
 		return res.json(results);
 	} catch (e) {
 		return res.sendStatus(500);

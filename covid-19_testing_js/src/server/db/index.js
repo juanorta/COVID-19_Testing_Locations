@@ -44,22 +44,6 @@ sitesDB.one = (id) => {
 	});
 };
 
-// sitesDB.stateQuery = (state) => {
-// 	return new Promise((resolve, reject) => {
-// 		pool.query(
-// 			`SELECT * FROM test_sites WHERE state = ?`,
-// 			[state],
-// 			(err, results) => {
-// 				if (err) {
-// 					return reject(err);
-// 				}
-// 				//console.log('ok');
-// 				return resolve(results);
-// 			}
-// 		);
-// 	});
-// };
-
 sitesDB.cityQuery = (city) => {
 	return new Promise((resolve, reject) => {
 		pool.query(
@@ -69,7 +53,7 @@ sitesDB.cityQuery = (city) => {
 				if (err) {
 					return reject(err);
 				}
-				//console.log('ok');
+
 				return resolve(results);
 			}
 		);
@@ -85,7 +69,7 @@ sitesDB.addressQuery = (address) => {
 				if (err) {
 					return reject(err);
 				}
-				//console.log('ok');
+
 				return resolve(results);
 			}
 		);
@@ -101,7 +85,7 @@ sitesDB.cityStateQuery = (city, state) => {
 				if (err) {
 					return reject(err);
 				}
-				//console.log('ok');
+
 				return resolve(results);
 			}
 		);
@@ -117,7 +101,6 @@ sitesDB.userLocationQuery = (locationAccess, city, lat, lng, radius, state) => {
 				if (err) {
 					return reject(err);
 				}
-				//console.log('ok');
 				return resolve(results);
 			}
 		);

@@ -56,7 +56,6 @@ function Map(props) {
 	//will set the center coordinates to a city's until a marker is clicked
 	let radius = props.radius * 1609.344;
 	if (load == 1) {
-		//console.log('true');
 		lat = parseFloat(props.lat) - offsetX;
 		lng = parseFloat(props.lng) - offsetY;
 	}
@@ -68,7 +67,6 @@ function Map(props) {
 		setLoad(0);
 	}
 	function handleCenterChange2() {
-		//console.log(this.getCenter().toJSON());
 		cardhover = 0;
 		lat = parseFloat(this.getCenter().toJSON().lat);
 		lng = parseFloat(this.getCenter().toJSON().lng);
@@ -77,19 +75,14 @@ function Map(props) {
 	//sets the zoom level to the current zoom
 	//this prevents the map from loading to the default city zoom on every marker click
 	function handleZoomChange() {
-		//console.log('zoom changed ' + this.getZoom());
 		cardhover = 0;
 		setCurrentZoom(this.getZoom());
 		//props.updateCount();
-		//console.log('currentzoom ' + currentZoom);
 	}
 	function stopBounce() {
 		cardhover = 0;
 	}
-	// console.log(props.newLat + ' ' + props.newLng);
-	// if (counter != 1) {
-	// 	animation = 0;
-	// }
+
 	return (
 		<GoogleMap
 			key={new Date().getTime()}
@@ -228,7 +221,6 @@ class UserView extends Component {
 	}
 
 	componentDidMount() {
-		console.log('INNER WIDTH => ' + window.innerWidth);
 		this.handleScreenResize();
 		this.handleMapOffsets();
 		this.handleLoad();
@@ -243,11 +235,7 @@ class UserView extends Component {
 			}
 		)
 			.then((res) => res.json())
-			.then((stateLocations) =>
-				this.setState({ stateLocations }, () =>
-					console.log('Locations fetched...', stateLocations)
-				)
-			);
+			.then((stateLocations) => this.setState({ stateLocations }));
 
 		setTimeout(() => {
 			this.getLocations();
@@ -256,14 +244,11 @@ class UserView extends Component {
 	}
 
 	componentWillReceiveProps() {
-		//console.log('willreceive');
-
 		window.location.reload(true);
 	}
 
 	getLocations = () => {
 		if (this.state.radius == 0) {
-			console.log('state should increase');
 			this.setState({ radius: 5 });
 		}
 
@@ -293,7 +278,7 @@ class UserView extends Component {
 			let resultInMiles = result * 0.000621371192;
 			if (resultInMiles <= this.state.radius) {
 				counter++;
-				//	console.log('---> ' + counter);
+
 				resultInMiles = parseFloat(resultInMiles).toFixed(2);
 				locationsCopy[i].Miles = resultInMiles;
 				newArray[counter] = locationsCopy[i];
@@ -303,7 +288,7 @@ class UserView extends Component {
 		newArray.sort((a, b) => {
 			return parseFloat(a.Miles) - parseFloat(b.Miles);
 		});
-		//console.log(newArray);
+
 		newArray.forEach((element, index) => {
 			//element.Miles = milesArray[index];
 			this.setState({
@@ -311,7 +296,6 @@ class UserView extends Component {
 				loading: false,
 			});
 		});
-		console.log(this.state.locations.length);
 		if (this.state.locations == 0) {
 			this.setState({ loading: false });
 		}
@@ -320,7 +304,6 @@ class UserView extends Component {
 
 	handleMouseOver(locationID) {
 		this.setState({ cardHover: locationID });
-		//	console.log(this.state);
 	}
 	handleMouseLeave() {
 		this.setState({ cardHover: '' });
@@ -340,76 +323,55 @@ class UserView extends Component {
 		id,
 		miles
 	) => () => {
-		this.setState(
-			{
-				moreInfoSelected: true,
-				cityFView: city,
-				facility: facility,
-				address: address,
-				type: type,
-				number: phoneNumber,
-				eligibility: eligibility,
-				link: link,
-				lat: lat,
-				lng: lng,
-				hours: hours,
-				id: id,
-				cardHover: 0,
-				miles: miles,
-			},
-			() => {
-				console.log(this.state);
-			}
-		);
+		this.setState({
+			moreInfoSelected: true,
+			cityFView: city,
+			facility: facility,
+			address: address,
+			type: type,
+			number: phoneNumber,
+			eligibility: eligibility,
+			link: link,
+			lat: lat,
+			lng: lng,
+			hours: hours,
+			id: id,
+			cardHover: 0,
+			miles: miles,
+		});
 	};
 
 	handleCloseMoreInfo = () => {
-		//	console.log('closed');
-		this.setState(
-			{
-				moreInfoSelected: false,
-				facility: '',
-				address: '',
-				type: '',
-				number: '',
-				eligibility: '',
-				link: '',
-				cardHover: '',
-				hours: '',
-				id: '',
-			},
-			() => {
-				console.log(this.state);
-			}
-		);
+		this.setState({
+			moreInfoSelected: false,
+			facility: '',
+			address: '',
+			type: '',
+			number: '',
+			eligibility: '',
+			link: '',
+			cardHover: '',
+			hours: '',
+			id: '',
+		});
 	};
 
 	//when called, changes the map zoom
 	handleViewOnMap = (lat, lng) => () => {
-		//console.log('handle view on map-> ' + lat + lng);
-		this.setState({ defaultZoom: 15 }, () => {
-			console.log(this.state);
-		});
+		this.setState({ defaultZoom: 15 });
 	};
 
 	handleDrawerToggle = () => {
-		this.setState(
-			(prevState) => {
-				return {
-					drawerOpen: !prevState.drawerOpen,
-					isLoaded: false,
-					cardHover: '',
-				};
-			},
-			() => {
-				//console.log(this.state.drawerOpen);
-			}
-		);
+		this.setState((prevState) => {
+			return {
+				drawerOpen: !prevState.drawerOpen,
+				isLoaded: false,
+				cardHover: '',
+			};
+		});
 	};
 
 	handleScreenResize = () => {
-		//console.log('ok');
-		console.log('width = ' + window.innerWidth);
 		if (window.innerWidth > 1824) {
 			this.setState({ columnSize: 3 });
 		}
@@ -473,7 +435,6 @@ class UserView extends Component {
 	};
 	//if being viewed on a mobile device, no offsets will be useds
 	handleMapOffsets = () => {
-		//console.log('ok');
 		if (window.innerWidth <= 1279) {
 			this.setState({ offsetX: 0, offsetY: 0 });
 		}
@@ -493,22 +454,14 @@ class UserView extends Component {
 
 		let scrolled = `${(scrollTop / height) * 100}%`;
 
-		console.log('scroll');
 		document.getElementById('myBar').style.width = `${scrolled}`;
 	};
 
 	updateCount = () => {
-		//console.log('called');
-		this.setState({ counter: this.state.counter + 1 }, () => {
-			console.log('called');
-		});
+		this.setState({ counter: this.state.counter + 1 });
 	};
 
 	bounceMarker = (id, zoom) => () => {
-		//console.log('hey-> ' + id);
-		// if (this.state.id === id) {
-		// 	console.log('state id-> ' + this.state.id + '  id-> ' + id);
-		// } else
 		if (zoom == 8) {
 			this.setState({ cardHover: id, drawerOpen: false });
 		} else {
@@ -517,8 +470,6 @@ class UserView extends Component {
 	};
 
 	render() {
-		//	console.log(this.state);
-		console.log('userLocation = ' + this.state.userLocation);
 		if (this.state.loading === true) {
 			return <Loading />;
 		}
@@ -540,16 +491,9 @@ class UserView extends Component {
 		let icon = 'show-list';
 		//let count;
 		if (this.state.drawerOpen == false) {
-			//count = 0;
-
-			// console.log('count false -> ' + count);
 			toggleLocationContainer = 'location-column-container closed';
 			icon = 'show-list closed';
-			//count = 1;
-			//	console.log(toggleLocationContainer);
 		} else if (this.state.drawerOpen == true) {
-			// console.log('count true -> ' + count);
-
 			toggleLocationContainer = 'location-column-container';
 
 			if (this.state.isLoaded == true) {
@@ -557,7 +501,6 @@ class UserView extends Component {
 			} else {
 				icon = 'show-list closed';
 			}
-			//console.log(toggleLocationContainer);
 		}
 
 		return (
