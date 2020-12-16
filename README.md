@@ -24,6 +24,11 @@ GoodRx.com has a public table that shows a national database of COVID-19 testing
 
 # Screenshots
 
+Landing page
 ![Screen Shot 2020-12-16 at 2 56 47 PM](https://user-images.githubusercontent.com/44252033/102405658-1ccdad00-3faf-11eb-9eb0-0ae905403379.png)
+
+Search results when using a user's location
 ![Screen Shot 2020-12-16 at 2 53 16 PM](https://user-images.githubusercontent.com/44252033/102405696-26efab80-3faf-11eb-86fa-4b8183753622.png)
+
+Search results when searching within 50 miles away from Los Angeles
 ![Screen Shot 2020-12-16 at 2 55 03 PM](https://user-images.githubusercontent.com/44252033/102405731-3242d700-3faf-11eb-803f-429c54c0d780.png)
