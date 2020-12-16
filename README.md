@@ -13,7 +13,8 @@ GoodRx.com has a public table that shows a national database of COVID-19 testing
 # What I Learned
  
 * Webscraping and gathering data using Selenium HtmlUnit 
-* Google's Places API, Geocoding API, Maps JavaScript API
+* Created a search feature with the help of Google's Places API for autocompletion
+* Recevied coordinates for locations with Google's Geocoding API
 * Display search results with map markers on a map with Google's Maps JavaScript API
 * Server-side rendering as opposed to client-side rendering to increase performance
 * Build API routes and fetch data from an Amazon RDS MySQL instance with Node/Express
