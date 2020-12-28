@@ -13,7 +13,7 @@ https://www.goodrx.com/blog/drive-thru-coronavirus-testing-near-me/ has a public
 # What I Learned
  
 * Selenium and HtmlUnit for webscraping and gathering data 
-* Google's Places API for created a search feature that uses autocompletion
+* Google's Places API for creating a search feature that uses autocompletion
 * Google's Geocoding API for receiving facility cooridinates
 * Google's Maps JavaScript API for displaying search results with map markers on a map
 * Server-side rendering as opposed to client-side rendering to increase performance
